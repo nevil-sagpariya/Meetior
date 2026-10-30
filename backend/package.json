@@ -1,0 +1,37 @@
+{
+  "name": "meetior-backend",
+  "version": "1.0.0",
+  "description": "Meetior - Local Event Discovery & Meetup Platform Backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "node tests/isolated.integration.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node utils/seeder.js && node utils/downloadEventImages.js && node utils/seedPublicGatherings.js",
+    "jobs": "node jobs/reminderWorker.js",
+    "clean:test": "node utils/cleanupTestData.js",
+    "clean:demo": "node utils/cleanDemoUsers.js",
+    "clean:github": "node utils/cleanDemoUsers.js",
+    "reset:clean": "node utils/seeder.js && node seeders/002_admin_user.js && node utils/downloadEventImages.js && node utils/seedPublicGatherings.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.7",
+    "node-cron": "^3.0.3",
+    "qrcode": "^1.5.4",
+    "razorpay": "^2.9.2",
+    "sequelize": "^6.37.3",
+    "uuid": "^10.0.0",
+    "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}

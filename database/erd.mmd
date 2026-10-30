@@ -1,0 +1,252 @@
+erDiagram
+    STATES ||--o{ DISTRICTS : contains
+    STATES ||--o{ POSTAL_CODES : references
+    DISTRICTS ||--o{ CITIES : contains
+    DISTRICTS ||--o{ POSTAL_CODES : groups
+    CITIES ||--o{ POSTAL_CODES : mapped_to
+
+    USERS ||--o{ EVENTS : organizes
+    CATEGORIES ||--o{ EVENTS : classifies
+    EVENTS ||--o{ EVENT_PHOTOS : exhibits
+    EVENTS ||--o{ REGISTRATIONS : admits
+    USERS ||--o{ REGISTRATIONS : books
+    REGISTRATIONS ||--|| EVENT_TICKETS : generates
+    EVENTS ||--o{ EVENT_TICKETS : issues
+    EVENT_TICKETS ||--o| CHECK_INS : records
+    USERS ||--o{ CHECK_INS : verifies
+    REGISTRATIONS ||--o| PAYMENTS : settles
+    USERS ||--o{ SAVED_EVENTS : bookmarks
+    EVENTS ||--o{ SAVED_EVENTS : bookmarked_in
+
+    EVENTS ||--o| MOTION_SECOND_CHANCES : enables
+    MOTION_SECOND_CHANCES ||--o{ SECOND_CHANCE_REQUESTS : accumulates
+    USERS ||--o{ SECOND_CHANCE_REQUESTS : requests
+
+    USERS ||--o{ DEMAND_REQUESTS : creates
+    CATEGORIES ||--o{ DEMAND_REQUESTS : tags
+    DEMAND_REQUESTS ||--o{ DEMAND_SUPPORTERS : gathers
+    USERS ||--o{ DEMAND_SUPPORTERS : endorses
+
+    EVENTS ||--o{ EVENT_REVIEWS : receives
+    USERS ||--o{ EVENT_REVIEWS : authors
+    USERS ||--o{ IN_APP_NOTIFICATIONS : notifies
+
+    USERS ||--o{ REPORTS : submits
+    EVENTS ||--o{ REPORTS : flagged_in
+    EVENTS ||--o{ EVENT_MODERATION : undergoes
+    USERS ||--o{ EVENT_MODERATION : moderates
+    USERS ||--o{ ADMIN_AUDIT_LOGS : actions
+
+    STATES {
+        int state_id PK
+        string state_name
+        string state_code
+    }
+
+    DISTRICTS {
+        int district_id PK
+        int state_id FK
+        string district_name
+    }
+
+    CITIES {
+        int city_id PK
+        int district_id FK
+        string city_name
+    }
+
+    POSTAL_CODES {
+        int postal_code_id PK
+        string pincode
+        int state_id FK
+        int district_id FK
+        int city_id FK
+        string post_office_name
+        string locality_name
+    }
+
+    USERS {
+        int user_id PK
+        string full_name
+        string email
+        string password_hash
+        string role
+        string phone_number
+        string pincode
+        string city
+        string district
+        string state
+        string account_status
+        datetime created_at
+    }
+
+    CATEGORIES {
+        int category_id PK
+        string category_name
+        string icon_name
+        string description
+    }
+
+    EVENTS {
+        int event_id PK
+        int organizer_id FK
+        int category_id FK
+        string title
+        string description
+        datetime start_date_time
+        datetime end_date_time
+        string venue_name
+        string address_line
+        string pincode
+        string city
+        string district
+        string state
+        decimal price
+        boolean is_paid
+        int max_capacity
+        string status
+        string moderation_status
+        string cover_image_url
+        datetime created_at
+    }
+
+    EVENT_PHOTOS {
+        int photo_id PK
+        int event_id FK
+        string photo_url
+        datetime uploaded_at
+    }
+
+    REGISTRATIONS {
+        int registration_id PK
+        int user_id FK
+        int event_id FK
+        int quantity
+        decimal total_amount
+        string status
+        datetime registered_at
+    }
+
+    EVENT_TICKETS {
+        int ticket_id PK
+        int registration_id FK
+        int event_id FK
+        string ticket_code
+        string qr_payload_hash
+        string qr_code_url
+        boolean is_valid
+        datetime issued_at
+    }
+
+    CHECK_INS {
+        int check_in_id PK
+        int ticket_id FK
+        int scanned_by FK
+        datetime check_in_time
+        string device_info
+    }
+
+    PAYMENTS {
+        int payment_id PK
+        int registration_id FK
+        string razorpay_order_id
+        string razorpay_payment_id
+        string razorpay_signature
+        decimal amount
+        string currency
+        string status
+        datetime created_at
+    }
+
+    SAVED_EVENTS {
+        int save_id PK
+        int user_id FK
+        int event_id FK
+        datetime created_at
+    }
+
+    MOTION_SECOND_CHANCES {
+        int motion_id PK
+        int event_id FK
+        int target_attendees
+        int current_requests
+        string status
+        datetime created_at
+    }
+
+    SECOND_CHANCE_REQUESTS {
+        int request_id PK
+        int motion_id FK
+        int user_id FK
+        datetime requested_at
+    }
+
+    DEMAND_REQUESTS {
+        int demand_id PK
+        int created_by FK
+        int category_id FK
+        string title
+        string description
+        string city
+        string district
+        string state
+        int support_count
+        string status
+        datetime created_at
+    }
+
+    DEMAND_SUPPORTERS {
+        int support_id PK
+        int demand_id FK
+        int user_id FK
+        datetime supported_at
+    }
+
+    EVENT_REVIEWS {
+        int review_id PK
+        int event_id FK
+        int user_id FK
+        int rating
+        string review_text
+        datetime created_at
+    }
+
+    IN_APP_NOTIFICATIONS {
+        int notification_id PK
+        int user_id FK
+        string title
+        string message
+        string type
+        boolean is_read
+        datetime created_at
+    }
+
+    REPORTS {
+        int report_id PK
+        int reported_by FK
+        int event_id FK
+        string reason
+        string description
+        string status
+        datetime created_at
+    }
+
+    EVENT_MODERATION {
+        int moderation_id PK
+        int event_id FK
+        int admin_id FK
+        string action
+        string reason
+        datetime created_at
+    }
+
+    ADMIN_AUDIT_LOGS {
+        int log_id PK
+        int admin_id FK
+        string action_type
+        string target_entity
+        int entity_id
+        string details
+        string ip_address
+        datetime created_at
+    }

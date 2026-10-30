@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment Configuration (never commit secrets)
+.env
+*/.env
+*.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# User temporary uploads (keep event assets)
+backend/uploads/*
+!backend/uploads/events/
+!backend/uploads/events/*
+
+# System & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

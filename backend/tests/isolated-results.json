@@ -1,0 +1,638 @@
+{
+  "timestamp": "2026-10-30T19:00:54.160Z",
+  "testDatabase": "meetior_test_1793386821941_23236",
+  "sourceDatabase": "meetior_db",
+  "sourceWrites": false,
+  "cleaned": true,
+  "passed": 150,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Create event: Legacy Ahmedabad fixture",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Mumbai",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Mumbai",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Ahmedabad",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Navi Mumbai",
+      "pass": true
+    },
+    {
+      "name": "Register Organizer in Mumbai",
+      "pass": true
+    },
+    {
+      "name": "Create event: Mumbai publication one",
+      "pass": true
+    },
+    {
+      "name": "Create event: Navi Mumbai exclusion",
+      "pass": true
+    },
+    {
+      "name": "Create event: Ahmedabad exclusion",
+      "pass": true
+    },
+    {
+      "name": "Mumbai discovery excludes Navi Mumbai and Ahmedabad",
+      "pass": true
+    },
+    {
+      "name": "Publication notification targeting mumbai@isolated.example",
+      "pass": true
+    },
+    {
+      "name": "Publication notification targeting mumbai2@isolated.example",
+      "pass": true
+    },
+    {
+      "name": "Publication notification targeting ahmedabad@isolated.example",
+      "pass": true
+    },
+    {
+      "name": "Publication notification targeting navi@isolated.example",
+      "pass": true
+    },
+    {
+      "name": "Publication notification targeting neworganizer@isolated.example",
+      "pass": true
+    },
+    {
+      "name": "Create event: Mumbai publication two",
+      "pass": true
+    },
+    {
+      "name": "Every new Mumbai event triggers another notification",
+      "pass": true
+    },
+    {
+      "name": "Admin overview reflects four new events",
+      "pass": true
+    },
+    {
+      "name": "Admin lists new organizer event",
+      "pass": true
+    },
+    {
+      "name": "Reference database has 36 states/UTs",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Kolkata",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Kolkata",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Chennai",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Chennai",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Bengaluru",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Bengaluru",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Guwahati",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Guwahati",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Imphal",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Imphal",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Leh",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Leh",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Kavaratti",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Kavaratti",
+      "pass": true
+    },
+    {
+      "name": "Register Attendee in Port Blair",
+      "pass": true
+    },
+    {
+      "name": "City dropdown contains Port Blair",
+      "pass": true
+    },
+    {
+      "name": "Nearby map finds Mumbai event by coordinates",
+      "pass": true
+    },
+    {
+      "name": "Invalid map coordinates return validation error",
+      "pass": true
+    },
+    {
+      "name": "Reject invalid email",
+      "pass": true
+    },
+    {
+      "name": "Reject weak password",
+      "pass": true
+    },
+    {
+      "name": "Reject admin escalation",
+      "pass": true
+    },
+    {
+      "name": "Reject duplicate registration",
+      "pass": true
+    },
+    {
+      "name": "Attendee cannot create event",
+      "pass": true
+    },
+    {
+      "name": "Unauthenticated cannot create event",
+      "pass": true
+    },
+    {
+      "name": "Attendee cannot access admin",
+      "pass": true
+    },
+    {
+      "name": "Other organizer cannot change event",
+      "pass": true
+    },
+    {
+      "name": "Wrong password rejected",
+      "pass": true
+    },
+    {
+      "name": "Free booking issues QR pass",
+      "pass": true
+    },
+    {
+      "name": "Duplicate booking rejected",
+      "pass": true
+    },
+    {
+      "name": "Other attendee cannot retrieve ticket",
+      "pass": true
+    },
+    {
+      "name": "Organizer scans valid ticket",
+      "pass": true
+    },
+    {
+      "name": "Repeated scan rejected",
+      "pass": true
+    },
+    {
+      "name": "Admin attendance reflects new booking and scan",
+      "pass": true
+    },
+    {
+      "name": "Admin attendee totals update",
+      "pass": true
+    },
+    {
+      "name": "Checked-in attendee can review",
+      "pass": true
+    },
+    {
+      "name": "Unattended user review rejected",
+      "pass": true
+    },
+    {
+      "name": "Booking notification exists",
+      "pass": true
+    },
+    {
+      "name": "Notification read-all clears unread count",
+      "pass": true
+    },
+    {
+      "name": "Pending MFA token cannot access admin",
+      "pass": true
+    },
+    {
+      "name": "Support admin cannot modify platform settings",
+      "pass": true
+    },
+    {
+      "name": "Support admin can read attendees",
+      "pass": true
+    },
+    {
+      "name": "Duplicate publication creates no duplicate event/notification",
+      "pass": true
+    },
+    {
+      "name": "Create event: Suspended recipient exclusion",
+      "pass": true
+    },
+    {
+      "name": "Suspended attendees get no publication notification",
+      "pass": true
+    },
+    {
+      "name": "Reject event with invalid date",
+      "pass": true
+    },
+    {
+      "name": "Reject event with missing title",
+      "pass": true
+    },
+    {
+      "name": "Create event: Capacity concurrency",
+      "pass": true
+    },
+    {
+      "name": "Concurrent bookings cannot overfill one seat",
+      "pass": true
+    },
+    {
+      "name": "Create event: Paid ledger fixture",
+      "pass": true
+    },
+    {
+      "name": "Paid booking remains pending before payment",
+      "pass": true
+    },
+    {
+      "name": "Missing gateway keys cannot create a pretend paid order",
+      "pass": true
+    },
+    {
+      "name": "Reject legacy fake payment signature",
+      "pass": true
+    },
+    {
+      "name": "Forged payment leaves booking pending",
+      "pass": true
+    },
+    {
+      "name": "Admin financial totals incorporate new synthetic transaction",
+      "pass": true
+    },
+    {
+      "name": "Admin ledger includes new event and attendee",
+      "pass": true
+    },
+    {
+      "name": "Create event: Reminder test",
+      "pass": true
+    },
+    {
+      "name": "Scheduled reminder delivered exactly once",
+      "pass": true
+    },
+    {
+      "name": "Confirmed attendee receives event update",
+      "pass": true
+    },
+    {
+      "name": "Confirmed attendee receives cancellation notice",
+      "pass": true
+    },
+    {
+      "name": "Map nearby results exclude hidden events",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint overview",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint attendees",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint organizers",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint finance/organizer-earnings",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint events",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint attendance",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint reviews",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint payments",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint finance/reports",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint reports",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint categories",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint locations/audit",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint notifications/alerts",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint audit-logs",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint roles-permissions",
+      "pass": true
+    },
+    {
+      "name": "Admin endpoint settings",
+      "pass": true
+    },
+    {
+      "name": "Frontend inline JavaScript parses",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders overview without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for overview",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for overview",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders attendees without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for attendees",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for attendees",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders organizers without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for organizers",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for organizers",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders attendance without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for attendance",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for attendance",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders payments without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for payments",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for payments",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders finance/organizer-earnings without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for finance/organizer-earnings",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for finance/organizer-earnings",
+      "pass": true
+    },
+    {
+      "name": "Frontend renders finance/reports without undefined/NaN/error",
+      "pass": true
+    },
+    {
+      "name": "Frontend produces content for finance/reports",
+      "pass": true
+    },
+    {
+      "name": "Frontend leaves loading state for finance/reports",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab overview",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab attendees",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab organizers",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab earnings",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab events",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab attendance",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab reviews",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab payments",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab finance",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab reports",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab categories",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab broadcast",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab audit",
+      "pass": true
+    },
+    {
+      "name": "Browser admin tab settings",
+      "pass": true
+    },
+    {
+      "name": "Organizer performance modal displays real event history",
+      "pass": true
+    },
+    {
+      "name": "Admin event inspection includes new attendee booking",
+      "pass": true
+    },
+    {
+      "name": "Browser Mumbai home excludes other-city events",
+      "pass": true
+    },
+    {
+      "name": "Browser empty city shows empty state, no substituted events",
+      "pass": true
+    },
+    {
+      "name": "Registration accepts manually entered Indian city",
+      "pass": true
+    },
+    {
+      "name": "Browser registration submits city without a database suggestion",
+      "pass": true
+    },
+    {
+      "name": "Map pin stores coordinates for Mumbai",
+      "pass": true
+    },
+    {
+      "name": "Map pin stores coordinates for Guwahati",
+      "pass": true
+    },
+    {
+      "name": "Map pin stores coordinates for Imphal",
+      "pass": true
+    },
+    {
+      "name": "Map tiles load in the browser",
+      "pass": true
+    },
+    {
+      "name": "External geocoder resolves Guwahati in Assam",
+      "pass": true
+    },
+    {
+      "name": "Browser reports no uncaught JavaScript errors",
+      "pass": true
+    },
+    {
+      "name": "Existing suite api.test.js",
+      "pass": true
+    },
+    {
+      "name": "Existing suite admin.test.js",
+      "pass": true
+    },
+    {
+      "name": "Existing suite super_admin.test.js",
+      "pass": true
+    },
+    {
+      "name": "Existing suite cancellation_revenue.test.js",
+      "pass": true
+    },
+    {
+      "name": "Existing suite sync_integration.test.js",
+      "pass": true
+    },
+    {
+      "name": "Temporary database deleted",
+      "pass": true
+    }
+  ],
+  "legacy": [
+    {
+      "file": "api.test.js",
+      "code": 0,
+      "output": "🧪 Starting Meetior Automated API Test Suite...\n\n  ✅ PASS: Server health check returns ok and MySQL connected\n  ✅ PASS: Categories endpoint returned 9 categories\n  ✅ PASS: Organizer login succeeds with role Organizer\n  ✅ PASS: Attendee login succeeds with role Attendee\n  ✅ PASS: /api/auth/me returns authenticated attendee profile\n  ✅ PASS: Discovery returned 2 events for Ahmedabad\n  ✅ PASS: Event details returned title: \"Legacy Ahmedabad fixture\"\n  ✅ PASS: Location system correctly classifies Koba under Gandhinagar district (not Ahmedabad)\n  ✅ PASS: Attendee can mark event as Going\n  ✅ PASS: Attendee can save/bookmark event\n  ✅ PASS: Registration confirmed with Ticket: MTR-20261031-A28005 and QR data URL\n  ✅ PASS: My Bookings returned 1 confirmed reservations\n  ✅ PASS: Community demand created: \"Test Pottery Workshop 1793386849393\"\n  ✅ PASS: Second user can upvote and support community demand\n  ✅ PASS: Scanner rejects invalid or fake QR tokens\n  ✅ PASS: In-app notifications loaded (3 alerts)\n  ✅ PASS: No paid events available to test payment\n\n========================================\n🏁 Test Summary: 17 Passed, 0 Failed\n========================================\n\n"
+    },
+    {
+      "file": "admin.test.js",
+      "code": 0,
+      "output": "\n============================================================\n🧪 RUNNING MEETIOR ADMIN & MODERATION TEST SUITE\n============================================================\n\n[1] Admin Authentication\n  ✅ PASS: Admin login HTTP 200\n  ✅ PASS: User role is Admin\n\n[2] RBAC Verification (Attendee blocked from Admin routes)\n  ✅ PASS: Attendee receives 403 Forbidden on /api/admin/overview\n\n[3] Admin Overview Metrics\n  ✅ PASS: Overview returns HTTP 200\n  ✅ PASS: Stats object present\n  ✅ PASS: Total users >= 1\n  ✅ PASS: Total events >= 1\n\n[4] User Management & Suspension\n  ✅ PASS: Get admin users returns HTTP 200\n  ✅ PASS: Users list populated\n  ✅ PASS: Found attendee@meetior.in in user list\n  ✅ PASS: Attendee account suspended\n  ✅ PASS: Suspended user login blocked with 403\n  ✅ PASS: Attendee account reactivated\n  ✅ PASS: Reactivated attendee logs in successfully\n\n[5] Content Reports Workflow\n  ✅ PASS: Report created HTTP 201\n  ✅ PASS: Created report found in pending reports\n  ✅ PASS: Report marked as resolved\n\n[6] Event Moderation & Feed Protection\n  ✅ PASS: Event #1 marked as Hidden\n  ✅ PASS: Hidden event #1 excluded from public events discovery\n  ✅ PASS: Hidden event #1 visible in Admin panel\n  ✅ PASS: Event #1 restored to Approved\n  ✅ PASS: Restored event #1 reappears in public events discovery\n\n[7] Administrative Audit Trail\n  ✅ PASS: Audit logs HTTP 200\n  ✅ PASS: Audit logs recorded multiple admin operations\n\n============================================================\n🏁 TEST RESULTS: 24 PASSED, 0 FAILED\n============================================================\n\n"
+    },
+    {
+      "file": "super_admin.test.js",
+      "code": 0,
+      "output": "🧪 Starting Super Admin System Automated Test Suite...\n\n[1] Admin Authentication & Security\n  ✅ PASS: Admin login succeeds with HTTP 200\n  ✅ PASS: Admin token issued with role Admin\n  ✅ PASS: Admin has Super Admin privileges\n  ✅ PASS: Attendee rejected at admin portal with 403 Forbidden\n  ✅ PASS: Wrong admin password rejected with 401 Unauthorized\n  ✅ PASS: Attendee blocked with 403 Forbidden from admin overview\n  ✅ PASS: Organizer blocked with 403 Forbidden from admin overview\n\n[2] Dashboard 15 Real Database Metrics & Time Filters\n  ✅ PASS: Admin overview returns HTTP 200\n  ✅ PASS: Metric 1: Total Attendees present\n  ✅ PASS: Metric 2: Total Organizers present\n  ✅ PASS: Metric 5: Total Events present\n  ✅ PASS: Metric 9: Confirmed Bookings present\n  ✅ PASS: Metric 11: Verified QR Check-ins present\n  ✅ PASS: Metric 12: Gross Booking Value present\n  ✅ PASS: Metric 13: Organizer Earnings present\n  ✅ PASS: Metric 14: Platform Revenue present\n  ✅ PASS: Metric 15: Total Refunds present\n  ✅ PASS: Time filter \"30d\" applied successfully\n\n[3] Attendee Management\n  ✅ PASS: Attendee list returned with pagination\n  ✅ PASS: Phone numbers masked by default for attendee privacy\n  ✅ PASS: Confirmed bookings count calculated per attendee\n  ✅ PASS: Attendee details returned complete booking history\n\n[4] Organizer Management & Performance\n  ✅ PASS: Organizer list returned with calculated metrics\n  ✅ PASS: Gross revenue computed per organizer\n  ✅ PASS: Net earnings computed per organizer\n  ✅ PASS: Organizer details returned full event performance list\n  ✅ PASS: Simulated sandbox notice present in organizer finance\n\n[5] Organizer Earnings Report\n  ✅ PASS: Organizer earnings report returned with totals\n  ✅ PASS: Sandbox mode notice explicitly displayed\n\n[6] Event Management & Moderation\n  ✅ PASS: Event list returned with lifecycle and moderation statuses\n  ✅ PASS: Event successfully hidden\n  ✅ PASS: Event successfully restored to Approved\n\n[7] Actual Attendance Tracking\n  ✅ PASS: Attendance report returned event list\n  ✅ PASS: Platform attendance rate % computed\n\n[8] Reviews & Ratings Management\n  ✅ PASS: Reviews list returned\n  ✅ PASS: Rating distribution (5★ to 1★) computed\n\n[9] Payments & Transactions Management\n  ✅ PASS: Payments ledger returned\n  ✅ PASS: Financial reconciliation computed\n\n[10] Platform Financial Reports\n  ✅ PASS: Top grossing events report returned\n  ✅ PASS: Paid vs Free events breakdown computed\n\n[11] Reports & Complaints Workflow\n  ✅ PASS: Content reports list returned\n\n[12] Categories & Locations\n  ✅ PASS: Categories returned with event counts\n  ✅ PASS: Location audit verified MySQL cities & states\n\n[13] Notifications & Broadcast\n  ✅ PASS: Admin critical alerts returned\n  ✅ PASS: Admin announcement broadcast delivered to users\n\n[14] Audit Trail & RBAC\n  ✅ PASS: Audit trail logged administrative operations with IP and reason\n  ✅ PASS: RBAC permissions matrix verified\n\n[15] Platform Settings\n  ✅ PASS: Platform settings retrieved from database\n  ✅ PASS: Platform settings updated successfully in MySQL\n\n========================================\n🏁 Super Admin Test Suite: 49 Passed, 0 Failed\n========================================\n\n"
+    },
+    {
+      "file": "cancellation_revenue.test.js",
+      "code": 0,
+      "output": "🧪 Starting Cancellation Policy & Organizer Revenue Hub Test Suite...\n\n  ✅ PASS: Organizer logged in successfully\n  ✅ PASS: Attendee logged in successfully\n  ✅ PASS: Organizer payments endpoint returns success: true\n  ✅ PASS: Total revenue computed: ₹0\n  ✅ PASS: Total refunded computed: ₹0\n  ✅ PASS: Payments list returned (1 transactions)\n  ✅ PASS: Blocked cancellation for past event with code EVENT_ALREADY_STARTED\n  ✅ PASS: Blocked cancellation within 24 hours with code CANCELLATION_DEADLINE_PASSED\n  ✅ PASS: Successfully cancelled booking > 24h away\n  ✅ PASS: Automated 100% refund initiated for ₹499.00\n  ✅ PASS: Registration status is Cancelled in DB\n  ✅ PASS: Payment status is Refunded in DB\n  ✅ PASS: Ticket status is Cancelled in DB\n  ✅ PASS: Payment appears in Organizer payments with status \"Refunded\"\n\n========================================\n🏁 Test Summary: 14 Passed, 0 Failed\n========================================\n\n"
+    },
+    {
+      "file": "sync_integration.test.js",
+      "code": 0,
+      "output": "\n========================================================\n🔄 RUNNING BI-DIRECTIONAL SYNCHRONIZATION TEST SUITE\nTarget Base URL: http://127.0.0.1:50003\n========================================================\n\n[Phase 0] Admin Authentication & Baseline Overview\n  ✅ PASS: Admin logged in successfully\n\n[Phase 1] Forward Sync: Attendee Registration & Profile -> Admin System\n  ✅ PASS: Attendee registered in main platform\n  ✅ PASS: Admin overview attendee count incremented (+1: 16)\n  ✅ PASS: New attendee appears in Admin Attendees table\n  ✅ PASS: Admin table reflects attendee city 'Ahmedabad'\n  ✅ PASS: Admin table reflects account_status: active\n  ✅ PASS: Attendee profile updated in main platform\n  ✅ PASS: Admin attendees table dynamically updated city to 'Surat'\n  ✅ PASS: Admin attendees table dynamically updated name\n\n[Phase 2] Forward Sync: Organizer & Event Creation -> Admin System\n  ✅ PASS: Organizer registered in main platform\n  ✅ PASS: Admin overview organizer count incremented (+1: 3)\n  ✅ PASS: New organizer appears in Admin Organizers table\n  ✅ PASS: Admin table reflects organizer city 'Surat'\n  ✅ PASS: Organizer created event in main platform\n  ✅ PASS: Admin overview event count incremented (+1: 10)\n  ✅ PASS: New event appears in Admin Events moderation table\n  ✅ PASS: Admin event table shows correct organizer name\n  ✅ PASS: Admin event table shows correct city Surat\n\n[Phase 3] Forward Sync: Booking & Check-in -> Admin Attendance\n  ✅ PASS: Attendee booked pass with valid QR code\n  ✅ PASS: Admin attendance reports confirmed_bookings = 1\n  ✅ PASS: Admin attendance reports valid_checkins = 0 prior to scan\n  ✅ PASS: Organizer successfully checked in attendee\n  ✅ PASS: Admin attendance dynamically updated valid_checkins to 1\n  ✅ PASS: Admin attendee record shows total_confirmed_bookings = 1\n  ✅ PASS: Admin attendee record shows total_verified_attended = 1\n  ✅ PASS: Checked-in attendee submitted event review\n  ✅ PASS: New review appears in Admin Reviews moderation panel\n  ✅ PASS: Admin review panel displays accurate rating 5/5\n\n[Phase 4] Reverse Sync: Admin Moderation -> Public Event Feeds\n  ✅ PASS: Public event discovery feed contains newly created approved event\n  ✅ PASS: Admin moderated event to Hidden\n  ✅ PASS: Public event discovery feed IMMEDIATELY excludes hidden event\n  ✅ PASS: Admin moderated event back to Approved\n  ✅ PASS: Public event discovery feed IMMEDIATELY restores approved event\n\n[Phase 5] Reverse Sync: Admin User Suspension -> Main Project Login & Access\n  ✅ PASS: Admin suspended attendee account\n  ✅ PASS: Suspended attendee login rejected with HTTP 403 Forbidden\n  ✅ PASS: Rejection message cites account suspension\n  ✅ PASS: Suspended attendee authenticated request rejected with HTTP 403 Forbidden\n  ✅ PASS: Admin reactivated attendee account\n  ✅ PASS: Reactivated attendee logged in successfully with HTTP 200\n\n[Phase 6] Reverse Sync: Admin Platform Settings -> Cancellation Cutoff Policy\n  ✅ PASS: Admin updated platform setting cancellation_cutoff_hours to 12\n  ✅ PASS: Admin settings query returns updated cancellation_cutoff_hours: 12\n  ✅ PASS: Admin settings restored to 24 hours\n\n[Phase 7] Reverse Sync: Admin Category Creation -> Main App Discovery\n  ✅ PASS: Admin created new category\n  ✅ PASS: Public categories API immediately reflects admin-created category\n\n🧹 Cleaning up test-generated records...\n  Cleaned 1 test events and associated records.\n  Cleaned 2 test users.\n  Cleaned 1 test categories.\n✅ Cleanup complete. Database is clean.\n\n========================================================\n🏆 BI-DIRECTIONAL SYNC SUITE RESULTS: 44 PASSED, 0 FAILED\n========================================================\n\n"
+    }
+  ]
+}
