@@ -1,5 +1,12 @@
 # 🎨 MEETIOR — Local Event Discovery & Meetup Platform
 
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![Sequelize](https://img.shields.io/badge/Sequelize-ORM-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)](https://sequelize.org)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org)
+
 > **Final Semester Capstone Project (Semester 7)**  
 > **Architecture:** Full-Stack Node.js, Express.js, MySQL (Sequelize ORM), Vanilla JavaScript, HTML5 & CSS3  
 > **UI Aesthetic:** Hand-Drawn Crayon & Playful Sketchbook Theme  

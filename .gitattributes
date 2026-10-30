@@ -1,0 +1,5 @@
+# Vendor files to exclude from language statistics
+frontend/vendor/** linguist-vendored
+backend/tests/artifacts/** linguist-vendored
+backend/tests/isolated-results.json linguist-generated
+database/schema.sql linguist-detectable=true
