@@ -1,0 +1,16 @@
+export { default as HomePage } from './HomePage.jsx';
+export { default as BrowsePage } from './BrowsePage.jsx';
+export { default as EventDetailsPage } from './EventDetailsPage.jsx';
+export { default as CreateEventPage } from './CreateEventPage.jsx';
+export { default as RegisterPage } from './RegisterPage.jsx';
+export { default as LoginPage } from './LoginPage.jsx';
+export { default as AdminLoginPage } from './AdminLoginPage.jsx';
+export { default as BookingsPage } from './BookingsPage.jsx';
+export { default as SavedEventsPage } from './SavedEventsPage.jsx';
+export { default as DemandsPage } from './DemandsPage.jsx';
+export { default as ScannerPage } from './ScannerPage.jsx';
+export { default as NotificationsPage } from './NotificationsPage.jsx';
+export { default as ProfilePage } from './ProfilePage.jsx';
+export { default as AdminDashboardPage } from './AdminDashboardPage.jsx';
+export { default as MyEventsPage } from './MyEventsPage.jsx';
+export { default as RevenuePage } from './RevenuePage.jsx';

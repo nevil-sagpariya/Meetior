@@ -51,12 +51,15 @@ module.exports=async function browserChecks({base,admin,org,mumbai,check}){
     await op.waitForFunction(()=>typeof currentUser!=='undefined'&&currentUser?.role==='Organizer');
     await op.evaluate(()=>navigateTo('create'));
     await op.waitForFunction(()=>typeof ceMap!=='undefined'&&ceMap);
+    await op.evaluate(()=>{ if (ceMap && ceMap.invalidateSize) ceMap.invalidateSize(); });
+    await op.waitForTimeout(1000);
     for(const [city,lat,lng] of [['Mumbai',19.076,72.8777],['Guwahati',26.1445,91.7362],['Imphal',24.817,93.9368]]){
       await op.evaluate(([lat,lng])=>{ceMap.setView([lat,lng],12);setCreateEventPin(lat,lng,false)},[lat,lng]);
       const coords=await op.evaluate(()=>[document.getElementById('ceLatitude').value,document.getElementById('ceLongitude').value]);
       check('Map pin stores coordinates for '+city,Math.abs(Number(coords[0])-lat)<0.00001&&Math.abs(Number(coords[1])-lng)<0.00001,JSON.stringify(coords));
     }
     await op.screenshot({path:path.join(dir,'organizer-map.png'),fullPage:true});
+    await op.waitForTimeout(1500);
     const loadedTiles=await op.locator('#ceLeafletMap img.leaflet-tile').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth>0).length);
     check('Map tiles load in the browser',loadedTiles>0,String(loadedTiles)+' loaded tiles');
     await op.evaluate(()=>searchLocationOnMap('Guwahati'));

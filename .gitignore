@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 */node_modules/
+dist/
+*/dist/
 
 # Environment Configuration (never commit secrets)
 .env
