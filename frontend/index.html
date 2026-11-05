@@ -1662,7 +1662,10 @@
     body.theme-night #passDispatchNotice span {
       color: #86efac !important;
     }
-    body.theme-night .pass-ticket-header button {
+    body.theme-night .pass-ticket-header button,
+    body.theme-night .pass-close-btn {
+      background: transparent !important;
+      border: none !important;
       color: #f1f2f6 !important;
     }
     body.theme-night #paymentModal .sketch-box {
@@ -2194,6 +2197,27 @@
       border-bottom: 2.5px dashed #b5b2aa;
       padding-bottom: 14px;
       margin-bottom: 16px;
+    }
+
+    .pass-ticket-header button,
+    .pass-close-btn {
+      background: transparent !important;
+      border: none !important;
+      font-size: 1.6rem !important;
+      cursor: pointer !important;
+      line-height: 1 !important;
+      color: #222 !important;
+      padding: 0 6px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: transform 0.15s ease, opacity 0.15s ease !important;
+    }
+
+    .pass-ticket-header button:hover,
+    .pass-close-btn:hover {
+      transform: scale(1.15) !important;
+      opacity: 0.75 !important;
     }
 
     .pass-tear-divider {
@@ -2766,10 +2790,10 @@
                 </p>
               </div>
               <div id="organizerActionBtnGroup" style="display:flex; gap:8px;">
-                <button type="button" class="btn-crayon-yellow" id="btnEditEventDetails" onclick="openEditEventModal(state.currentEventId)" style="padding:6px 14px; font-size:0.95rem;">
+                <button type="button" class="btn-crayon-yellow" id="btnEditEventDetails" onclick="openEditEventModal(window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null))" style="padding:6px 14px; font-size:0.95rem;">
                   ✏️ Edit Event
                 </button>
-                <button type="button" class="btn-sketch-white" id="btnCancelEventDetails" onclick="promptCancelEvent(state.currentEventId)" style="color:#b71540; border-color:#b71540; padding:6px 14px; font-size:0.95rem;">
+                <button type="button" class="btn-sketch-white" id="btnCancelEventDetails" onclick="promptCancelEvent(window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null))" style="color:#b71540; border-color:#b71540; padding:6px 14px; font-size:0.95rem;">
                   ❌ Cancel Event
                 </button>
               </div>
@@ -5459,7 +5483,7 @@
           <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
           <span style="font-size: 0.95rem; color: #2e7d32; font-family: var(--font-hand); margin-left: 6px;">EDIT EVENT</span>
         </div>
-        <button class="pass-close-btn" onclick="closeEditEventModal()">✕</button>
+        <button type="button" class="pass-close-btn" onclick="closeEditEventModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1; color:inherit; padding:0 4px;" title="Close" aria-label="Close">✕</button>
       </div>
       <div style="padding: 16px;">
         <h3 style="font-size: 1.3rem; margin-bottom: 6px;">✏️ Edit Event Details</h3>
@@ -5556,7 +5580,7 @@
           <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
           <span style="font-size: 0.95rem; color: #b71540; font-family: var(--font-hand); margin-left: 6px;">CANCEL EVENT</span>
         </div>
-        <button class="pass-close-btn" onclick="closeCancelEventModal()">✕</button>
+        <button type="button" class="pass-close-btn" onclick="closeCancelEventModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1; color:inherit; padding:0 4px;" title="Close" aria-label="Close">✕</button>
       </div>
       <div style="padding: 20px;">
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -6330,6 +6354,9 @@
     }
 
     async function openEditEventModal(eventId) {
+      if (!eventId) {
+        eventId = window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null);
+      }
       let ev = cachedOrganizedEvents.find(e => (e.event_id || e.id) == eventId);
       if (!ev) {
         ev = activeEventsList.find(e => (e.event_id || e.id) == eventId);
@@ -6463,6 +6490,9 @@
     }
 
     function promptCancelEvent(eventId) {
+      if (!eventId) {
+        eventId = window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null);
+      }
       let ev = cachedOrganizedEvents.find(e => (e.event_id || e.id) == eventId);
       if (!ev) {
         ev = activeEventsList.find(e => (e.event_id || e.id) == eventId);
@@ -8546,8 +8576,17 @@
             if (btnCancel) btnCancel.style.display = 'none';
           } else {
             orgNotice.innerHTML = 'You can modify event details or cancel before the scheduled event date. <strong style="color:#27ae60;">🛡️ Cancelling will automatically refund 100% of money to all paid attendees.</strong>';
-            if (btnEdit) { btnEdit.style.display = 'inline-block'; btnEdit.disabled = false; }
-            if (btnCancel) { btnCancel.style.display = 'inline-block'; btnCancel.disabled = false; }
+            window.currentDetailedEventId = evId;
+            if (btnEdit) {
+              btnEdit.style.display = 'inline-block';
+              btnEdit.disabled = false;
+              btnEdit.onclick = () => openEditEventModal(evId);
+            }
+            if (btnCancel) {
+              btnCancel.style.display = 'inline-block';
+              btnCancel.disabled = false;
+              btnCancel.onclick = () => promptCancelEvent(evId);
+            }
           }
         } else {
           orgBox.style.display = 'none';

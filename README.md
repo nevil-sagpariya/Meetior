@@ -77,13 +77,20 @@ npm install
 
 ### 4. Initialize Database & Seed Clean Data
 ```bash
-# Seed canonical categories, users, authentic events, and admin account
-npm run seed
-node seeders/002_admin_user.js
-```
-*(Or run `npm run reset:clean` to perform a complete fresh reset and seed in one step)*
+# Auto-check MySQL connection & auto-create meetior_db if missing:
+npm run check
 
-### 5. Start the Server
+# Create all 27 tables and seed verified sample events:
+npm run reset:clean
+```
+
+### 5. Inspect Your Database in Terminal
+```bash
+# Pretty-print all users, events, and transactions in a clean ASCII grid:
+npm run db:view
+```
+
+### 6. Start the Server
 ```bash
 npm start
 ```

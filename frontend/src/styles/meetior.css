@@ -1647,7 +1647,10 @@
     body.theme-night #passDispatchNotice span {
       color: #86efac !important;
     }
-    body.theme-night .pass-ticket-header button {
+    body.theme-night .pass-ticket-header button,
+    body.theme-night .pass-close-btn {
+      background: transparent !important;
+      border: none !important;
       color: #f1f2f6 !important;
     }
     body.theme-night #paymentModal .sketch-box {
@@ -2179,6 +2182,27 @@
       border-bottom: 2.5px dashed #b5b2aa;
       padding-bottom: 14px;
       margin-bottom: 16px;
+    }
+
+    .pass-ticket-header button,
+    .pass-close-btn {
+      background: transparent !important;
+      border: none !important;
+      font-size: 1.6rem !important;
+      cursor: pointer !important;
+      line-height: 1 !important;
+      color: #222 !important;
+      padding: 0 6px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: transform 0.15s ease, opacity 0.15s ease !important;
+    }
+
+    .pass-ticket-header button:hover,
+    .pass-close-btn:hover {
+      transform: scale(1.15) !important;
+      opacity: 0.75 !important;
     }
 
     .pass-tear-divider {

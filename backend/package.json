@@ -12,6 +12,8 @@
     "clean:test": "node utils/cleanupTestData.js",
     "clean:demo": "node utils/cleanDemoUsers.js",
     "clean:github": "node utils/cleanDemoUsers.js",
+    "check": "node check_setup.js",
+    "db:view": "node utils/viewDatabase.js",
     "reset:clean": "node utils/seeder.js && node seeders/002_admin_user.js && node utils/downloadEventImages.js && node utils/seedPublicGatherings.js"
   },
   "dependencies": {

@@ -46,10 +46,10 @@ export default function EventDetailsPage({ navigateTo, currentUser, showToast })
                 </p>
               </div>
               <div id="organizerActionBtnGroup" style={{"display":"flex","gap":"8px"}}>
-                <button type="button" className="btn-crayon-yellow" id="btnEditEventDetails" onclick="openEditEventModal(state.currentEventId)" style={{"padding":"6px 14px","fontSize":"0.95rem"}}>
+                <button type="button" className="btn-crayon-yellow" id="btnEditEventDetails" onclick="openEditEventModal(window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null))" style={{"padding":"6px 14px","fontSize":"0.95rem"}}>
                   ✏️ Edit Event
                 </button>
-                <button type="button" className="btn-sketch-white" id="btnCancelEventDetails" onclick="promptCancelEvent(state.currentEventId)" style={{"color":"#b71540","borderColor":"#b71540","padding":"6px 14px","fontSize":"0.95rem"}}>
+                <button type="button" className="btn-sketch-white" id="btnCancelEventDetails" onclick="promptCancelEvent(window.currentDetailedEventId || (activeEventsList && activeEventsList[currentDetailIndex] ? (activeEventsList[currentDetailIndex].event_id || activeEventsList[currentDetailIndex].id) : null))" style={{"color":"#b71540","borderColor":"#b71540","padding":"6px 14px","fontSize":"0.95rem"}}>
                   ❌ Cancel Event
                 </button>
               </div>
