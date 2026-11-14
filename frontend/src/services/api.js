@@ -150,7 +150,7 @@ export const API = {
       createAdminUser: (payload) => apiFetch('/api/admin/users/create-admin', { method: 'POST', body: JSON.stringify(payload) }),
       updateAdminRole: (id, admin_role) => apiFetch(`/api/admin/users/${id}/admin-role`, { method: 'PATCH', body: JSON.stringify({ admin_role }) }),
       getPlatformSettings: () => apiFetch('/api/admin/settings'),
-      updatePlatformSettings: (settings) => apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify({ settings }) }),
+      updatePlatformSettings: (payload) => apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify(payload && payload.settings ? payload : { settings: payload }) }),
       // Admin Add & Remove Data
       deleteAdminUser: (userId) => apiFetch(`/api/admin/users/${userId}`, { method: 'DELETE' }),
       createAdminUserAccount: (payload) => apiFetch('/api/admin/users/create', { method: 'POST', body: JSON.stringify(payload) }),

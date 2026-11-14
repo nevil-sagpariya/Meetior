@@ -1901,7 +1901,7 @@
                 <th style="padding: 10px; text-align: center;">Paid Bookings</th>
                 <th style="padding: 10px; text-align: right;">Gross Sales</th>
                 <th style="padding: 10px; text-align: right;">Refunds Deducted</th>
-                <th style="padding: 10px; text-align: right;">Platform Fee (5%)</th>
+                <th id="admEarningsThCommission" style="padding: 10px; text-align: right;">Platform Fee (5.0%)</th>
                 <th style="padding: 10px; text-align: right;">Net Est. Earnings</th>
                 <th style="padding: 10px; text-align: center;">Actual Payouts</th>
               </tr>
@@ -2182,7 +2182,7 @@
           <div class="sketch-box" style="background:#e0f7fa; border-color:#00838f; padding: 18px; text-align: center;">
             <div style="font-size: 0.85rem; font-weight: 700; color: #006064; text-transform: uppercase;">Platform Commission Pool</div>
             <div id="admFinCommission" style="font-size: 2.3rem; font-weight: 800; color: #00838f; margin: 4px 0;">₹0.00</div>
-            <div style="font-size: 0.85rem; color: #555;">5.0% Meetior Platform Fee</div>
+            <div id="admFinCommissionNotice" style="font-size: 0.85rem; color: #555;">5.0% Meetior Platform Fee</div>
           </div>
           <div class="sketch-box" style="background:#ede7f6; border-color:#673ab7; padding: 18px; text-align: center;">
             <div style="font-size: 0.85rem; font-weight: 700; color: #4527a0; text-transform: uppercase;">Organizer Payout Pool</div>
@@ -2370,6 +2370,12 @@
           <p style="font-size: 0.9rem; color: #666; margin-bottom: 18px;">
             Configure platform policies, financial fee deduction models, and event moderation rules. Values are stored securely in MySQL.
           </p>
+
+          <div id="admSettingsCurrentNotice" style="margin-bottom: 16px; padding: 12px 16px; background: #e0f7fa; border: 2px solid #00838f; border-radius: 8px; color: #006064;">
+            <div style="font-size: 0.82rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Active Platform Commission</div>
+            <div style="font-size: 1.4rem; font-weight: 800; margin-top: 2px;"><span id="admSettingsCurrentRate">5.0</span>% Fee on Paid Bookings</div>
+            <div style="font-size: 0.85rem; color: #555; margin-top: 4px;">Changes take effect immediately across all overview metrics, organizer payouts, and financial reports.</div>
+          </div>
 
           <form onsubmit="handleSavePlatformSettings(event)">
             <div style="margin-bottom: 14px;">
@@ -5226,7 +5232,7 @@
       createAdminUser: (payload) => apiFetch('/api/admin/users/create-admin', { method: 'POST', body: JSON.stringify(payload) }),
       updateAdminRole: (id, admin_role) => apiFetch(`/api/admin/users/${id}/admin-role`, { method: 'PATCH', body: JSON.stringify({ admin_role }) }),
       getPlatformSettings: () => apiFetch('/api/admin/settings'),
-      updatePlatformSettings: (settings) => apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify({ settings }) }),
+      updatePlatformSettings: (payload) => apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify(payload && payload.settings ? payload : { settings: payload }) }),
       // Admin Add & Remove Data
       deleteAdminUser: (userId) => apiFetch(`/api/admin/users/${userId}`, { method: 'DELETE' }),
       createAdminUserAccount: (payload) => apiFetch('/api/admin/users/create', { method: 'POST', body: JSON.stringify(payload) }),
@@ -9541,6 +9547,10 @@
 
       try {
         const res = await API.getAdminOrganizerEarnings(qs);
+        const commTh = document.getElementById('admEarningsThCommission');
+        if (commTh && res && res.commission_percent !== undefined) {
+          commTh.textContent = `Platform Fee (${res.commission_percent}%)`;
+        }
         if (res && res.organizers) {
           adminEarningsCache = res.organizers;
 
@@ -10085,6 +10095,11 @@
           document.getElementById('admFinTotalRefunds').textContent = `₹${parseFloat(r.total_refunds).toFixed(2)}`;
           document.getElementById('admFinCommission').textContent = `₹${parseFloat(r.platform_commission).toFixed(2)}`;
           document.getElementById('admFinOrganizerPool').textContent = `₹${parseFloat(r.organizer_payout_pool).toFixed(2)}`;
+          const finNotice = document.getElementById('admFinCommissionNotice');
+          const commRate = r.commission_percent ?? r.platform_commission_percent;
+          if (finNotice && commRate !== undefined) {
+            finNotice.textContent = `${commRate}% Meetior Platform Fee`;
+          }
 
           // Top Events List
           const topList = document.getElementById('admFinTopEventsList');
@@ -10476,17 +10491,23 @@
     async function loadAdminSettings() {
       try {
         const res = await API.getPlatformSettings();
-        if (res && res.settings) {
-          const s = Array.isArray(res.settings) ? Object.fromEntries(res.settings.map(row => [row.setting_key, row.setting_value])) : res.settings;
+        if (res) {
+          const s = res.settings_map || (Array.isArray(res.settings) ? Object.fromEntries(res.settings.map(row => [row.setting_key, row.setting_value])) : res.settings) || {};
           const commInput = document.getElementById('settingCommissionPercent');
           const autoInput = document.getElementById('settingAutoApproveEvents');
           const revInput = document.getElementById('settingReviewPolicy');
           const cancelInput = document.getElementById('settingCancellationHours');
+          const rateNotice = document.getElementById('admSettingsCurrentRate');
 
-          if (commInput && s.platform_commission_percent) commInput.value = s.platform_commission_percent;
-          if (autoInput && s.auto_approve_events) autoInput.value = s.auto_approve_events;
-          if (revInput && s.review_moderation_policy) revInput.value = s.review_moderation_policy;
-          if (cancelInput && s.cancellation_cutoff_hours) cancelInput.value = s.cancellation_cutoff_hours;
+          if (commInput && s.platform_commission_percent !== undefined) {
+            commInput.value = s.platform_commission_percent;
+            if (rateNotice) rateNotice.textContent = s.platform_commission_percent;
+          }
+          if (autoInput && s.auto_approve_events !== undefined) autoInput.value = s.auto_approve_events;
+          if (revInput && s.review_moderation_policy !== undefined) revInput.value = s.review_moderation_policy;
+          if (cancelInput && (s.cancellation_cutoff_hours !== undefined || s.max_booking_cancellation_hours !== undefined)) {
+            cancelInput.value = s.cancellation_cutoff_hours || s.max_booking_cancellation_hours;
+          }
         }
       } catch (err) {
         showToast(err.message || 'Could not load platform settings.');
@@ -10494,12 +10515,12 @@
     }
 
     async function handleSavePlatformSettings(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
       const subBtn = document.getElementById('saveSettingsBtn');
-      const commission = document.getElementById('settingCommissionPercent').value;
-      const autoApprove = document.getElementById('settingAutoApproveEvents').value;
-      const reviewPolicy = document.getElementById('settingReviewPolicy').value;
-      const cancelHours = document.getElementById('settingCancellationHours').value;
+      const commission = document.getElementById('settingCommissionPercent')?.value || '5.0';
+      const autoApprove = document.getElementById('settingAutoApproveEvents')?.value || 'true';
+      const reviewPolicy = document.getElementById('settingReviewPolicy')?.value || 'verified_attendees_only';
+      const cancelHours = document.getElementById('settingCancellationHours')?.value || '24';
 
       if (subBtn) {
         subBtn.disabled = true;
@@ -10507,13 +10528,31 @@
       }
 
       try {
-        await API.updatePlatformSettings({
+        const payload = {
           platform_commission_percent: commission,
           auto_approve_events: autoApprove,
           review_moderation_policy: reviewPolicy,
-          cancellation_cutoff_hours: cancelHours
-        });
-        showToast('Platform settings updated successfully! 💾');
+          cancellation_cutoff_hours: cancelHours,
+          max_booking_cancellation_hours: cancelHours
+        };
+        await API.updatePlatformSettings(payload);
+        showToast(`Platform settings updated! Fee set to ${commission}% 💾`);
+
+        // Real-time DOM updates across all dashboard tabs:
+        const rateNotice = document.getElementById('admSettingsCurrentRate');
+        if (rateNotice) rateNotice.textContent = commission;
+        const commNotice = document.getElementById('admStatCommissionRateNotice');
+        if (commNotice) commNotice.textContent = `${commission}% Configured Fee`;
+        const finNotice = document.getElementById('admFinCommissionNotice');
+        if (finNotice) finNotice.textContent = `${commission}% Meetior Platform Fee`;
+        const commTh = document.getElementById('admEarningsThCommission');
+        if (commTh) commTh.textContent = `Platform Fee (${commission}%)`;
+
+        // Refresh overview, earnings, and finance data
+        if (typeof loadAdminOverview === 'function') loadAdminOverview();
+        if (typeof loadAdminEarnings === 'function') loadAdminEarnings();
+        if (typeof loadAdminFinanceReports === 'function') loadAdminFinanceReports();
+        loadAdminSettings();
       } catch (err) {
         showToast(err.message || 'Could not save settings.');
       } finally {

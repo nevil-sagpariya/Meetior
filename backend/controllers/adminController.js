@@ -829,14 +829,19 @@ const getOrganizers = async (req, res) => {
 
       return {
         ...o,
+        organizer_id: o.user_id,
         total_events_created: eventsCreated,
         published_events: publishedEvents,
         cancelled_events: cancelledEvents,
         total_confirmed_bookings: confirmedBookings,
+        total_paid_bookings: confirmedBookings,
         total_verified_attendance: verifiedAttendance,
         average_rating: parseFloat(avgRating),
         gross_revenue: grossRevenue,
+        gross_booking_revenue: grossRevenue,
         total_refunds: totalRefunds,
+        platform_commission_amount: commission,
+        platform_commission_percent: commissionPercent,
         net_estimated_earnings: netEarnings,
         payout_status: 'TEST / SIMULATED (Sandbox Mode)'
       };
@@ -2266,16 +2271,23 @@ const getPlatformSettings = async (req, res) => {
 // PATCH /api/admin/settings
 const updatePlatformSettings = async (req, res) => {
   try {
-    const { settings, reason } = req.body;
-    if (!settings || typeof settings !== 'object') {
+    let settings = req.body?.settings || req.body;
+    if (settings && settings.settings && typeof settings.settings === 'object') {
+      settings = settings.settings;
+    }
+    const reason = req.body?.reason;
+    if (!settings || typeof settings !== 'object' || Object.keys(settings).length === 0) {
       return res.status(400).json({ success: false, message: 'Settings key-value map required.' });
     }
 
+    const adminId = req.user?.user_id || 1;
+
     for (const [key, val] of Object.entries(settings)) {
+      if (key === 'reason') continue;
       const existing = await PlatformSetting.findOne({ where: { setting_key: key } });
       if (existing) {
         existing.setting_value = String(val);
-        existing.updated_by = req.user.user_id;
+        existing.updated_by = adminId;
         await existing.save();
       } else {
         await PlatformSetting.create({
@@ -2283,7 +2295,7 @@ const updatePlatformSettings = async (req, res) => {
           setting_value: String(val),
           category: 'general',
           description: key,
-          updated_by: req.user.user_id
+          updated_by: adminId
         });
       }
 
@@ -2303,17 +2315,28 @@ const updatePlatformSettings = async (req, res) => {
       }
     }
 
-    await AdminAuditLog.create({
-      admin_id: req.user.user_id,
-      action: 'platform_settings_updated',
-      target_type: 'setting',
-      target_id: 0,
-      reason: reason || 'Platform settings modified',
-      metadata_json: settings,
-      ip_address: getClientIp(req)
-    });
+    try {
+      await AdminAuditLog.create({
+        admin_id: adminId,
+        action: 'platform_settings_updated',
+        target_type: 'setting',
+        target_id: 0,
+        reason: reason || 'Platform settings modified',
+        metadata_json: settings,
+        ip_address: getClientIp(req)
+      });
+    } catch (auditErr) {
+      console.warn('Could not record admin audit log for settings update:', auditErr.message);
+    }
 
-    return res.json({ success: true, message: 'Platform settings updated successfully!' });
+    const activeCommission = await getPlatformCommissionPercent();
+
+    return res.json({
+      success: true,
+      message: 'Platform settings updated successfully!',
+      commission_percent: activeCommission,
+      settings
+    });
   } catch (err) {
     console.error('updatePlatformSettings error:', err);
     return res.status(500).json({ success: false, message: 'Could not update settings: ' + err.message });

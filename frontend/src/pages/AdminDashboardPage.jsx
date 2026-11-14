@@ -330,7 +330,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
                 <th style={{"padding":"10px","textAlign":"center"}}>Paid Bookings</th>
                 <th style={{"padding":"10px","textAlign":"right"}}>Gross Sales</th>
                 <th style={{"padding":"10px","textAlign":"right"}}>Refunds Deducted</th>
-                <th style={{"padding":"10px","textAlign":"right"}}>Platform Fee (5%)</th>
+                <th id="admEarningsThCommission" style={{"padding":"10px","textAlign":"right"}}>Platform Fee (5.0%)</th>
                 <th style={{"padding":"10px","textAlign":"right"}}>Net Est. Earnings</th>
                 <th style={{"padding":"10px","textAlign":"center"}}>Actual Payouts</th>
               </tr>
@@ -611,7 +611,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
           <div className="sketch-box" style={{"background":"#e0f7fa","borderColor":"#00838f","padding":"18px","textAlign":"center"}}>
             <div style={{"fontSize":"0.85rem","fontWeight":"700","color":"#006064","textTransform":"uppercase"}}>Platform Commission Pool</div>
             <div id="admFinCommission" style={{"fontSize":"2.3rem","fontWeight":"800","color":"#00838f","margin":"4px 0"}}>₹0.00</div>
-            <div style={{"fontSize":"0.85rem","color":"#555"}}>5.0% Meetior Platform Fee</div>
+            <div id="admFinCommissionNotice" style={{"fontSize":"0.85rem","color":"#555"}}>5.0% Meetior Platform Fee</div>
           </div>
           <div className="sketch-box" style={{"background":"#ede7f6","borderColor":"#673ab7","padding":"18px","textAlign":"center"}}>
             <div style={{"fontSize":"0.85rem","fontWeight":"700","color":"#4527a0","textTransform":"uppercase"}}>Organizer Payout Pool</div>
@@ -800,10 +800,16 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
             Configure platform policies, financial fee deduction models, and event moderation rules. Values are stored securely in MySQL.
           </p>
 
+          <div id="admSettingsCurrentNotice" style={{"marginBottom":"16px","padding":"12px 16px","background":"#e0f7fa","border":"2px solid #00838f","borderRadius":"8px","color":"#006064"}}>
+            <div style={{"fontSize":"0.82rem","textTransform":"uppercase","fontWeight":"700","letterSpacing":"0.5px"}}>Active Platform Commission</div>
+            <div style={{"fontSize":"1.4rem","fontWeight":"800","marginTop":"2px"}}><span id="admSettingsCurrentRate">5.0</span>% Fee on Paid Bookings</div>
+            <div style={{"fontSize":"0.85rem","color":"#555","marginTop":"4px"}}>Changes take effect immediately across all overview metrics, organizer payouts, and financial reports.</div>
+          </div>
+
           <form onsubmit="handleSavePlatformSettings(event)">
             <div style={{"marginBottom":"14px"}}>
               <label className="field-label">Platform Fee Commission (%) <span className="req-star">*</span></label>
-              <input id="settingCommissionPercent" type="number" step="0.1" min="0" max="50" className="sketch-input" style={{"width":"100%"}} value="5.0" required/>
+              <input id="settingCommissionPercent" type="number" step="0.1" min="0" max="50" className="sketch-input" style={{"width":"100%"}} defaultValue="5.0" required/>
               <span style={{"fontSize":"0.82rem","color":"#666"}}>Deducted from gross booking revenue before net organizer earnings calculation.</span>
             </div>
 
@@ -827,7 +833,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
 
             <div style={{"marginBottom":"18px"}}>
               <label className="field-label">Booking Cancellation Cutoff Window (Hours)</label>
-              <input id="settingCancellationHours" type="number" step="1" min="1" max="168" className="sketch-input" style={{"width":"100%"}} value="24" required/>
+              <input id="settingCancellationHours" type="number" step="1" min="1" max="168" className="sketch-input" style={{"width":"100%"}} defaultValue="24" required/>
               <span style={{"fontSize":"0.82rem","color":"#666"}}>Attendees cannot cancel passes within this window before event start.</span>
             </div>
 
