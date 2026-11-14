@@ -108,7 +108,6 @@ export const API = {
       getEventReviews: (eventId) => apiFetch(`/api/events/${eventId}/reviews`),
       submitReview: (eventId, rating, comment) => apiFetch(`/api/events/${eventId}/reviews`, { method: 'POST', body: JSON.stringify({ rating, comment }) }),
       getSecondChance: (id) => apiFetch(`/api/events/${id}/second-chance`),
-      requestSecondChance: (id, message) => apiFetch(`/api/events/${id}/second-chance`, { method: 'POST', body: JSON.stringify({ message }) }),
 
       getCategories: () => apiFetch('/api/categories'),
       submitReport: (target_type, target_id, reason, description) => apiFetch('/api/reports', { method: 'POST', body: JSON.stringify({ target_type, target_id, reason, description }) }),
@@ -141,7 +140,6 @@ export const API = {
       getAdminFinanceReports: (params = '') => apiFetch(`/api/admin/finance/reports${params}`),
       getAdminReports: (params = '') => apiFetch(`/api/admin/reports${params}`),
       updateReport: (reportId, status, resolution_notes = '') => apiFetch(`/api/admin/reports/${reportId}/status`, { method: 'PATCH', body: JSON.stringify({ status, resolution_notes }) }),
-      getCategories: () => apiFetch('/api/categories'),
       createCategory: (data) => apiFetch('/api/admin/categories', { method: 'POST', body: JSON.stringify(data) }),
       updateCategory: (id, data) => apiFetch(`/api/admin/categories/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
       getLocationAudit: () => apiFetch('/api/admin/locations/audit'),

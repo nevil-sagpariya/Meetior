@@ -9,9 +9,11 @@ dist/
 */.env
 *.env
 
-# Logs
+# Logs & Test Artifacts
 *.log
 npm-debug.log*
+isolated-results.json
+**/tests/isolated-results.json
 
 # User temporary uploads (keep event assets)
 backend/uploads/*
