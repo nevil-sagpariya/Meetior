@@ -1976,6 +1976,69 @@
       border-bottom-color: #3b4256 !important;
     }
 
+        /* Direct Class Selectors for Admin Inspection Modals */
+    body.theme-night .admin-modal-user-card {
+      background: #202738 !important;
+      border-color: #3b4256 !important;
+      color: #f1f2f6 !important;
+    }
+    body.theme-night .admin-modal-user-card h2,
+    body.theme-night .admin-modal-user-card strong {
+      color: #ffffff !important;
+    }
+    body.theme-night .admin-modal-user-card div,
+    body.theme-night .admin-modal-user-card span {
+      color: #cbd5e1 !important;
+    }
+    body.theme-night .admin-modal-scroll-box {
+      background: #181d28 !important;
+      border-color: #3b4256 !important;
+      color: #cbd5e1 !important;
+    }
+    body.theme-night .admin-modal-scroll-box strong {
+      color: #ffffff !important;
+    }
+    body.theme-night .admin-modal-scroll-box div {
+      color: #94a3b8 !important;
+    }
+
+    /* NIGHT THEME - REVENUE HUB & ORGANIZER PROFILE FEE NOTICE */
+    body.theme-night .rev-fee-notice-banner {
+      background: #23221b !important;
+      border-color: #fab005 !important;
+      color: #fef08a !important;
+      box-shadow: 2px 2px 0 #fab005 !important;
+    }
+    body.theme-night .rev-fee-notice-banner div {
+      color: #fef08a !important;
+    }
+    body.theme-night #organizerProfileRevenueBox {
+      background: #132219 !important;
+      border-color: #22c55e !important;
+      box-shadow: 3px 3px 0 #22c55e !important;
+    }
+    body.theme-night #organizerProfileRevenueBox strong {
+      color: #4ade80 !important;
+    }
+    body.theme-night #organizerProfileRevenueBox #profileFeeNotice {
+      color: #86efac !important;
+    }
+    body.theme-night #organizerProfileRevenueBox div[style*="background:#ffffff"] {
+      background: #1b2f23 !important;
+      border-color: #2e7d32 !important;
+      color: #f1f2f6 !important;
+    }
+    body.theme-night #organizerProfileRevenueBox div[style*="background:#fff7ed"] {
+      background: #2e1d13 !important;
+      border-color: #ea580c !important;
+      color: #f1f2f6 !important;
+    }
+    body.theme-night #organizerProfileRevenueBox div[style*="background:#ecfdf5"] {
+      background: #163622 !important;
+      border-color: #10b981 !important;
+      color: #f1f2f6 !important;
+    }
+
     /* Section Headings in Modals (h4) */
     body.theme-night #adminOrganizerModal h4,
     body.theme-night #adminAttendeeModal h4,

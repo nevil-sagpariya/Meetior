@@ -331,7 +331,18 @@ const issueTicket = async (registration_id, t) => {
 // GET /api/organizer/payments (Organizer Revenue & Payment Transactions)
 const getOrganizerPayments = async (req, res) => {
   try {
-    const { User } = require('../models');
+    const { User, PlatformSetting } = require('../models');
+
+    // Retrieve active platform commission setting (defaults to 5.0%)
+    let commissionPercent = 5.0;
+    try {
+      const setting = await PlatformSetting.findOne({ where: { setting_key: 'platform_commission_percent' } });
+      if (setting && setting.setting_value) {
+        const val = parseFloat(setting.setting_value);
+        if (!isNaN(val) && val >= 0) commissionPercent = val;
+      }
+    } catch (_) {}
+
     // Find all events owned by this organizer
     const myEvents = await Event.findAll({
       where: { organizer_id: req.user.user_id },
@@ -342,12 +353,17 @@ const getOrganizerPayments = async (req, res) => {
     if (eventIds.length === 0) {
       return res.json({
         success: true,
+        gross_revenue: 0,
         total_revenue: 0,
+        commission_percent: commissionPercent,
+        platform_fee: 0,
+        net_earnings: 0,
         total_refunded: 0,
         total_paid_bookings: 0,
         total_refunded_bookings: 0,
         total_free_passes: 0,
         total_attendees: 0,
+        fee_disclosure: `Meetior automatically retains a ${commissionPercent}% platform commission fee on all completed ticket sales. Payout settlements reflect your net earnings after deducting this fee and any processed refunds.`,
         payments: []
       });
     }
@@ -380,18 +396,28 @@ const getOrganizerPayments = async (req, res) => {
           continue;
         }
         const amt = parseFloat(reg.payment.amount || 0);
-        if (reg.payment.status === 'Completed') {
+        const isCompleted = (reg.payment.status === 'Completed');
+        const isRefunded = (reg.payment.status === 'Refunded');
+
+        if (isCompleted) {
           totalRevenue += amt;
           completedCount++;
-        } else if (reg.payment.status === 'Refunded') {
+        } else if (isRefunded) {
           totalRefunded += amt;
           refundedCount++;
         }
+
+        const feeAmount = isCompleted ? parseFloat((amt * (commissionPercent / 100)).toFixed(2)) : 0.00;
+        const netAmount = isCompleted ? parseFloat((amt - feeAmount).toFixed(2)) : 0.00;
 
         paymentRecords.push({
           payment_id: reg.payment.payment_id,
           registration_id: reg.registration_id,
           amount: amt,
+          gross_amount: amt,
+          commission_rate: commissionPercent,
+          platform_fee: feeAmount,
+          net_amount: netAmount,
           currency: reg.payment.currency || 'INR',
           gateway: reg.payment.gateway,
           gateway_payment_id: reg.payment.gateway_payment_id,
@@ -416,6 +442,10 @@ const getOrganizerPayments = async (req, res) => {
           payment_id: `FREE-${reg.registration_id}`,
           registration_id: reg.registration_id,
           amount: 0.00,
+          gross_amount: 0.00,
+          commission_rate: 0.00,
+          platform_fee: 0.00,
+          net_amount: 0.00,
           currency: reg.event?.currency || 'INR',
           gateway: 'FREE_PASS',
           gateway_payment_id: 'FREE_ENTRY',
@@ -436,15 +466,22 @@ const getOrganizerPayments = async (req, res) => {
     paymentRecords.sort((a, b) => new Date(b.paid_at || 0) - new Date(a.paid_at || 0));
 
     const totalAttendees = completedCount + freePassCount;
+    const totalPlatformFee = parseFloat((totalRevenue * (commissionPercent / 100)).toFixed(2));
+    const totalNetEarnings = Math.max(0, parseFloat((totalRevenue - totalRefunded - totalPlatformFee).toFixed(2)));
 
     return res.json({
       success: true,
-      total_revenue: totalRevenue,
+      gross_revenue: totalRevenue,
+      total_revenue: totalRevenue, // retained for backward compatibility
+      commission_percent: commissionPercent,
+      platform_fee: totalPlatformFee,
+      net_earnings: totalNetEarnings,
       total_refunded: totalRefunded,
       total_paid_bookings: completedCount,
       total_refunded_bookings: refundedCount,
       total_free_passes: freePassCount,
       total_attendees: totalAttendees,
+      fee_disclosure: `Meetior automatically retains a ${commissionPercent}% platform commission fee on all completed ticket sales. Payout settlements reflect your net earnings after deducting this fee and any processed refunds.`,
       payments: paymentRecords
     });
   } catch (err) {

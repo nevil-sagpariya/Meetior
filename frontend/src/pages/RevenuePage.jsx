@@ -33,23 +33,45 @@ export default function RevenuePage({ navigateTo, currentUser, showToast }) {
       <div className="sketch-box revenue-hub-card" style={{"maxWidth":"1050px","margin":"0 auto","padding":"24px"}}>
         
         {/* Summary Stats Cards */}
-        <div style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(210px, 1fr))","gap":"14px","marginBottom":"22px"}}>
+        <div style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(185px, 1fr))","gap":"12px","marginBottom":"16px"}}>
+          {/* 1. Gross Ticket Sales */}
+          <div style={{"background":"#eff6ff","border":"2.5px solid #2563eb","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
+            <span style={{"fontSize":"0.82rem","color":"#1d4ed8","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.5px"}}>Gross Ticket Sales</span>
+            <div id="revGrossSales" style={{"fontSize":"1.85rem","fontWeight":"800","color":"#1e40af","marginTop":"4px"}}>₹0.00</div>
+            <div id="revPaidPassesBreakdown" style={{"fontSize":"0.80rem","color":"#2563eb","fontWeight":"700","marginTop":"2px"}}>0 Paid Bookings</div>
+          </div>
+          {/* 2. Platform Commission Fee */}
+          <div style={{"background":"#fff7ed","border":"2.5px solid #ea580c","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
+            <span id="revFeeLabel" style={{"fontSize":"0.82rem","color":"#c2410c","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.5px"}}>Platform Fee (5.0%)</span>
+            <div id="revPlatformFee" style={{"fontSize":"1.85rem","fontWeight":"800","color":"#ea580c","marginTop":"4px"}}>-₹0.00</div>
+            <div style={{"fontSize":"0.80rem","color":"#9a3412","fontWeight":"700","marginTop":"2px"}}>Auto-deducted fee</div>
+          </div>
+          {/* 3. Net Take-Home Earnings */}
           <div style={{"background":"#e8f5e9","border":"2.5px solid #2e7d32","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
-            <span style={{"fontSize":"0.88rem","color":"#2e7d32","fontWeight":"700","textTransform":"uppercase"}}>Net Revenue Received</span>
-            <div id="revTotalRevenue" style={{"fontSize":"2rem","fontWeight":"800","color":"#1b5e20","marginTop":"4px"}}>₹0.00</div>
+            <span style={{"fontSize":"0.82rem","color":"#2e7d32","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.5px"}}>Net Take-Home Payout</span>
+            <div id="revNetEarnings" style={{"fontSize":"1.85rem","fontWeight":"800","color":"#1b5e20","marginTop":"4px"}}>₹0.00</div>
+            <div id="revTotalRevenue" style={{"display":"none"}}>₹0.00</div>
+            <div style={{"fontSize":"0.80rem","color":"#166534","fontWeight":"700","marginTop":"2px"}}>Your actual payout</div>
           </div>
-          <div style={{"background":"#e3f2fd","border":"2.5px solid #1565c0","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
-            <span style={{"fontSize":"0.88rem","color":"#1565c0","fontWeight":"700","textTransform":"uppercase"}}>Total Attendees / Passes</span>
-            <div id="revTotalTickets" style={{"fontSize":"2rem","fontWeight":"800","color":"#0d47a1","marginTop":"4px"}}>0</div>
-            <div id="revAttendeesBreakdown" style={{"fontSize":"0.84rem","color":"#1565c0","fontWeight":"700","marginTop":"2px"}}>0 Paid • 0 Free Passes</div>
+          {/* 4. Total Attendees / Passes */}
+          <div style={{"background":"#f5f3ff","border":"2.5px solid #7c3aed","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
+            <span style={{"fontSize":"0.82rem","color":"#6d28d9","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.5px"}}>Total Attendees</span>
+            <div id="revTotalTickets" style={{"fontSize":"1.85rem","fontWeight":"800","color":"#5b21b6","marginTop":"4px"}}>0</div>
+            <div id="revAttendeesBreakdown" style={{"fontSize":"0.80rem","color":"#6d28d9","fontWeight":"700","marginTop":"2px"}}>0 Paid • 0 Free Passes</div>
           </div>
+          {/* 5. Total Refunded */}
           <div style={{"background":"#fef2f2","border":"2.5px solid #dc2626","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
-            <span style={{"fontSize":"0.88rem","color":"#dc2626","fontWeight":"700","textTransform":"uppercase"}}>Total Refunded</span>
-            <div id="revTotalRefunded" style={{"fontSize":"2rem","fontWeight":"800","color":"#991b1b","marginTop":"4px"}}>₹0.00</div>
+            <span style={{"fontSize":"0.82rem","color":"#dc2626","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.5px"}}>Total Refunded</span>
+            <div id="revTotalRefunded" style={{"fontSize":"1.85rem","fontWeight":"800","color":"#991b1b","marginTop":"4px"}}>₹0.00</div>
+            <div id="revRefundsBreakdown" style={{"fontSize":"0.80rem","color":"#dc2626","fontWeight":"700","marginTop":"2px"}}>0 Refunded Bookings</div>
           </div>
-          <div style={{"background":"#fff3e0","border":"2.5px solid #e65100","borderRadius":"12px","padding":"14px","textAlign":"center"}}>
-            <span style={{"fontSize":"0.88rem","color":"#e65100","fontWeight":"700","textTransform":"uppercase"}}>Payment Gateway</span>
-            <div style={{"fontSize":"1.35rem","fontWeight":"800","color":"#bf360c","marginTop":"6px"}}>Razorpay (Live / Test)</div>
+        </div>
+
+        {/* Platform Commission Policy Notice Banner */}
+        <div className="rev-fee-notice-banner" style={{"display":"flex","alignItems":"flex-start","gap":"12px","background":"#fffbe6","border":"2px solid #fab005","borderRadius":"10px","padding":"12px 16px","marginBottom":"18px","boxShadow":"2px 2px 0 #fab005"}}>
+          <span style={{"fontSize":"1.5rem","lineHeight":"1.1"}}>💡</span>
+          <div style={{"fontSize":"0.92rem","color":"#5c3e04","lineHeight":"1.45"}}>
+            <strong>Meetior Platform Fee Policy:</strong> A standard <span id="revNoticeRate" style={{"fontWeight":"800","color":"#b45309"}}>5.0% platform service fee</span> is automatically deducted from paid ticket sales at settlement. Free events (₹0) are 100% free with <strong>0% fee</strong>. You never pay out of pocket; payouts are settled as: <em>Net Payout = Gross Ticket Sales - 5.0% Platform Fee - Refunds</em>.
           </div>
         </div>
 
@@ -79,7 +101,7 @@ export default function RevenuePage({ navigateTo, currentUser, showToast }) {
                 <th style={{"padding":"10px 14px","fontWeight":"700"}}>Event Title 🎭</th>
                 <th style={{"padding":"10px 14px","fontWeight":"700"}}>Attendee Details 👤</th>
                 <th style={{"padding":"10px 14px","fontWeight":"700","textAlign":"center"}}>Ticket / Pass # 🎟️</th>
-                <th style={{"padding":"10px 14px","fontWeight":"700","textAlign":"right"}}>Amount 💵</th>
+                <th style={{"padding":"10px 14px","fontWeight":"700","textAlign":"right"}}>Payout Breakdown 💵 (Net / Gross / Fee)</th>
                 <th style={{"padding":"10px 14px","fontWeight":"700","textAlign":"center"}}>Status 🏷️</th>
               </tr>
             </thead>

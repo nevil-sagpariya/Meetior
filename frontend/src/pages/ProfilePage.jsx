@@ -75,19 +75,39 @@ export default function ProfilePage({ navigateTo, currentUser, showToast }) {
 
         {/* Organizer Revenue Quick Access Banner */}
         <div id="organizerProfileRevenueBox" className="organizer-only" style={{"display":"none","margin":"20px 0","border":"2.5px solid #2e7d32","borderRadius":"14px","background":"#f0fdf4","padding":"18px","boxShadow":"3px 3px 0 #2e7d32"}}>
-          <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","flexWrap":"wrap","gap":"12px"}}>
+          <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","flexWrap":"wrap","gap":"12px","marginBottom":"12px"}}>
             <div>
               <div style={{"display":"flex","alignItems":"center","gap":"8px"}}>
                 <span style={{"fontSize":"1.4rem"}}>💰</span>
-                <strong style={{"fontSize":"1.2rem","color":"#166534"}}>Organizer Revenue & Ticket Sales</strong>
+                <strong style={{"fontSize":"1.25rem","color":"#166534"}}>Organizer Revenue & Settlement Snapshot</strong>
               </div>
-              <div style={{"fontSize":"0.95rem","color":"#15803d","marginTop":"3px"}}>
-                Total Net Sales: <strong id="profileRevenueDisplay" style={{"color":"#1b5e20","fontSize":"1.15rem"}}>₹0.00</strong> · Paid Tickets Sold: <strong id="profileTicketsDisplay" style={{"color":"#1b5e20"}}>0</strong>
+              <div id="profileFeeNotice" style={{"fontSize":"0.88rem","color":"#15803d","marginTop":"3px","fontWeight":"600"}}>
+                ℹ️ Meetior platform commission (5.0%) is auto-deducted from paid ticket sales at payout settlement.
               </div>
             </div>
             <button type="button" className="btn-crayon-yellow" onclick="navigateTo('revenue')" style={{"padding":"8px 18px","fontSize":"1.02rem","fontWeight":"700","cursor":"pointer"}}>
               💰 Open Dedicated Revenue Hub →
             </button>
+          </div>
+          {/* 4 Financial Stat Cards */}
+          <div style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(140px, 1fr))","gap":"10px"}}>
+            <div style={{"background":"#ffffff","border":"1.5px solid #86efac","borderRadius":"8px","padding":"10px","textAlign":"center"}}>
+              <span style={{"fontSize":"0.76rem","color":"#15803d","fontWeight":"700","textTransform":"uppercase"}}>Gross Sales</span>
+              <div id="profileGrossDisplay" style={{"fontSize":"1.25rem","fontWeight":"800","color":"#166534","marginTop":"2px"}}>₹0.00</div>
+            </div>
+            <div style={{"background":"#fff7ed","border":"1.5px solid #fdba74","borderRadius":"8px","padding":"10px","textAlign":"center"}}>
+              <span id="profileFeeLabel" style={{"fontSize":"0.76rem","color":"#c2410c","fontWeight":"700","textTransform":"uppercase"}}>Platform Fee (5%)</span>
+              <div id="profileFeeDisplay" style={{"fontSize":"1.25rem","fontWeight":"800","color":"#ea580c","marginTop":"2px"}}>-₹0.00</div>
+            </div>
+            <div style={{"background":"#ecfdf5","border":"1.5px solid #2e7d32","borderRadius":"8px","padding":"10px","textAlign":"center"}}>
+              <span style={{"fontSize":"0.76rem","color":"#166534","fontWeight":"700","textTransform":"uppercase"}}>Net Est. Payout</span>
+              <div id="profileNetDisplay" style={{"fontSize":"1.25rem","fontWeight":"800","color":"#1b5e20","marginTop":"2px"}}>₹0.00</div>
+              <span id="profileRevenueDisplay" style={{"display":"none"}}>₹0.00</span>
+            </div>
+            <div style={{"background":"#ffffff","border":"1.5px solid #86efac","borderRadius":"8px","padding":"10px","textAlign":"center"}}>
+              <span style={{"fontSize":"0.76rem","color":"#15803d","fontWeight":"700","textTransform":"uppercase"}}>Total Passes</span>
+              <div id="profileTicketsDisplay" style={{"fontSize":"1.25rem","fontWeight":"800","color":"#166534","marginTop":"2px"}}>0</div>
+            </div>
           </div>
         </div>
 

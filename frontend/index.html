@@ -567,7 +567,10 @@
           <div>
             <label class="field-label">Cost <span class="req-star">*</span></label>
             <input id="ceCost" type="text" class="sketch-input" placeholder="Enter 0 for free, or specify ₹ per attendee"/>
-            <div class="helper-note">Must mention 'free' or specify the charge</div>
+            <div class="helper-note" style="display:flex; flex-direction:column; gap:3px; margin-top:4px;">
+              <span>Must mention 'free' or specify the charge in ₹</span>
+              <span style="color:#d97706; font-weight:700; font-size:0.84rem;">ℹ️ Platform Service Fee: 5.0% auto-deducted from paid ticket sales at payout settlement. Free events (₹0) have 0% fee.</span>
+            </div>
           </div>
         </div>
 
@@ -1512,19 +1515,39 @@
 
         <!-- Organizer Revenue Quick Access Banner -->
         <div id="organizerProfileRevenueBox" class="organizer-only" style="display:none; margin: 20px 0; border: 2.5px solid #2e7d32; border-radius: 14px; background: #f0fdf4; padding: 18px; box-shadow: 3px 3px 0 #2e7d32;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
             <div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:1.4rem;">💰</span>
-                <strong style="font-size:1.2rem; color:#166534;">Organizer Revenue & Ticket Sales</strong>
+                <strong style="font-size:1.25rem; color:#166534;">Organizer Revenue & Settlement Snapshot</strong>
               </div>
-              <div style="font-size:0.95rem; color:#15803d; margin-top:3px;">
-                Total Net Sales: <strong id="profileRevenueDisplay" style="color:#1b5e20; font-size:1.15rem;">₹0.00</strong> · Paid Tickets Sold: <strong id="profileTicketsDisplay" style="color:#1b5e20;">0</strong>
+              <div id="profileFeeNotice" style="font-size:0.88rem; color:#15803d; margin-top:3px; font-weight:600;">
+                ℹ️ Meetior platform commission (5.0%) is auto-deducted from paid ticket sales at payout settlement.
               </div>
             </div>
             <button type="button" class="btn-crayon-yellow" onclick="navigateTo('revenue')" style="padding:8px 18px; font-size:1.02rem; font-weight:700; cursor:pointer;">
               💰 Open Dedicated Revenue Hub →
             </button>
+          </div>
+          <!-- 4 Financial Stat Cards -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px;">
+            <div style="background:#ffffff; border:1.5px solid #86efac; border-radius:8px; padding:10px; text-align:center;">
+              <span style="font-size:0.76rem; color:#15803d; font-weight:700; text-transform:uppercase;">Gross Sales</span>
+              <div id="profileGrossDisplay" style="font-size:1.25rem; font-weight:800; color:#166534; margin-top:2px;">₹0.00</div>
+            </div>
+            <div style="background:#fff7ed; border:1.5px solid #fdba74; border-radius:8px; padding:10px; text-align:center;">
+              <span id="profileFeeLabel" style="font-size:0.76rem; color:#c2410c; font-weight:700; text-transform:uppercase;">Platform Fee (5%)</span>
+              <div id="profileFeeDisplay" style="font-size:1.25rem; font-weight:800; color:#ea580c; margin-top:2px;">-₹0.00</div>
+            </div>
+            <div style="background:#ecfdf5; border:1.5px solid #2e7d32; border-radius:8px; padding:10px; text-align:center;">
+              <span style="font-size:0.76rem; color:#166534; font-weight:700; text-transform:uppercase;">Net Est. Payout</span>
+              <div id="profileNetDisplay" style="font-size:1.25rem; font-weight:800; color:#1b5e20; margin-top:2px;">₹0.00</div>
+              <span id="profileRevenueDisplay" style="display:none;">₹0.00</span>
+            </div>
+            <div style="background:#ffffff; border:1.5px solid #86efac; border-radius:8px; padding:10px; text-align:center;">
+              <span style="font-size:0.76rem; color:#15803d; font-weight:700; text-transform:uppercase;">Total Passes</span>
+              <div id="profileTicketsDisplay" style="font-size:1.25rem; font-weight:800; color:#166534; margin-top:2px;">0</div>
+            </div>
           </div>
         </div>
 
@@ -2484,23 +2507,45 @@
       <div class="sketch-box revenue-hub-card" style="max-width: 1050px; margin: 0 auto; padding: 24px;">
         
         <!-- Summary Stats Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 22px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <!-- 1. Gross Ticket Sales -->
+          <div style="background: #eff6ff; border: 2.5px solid #2563eb; border-radius: 12px; padding: 14px; text-align: center;">
+            <span style="font-size: 0.82rem; color: #1d4ed8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Gross Ticket Sales</span>
+            <div id="revGrossSales" style="font-size: 1.85rem; font-weight: 800; color: #1e40af; margin-top:4px;">₹0.00</div>
+            <div id="revPaidPassesBreakdown" style="font-size: 0.80rem; color: #2563eb; font-weight: 700; margin-top: 2px;">0 Paid Bookings</div>
+          </div>
+          <!-- 2. Platform Commission Fee -->
+          <div style="background: #fff7ed; border: 2.5px solid #ea580c; border-radius: 12px; padding: 14px; text-align: center;">
+            <span id="revFeeLabel" style="font-size: 0.82rem; color: #c2410c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Platform Fee (5.0%)</span>
+            <div id="revPlatformFee" style="font-size: 1.85rem; font-weight: 800; color: #ea580c; margin-top:4px;">-₹0.00</div>
+            <div style="font-size: 0.80rem; color: #9a3412; font-weight: 700; margin-top: 2px;">Auto-deducted fee</div>
+          </div>
+          <!-- 3. Net Take-Home Earnings -->
           <div style="background: #e8f5e9; border: 2.5px solid #2e7d32; border-radius: 12px; padding: 14px; text-align: center;">
-            <span style="font-size: 0.88rem; color: #2e7d32; font-weight: 700; text-transform: uppercase;">Net Revenue Received</span>
-            <div id="revTotalRevenue" style="font-size: 2rem; font-weight: 800; color: #1b5e20; margin-top:4px;">₹0.00</div>
+            <span style="font-size: 0.82rem; color: #2e7d32; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Net Take-Home Payout</span>
+            <div id="revNetEarnings" style="font-size: 1.85rem; font-weight: 800; color: #1b5e20; margin-top:4px;">₹0.00</div>
+            <div id="revTotalRevenue" style="display:none;">₹0.00</div>
+            <div style="font-size: 0.80rem; color: #166534; font-weight: 700; margin-top: 2px;">Your actual payout</div>
           </div>
-          <div style="background: #e3f2fd; border: 2.5px solid #1565c0; border-radius: 12px; padding: 14px; text-align: center;">
-            <span style="font-size: 0.88rem; color: #1565c0; font-weight: 700; text-transform: uppercase;">Total Attendees / Passes</span>
-            <div id="revTotalTickets" style="font-size: 2rem; font-weight: 800; color: #0d47a1; margin-top:4px;">0</div>
-            <div id="revAttendeesBreakdown" style="font-size: 0.84rem; color: #1565c0; font-weight: 700; margin-top: 2px;">0 Paid • 0 Free Passes</div>
+          <!-- 4. Total Attendees / Passes -->
+          <div style="background: #f5f3ff; border: 2.5px solid #7c3aed; border-radius: 12px; padding: 14px; text-align: center;">
+            <span style="font-size: 0.82rem; color: #6d28d9; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Total Attendees</span>
+            <div id="revTotalTickets" style="font-size: 1.85rem; font-weight: 800; color: #5b21b6; margin-top:4px;">0</div>
+            <div id="revAttendeesBreakdown" style="font-size: 0.80rem; color: #6d28d9; font-weight: 700; margin-top: 2px;">0 Paid • 0 Free Passes</div>
           </div>
+          <!-- 5. Total Refunded -->
           <div style="background: #fef2f2; border: 2.5px solid #dc2626; border-radius: 12px; padding: 14px; text-align: center;">
-            <span style="font-size: 0.88rem; color: #dc2626; font-weight: 700; text-transform: uppercase;">Total Refunded</span>
-            <div id="revTotalRefunded" style="font-size: 2rem; font-weight: 800; color: #991b1b; margin-top:4px;">₹0.00</div>
+            <span style="font-size: 0.82rem; color: #dc2626; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Total Refunded</span>
+            <div id="revTotalRefunded" style="font-size: 1.85rem; font-weight: 800; color: #991b1b; margin-top:4px;">₹0.00</div>
+            <div id="revRefundsBreakdown" style="font-size: 0.80rem; color: #dc2626; font-weight: 700; margin-top: 2px;">0 Refunded Bookings</div>
           </div>
-          <div style="background: #fff3e0; border: 2.5px solid #e65100; border-radius: 12px; padding: 14px; text-align: center;">
-            <span style="font-size: 0.88rem; color: #e65100; font-weight: 700; text-transform: uppercase;">Payment Gateway</span>
-            <div style="font-size: 1.35rem; font-weight: 800; color: #bf360c; margin-top: 6px;">Razorpay (Live / Test)</div>
+        </div>
+
+        <!-- Platform Commission Policy Notice Banner -->
+        <div class="rev-fee-notice-banner" style="display:flex; align-items:flex-start; gap:12px; background: #fffbe6; border: 2px solid #fab005; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; box-shadow: 2px 2px 0 #fab005;">
+          <span style="font-size: 1.5rem; line-height: 1.1;">💡</span>
+          <div style="font-size: 0.92rem; color: #5c3e04; line-height: 1.45;">
+            <strong>Meetior Platform Fee Policy:</strong> A standard <span id="revNoticeRate" style="font-weight: 800; color: #b45309;">5.0% platform service fee</span> is automatically deducted from paid ticket sales at settlement. Free events (₹0) are 100% free with <strong>0% fee</strong>. You never pay out of pocket; payouts are settled as: <em>Net Payout = Gross Ticket Sales - 5.0% Platform Fee - Refunds</em>.
           </div>
         </div>
 
@@ -2530,7 +2575,7 @@
                 <th style="padding: 10px 14px; font-weight: 700;">Event Title 🎭</th>
                 <th style="padding: 10px 14px; font-weight: 700;">Attendee Details 👤</th>
                 <th style="padding: 10px 14px; font-weight: 700; text-align: center;">Ticket / Pass # 🎟️</th>
-                <th style="padding: 10px 14px; font-weight: 700; text-align: right;">Amount 💵</th>
+                <th style="padding: 10px 14px; font-weight: 700; text-align: right;">Payout Breakdown 💵 (Net / Gross / Fee)</th>
                 <th style="padding: 10px 14px; font-weight: 700; text-align: center;">Status 🏷️</th>
               </tr>
             </thead>
@@ -7845,13 +7890,29 @@
           orgBox.style.display = 'block';
           API.getOrganizerPayments().then(res => {
             if (res && res.success) {
-              const revEl = document.getElementById('profileRevenueDisplay');
-              const tktEl = document.getElementById('profileTicketsDisplay');
+              const grossSales = parseFloat(res.gross_revenue !== undefined ? res.gross_revenue : (res.total_revenue || 0));
+              const feePercent = parseFloat(res.commission_percent || 5.0);
+              const feeAmount = parseFloat(res.platform_fee !== undefined ? res.platform_fee : (grossSales * (feePercent / 100)));
+              const netEarnings = parseFloat(res.net_earnings !== undefined ? res.net_earnings : (grossSales - feeAmount));
               const totalAttendees = (res.total_attendees !== undefined)
                 ? res.total_attendees
                 : ((res.total_paid_bookings || 0) + (res.total_free_passes || 0));
-              if (revEl) revEl.textContent = `₹${parseFloat(res.total_revenue || 0).toFixed(2)}`;
-              if (tktEl) tktEl.textContent = totalAttendees;
+
+              const profGross = document.getElementById('profileGrossDisplay');
+              const profFee = document.getElementById('profileFeeDisplay');
+              const profFeeLabel = document.getElementById('profileFeeLabel');
+              const profNet = document.getElementById('profileNetDisplay');
+              const profRev = document.getElementById('profileRevenueDisplay');
+              const profTkt = document.getElementById('profileTicketsDisplay');
+              const profNotice = document.getElementById('profileFeeNotice');
+
+              if (profGross) profGross.textContent = `₹${grossSales.toFixed(2)}`;
+              if (profFee) profFee.textContent = `-₹${feeAmount.toFixed(2)}`;
+              if (profFeeLabel) profFeeLabel.textContent = `Platform Fee (${feePercent.toFixed(1)}%)`;
+              if (profNet) profNet.textContent = `₹${netEarnings.toFixed(2)}`;
+              if (profRev) profRev.textContent = `₹${netEarnings.toFixed(2)}`;
+              if (profTkt) profTkt.textContent = totalAttendees;
+              if (profNotice) profNotice.textContent = `ℹ️ Meetior platform commission (${feePercent.toFixed(1)}%) is auto-deducted from paid ticket sales at payout settlement.`;
             }
           }).catch(() => {});
         } else {
@@ -7883,24 +7944,56 @@
       try {
         const res = await API.getOrganizerPayments();
         if (res && res.success) {
-          const revEl = document.getElementById('revTotalRevenue');
-          const tktEl = document.getElementById('revTotalTickets');
-          const refEl = document.getElementById('revTotalRefunded');
-          const brkEl = document.getElementById('revAttendeesBreakdown');
+          const grossSales = parseFloat(res.gross_revenue !== undefined ? res.gross_revenue : (res.total_revenue || 0));
+          const feePercent = parseFloat(res.commission_percent || 5.0);
+          const feeAmount = parseFloat(res.platform_fee !== undefined ? res.platform_fee : (grossSales * (feePercent / 100)));
+          const netEarnings = parseFloat(res.net_earnings !== undefined ? res.net_earnings : (grossSales - feeAmount));
+          const totalRefunded = parseFloat(res.total_refunded || 0);
 
           const totalAttendees = (res.total_attendees !== undefined)
             ? res.total_attendees
             : ((res.total_paid_bookings || 0) + (res.total_free_passes || 0));
 
-          if (revEl) revEl.textContent = `₹${parseFloat(res.total_revenue || 0).toFixed(2)}`;
-          if (tktEl) tktEl.textContent = totalAttendees;
-          if (brkEl) brkEl.textContent = `${res.total_paid_bookings || 0} Paid • ${res.total_free_passes || 0} Free Passes`;
-          if (refEl) refEl.textContent = `₹${parseFloat(res.total_refunded || 0).toFixed(2)}`;
+          const grossEl = document.getElementById('revGrossSales');
+          const feeEl = document.getElementById('revPlatformFee');
+          const feeLabel = document.getElementById('revFeeLabel');
+          const netEl = document.getElementById('revNetEarnings');
+          const revEl = document.getElementById('revTotalRevenue');
+          const tktEl = document.getElementById('revTotalTickets');
+          const refEl = document.getElementById('revTotalRefunded');
+          const brkEl = document.getElementById('revAttendeesBreakdown');
+          const paidBrkEl = document.getElementById('revPaidPassesBreakdown');
+          const refBrkEl = document.getElementById('revRefundsBreakdown');
+          const noticeRate = document.getElementById('revNoticeRate');
 
+          if (grossEl) grossEl.textContent = `₹${grossSales.toFixed(2)}`;
+          if (feeEl) feeEl.textContent = `-₹${feeAmount.toFixed(2)}`;
+          if (feeLabel) feeLabel.textContent = `Platform Fee (${feePercent.toFixed(1)}%)`;
+          if (netEl) netEl.textContent = `₹${netEarnings.toFixed(2)}`;
+          if (revEl) revEl.textContent = `₹${netEarnings.toFixed(2)}`;
+          if (tktEl) tktEl.textContent = totalAttendees;
+          if (refEl) refEl.textContent = `₹${totalRefunded.toFixed(2)}`;
+          if (brkEl) brkEl.textContent = `${res.total_paid_bookings || 0} Paid • ${res.total_free_passes || 0} Free Passes`;
+          if (paidBrkEl) paidBrkEl.textContent = `${res.total_paid_bookings || 0} Paid Booking${res.total_paid_bookings === 1 ? '' : 's'}`;
+          if (refBrkEl) refBrkEl.textContent = `${res.total_refunded_bookings || 0} Refunded Booking${res.total_refunded_bookings === 1 ? '' : 's'}`;
+          if (noticeRate) noticeRate.textContent = `${feePercent.toFixed(1)}% platform service fee`;
+
+          // Mirror into Organizer Profile Snapshot
+          const profGross = document.getElementById('profileGrossDisplay');
+          const profFee = document.getElementById('profileFeeDisplay');
+          const profFeeLabel = document.getElementById('profileFeeLabel');
+          const profNet = document.getElementById('profileNetDisplay');
           const profRev = document.getElementById('profileRevenueDisplay');
           const profTkt = document.getElementById('profileTicketsDisplay');
-          if (profRev) profRev.textContent = `₹${parseFloat(res.total_revenue || 0).toFixed(2)}`;
+          const profNotice = document.getElementById('profileFeeNotice');
+
+          if (profGross) profGross.textContent = `₹${grossSales.toFixed(2)}`;
+          if (profFee) profFee.textContent = `-₹${feeAmount.toFixed(2)}`;
+          if (profFeeLabel) profFeeLabel.textContent = `Platform Fee (${feePercent.toFixed(1)}%)`;
+          if (profNet) profNet.textContent = `₹${netEarnings.toFixed(2)}`;
+          if (profRev) profRev.textContent = `₹${netEarnings.toFixed(2)}`;
           if (profTkt) profTkt.textContent = totalAttendees;
+          if (profNotice) profNotice.textContent = `ℹ️ Meetior platform commission (${feePercent.toFixed(1)}%) is auto-deducted from paid ticket sales at payout settlement.`;
 
           allOrganizerRevenueList = Array.isArray(res.payments) ? res.payments : [];
           currentRevenuePage = 1;
@@ -7989,11 +8082,24 @@
 
         let amountHtml = '';
         if (isFree) {
-          amountHtml = `<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1.5px solid #2e7d32; border-radius: 6px; padding: 2px 8px; font-weight: 800; font-size: 0.88rem; display:inline-block;">FREE (₹0.00)</span>`;
+          amountHtml = '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1.5px solid #2e7d32; border-radius: 6px; padding: 2px 8px; font-weight: 800; font-size: 0.88rem; display:inline-block;">FREE (0% Fee)</span>';
         } else {
-          const amountColor = isRefunded ? '#dc2626' : '#166534';
-          const amountPrefix = isRefunded ? '-₹' : '+₹';
-          amountHtml = `<span style="font-weight: 800; font-size: 1rem; color: ${amountColor};">${amountPrefix}${parseFloat(p.amount || 0).toFixed(2)}</span>`;
+          const grossAmt = parseFloat(p.gross_amount !== undefined ? p.gross_amount : (p.amount || 0));
+          const rate = parseFloat(p.commission_rate !== undefined ? p.commission_rate : 5.0);
+          const feeAmt = parseFloat(p.platform_fee !== undefined ? p.platform_fee : (grossAmt * (rate / 100)));
+          const netAmt = parseFloat(p.net_amount !== undefined ? p.net_amount : (grossAmt - feeAmt));
+
+          if (isRefunded) {
+            amountHtml = `
+              <div style="font-weight: 800; font-size: 1rem; color: #dc2626;">-₹${grossAmt.toFixed(2)}</div>
+              <small style="color: #991b1b; font-size: 0.78rem; font-weight: 600;">Refunded to Attendee</small>
+            `;
+          } else {
+            amountHtml = `
+              <div style="font-weight: 800; font-size: 1.05rem; color: #166534;">+₹${netAmt.toFixed(2)} <span style="font-size:0.75rem; font-weight:700; color:#15803d; text-transform:uppercase;">Net</span></div>
+              <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Gross: ₹${grossAmt.toFixed(2)} · Fee (${rate}%): -₹${feeAmt.toFixed(2)}</div>
+            `;
+          }
         }
 
         return `
