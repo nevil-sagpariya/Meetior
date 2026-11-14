@@ -210,6 +210,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
                 <option value="active">Active Only</option>
                 <option value="suspended">Suspended Only</option>
               </select>
+              <button className="btn-crayon-yellow" onclick="openAdminCreateUserModal('Attendee')" style={{"padding":"5px 14px","fontSize":"0.9rem"}}>➕ Add Attendee</button>
               <button className="btn-sketch-white" onclick="loadAdminAttendees()" style={{"padding":"5px 12px"}}>🔄 Refresh</button>
             </div>
           </div>
@@ -251,6 +252,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
                 <option value="active">Active Only</option>
                 <option value="suspended">Suspended Only</option>
               </select>
+              <button className="btn-crayon-yellow" onclick="openAdminCreateUserModal('Organizer')" style={{"padding":"5px 14px","fontSize":"0.9rem"}}>➕ Add Organizer</button>
               <button className="btn-sketch-white" onclick="loadAdminOrganizers()" style={{"padding":"5px 12px"}}>🔄 Refresh</button>
             </div>
           </div>
@@ -361,6 +363,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
                 <option value="Completed">Completed</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
+              <button className="btn-crayon-yellow" onclick="openAdminCreateEventModal()" style={{"padding":"5px 14px","fontSize":"0.9rem"}}>➕ Create Event</button>
               <button className="btn-sketch-white" onclick="loadAdminEvents()" style={{"padding":"5px 12px"}}>🔄 Refresh</button>
             </div>
           </div>
@@ -834,6 +837,130 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
           </form>
         </div>
       </div>
+    
+  {/* ADMIN CREATE USER MODAL */}
+  <div id="adminCreateUserModal" className="modal-backdrop hidden" onclick="if(event.target===this) closeAdminCreateUserModal()">
+    <div className="pass-card-container" style={{"maxWidth":"520px"}}>
+      <div className="pass-ticket-header">
+        <div className="brand-wordmark" style={{"fontSize":"1.35rem"}}>
+          <span className="m-blue">M</span><span className="e-green">E</span><span className="e-green">E</span><span className="t-yellow">T</span><span className="i-orange">I</span><span className="o-red">O</span><span className="r-teal">R</span>
+          <span style={{"fontSize":"0.95rem","color":"#1e90ff","fontFamily":"var(--font-hand)","marginLeft":"6px"}}>USER MANAGEMENT</span>
+        </div>
+        <button onclick="closeAdminCreateUserModal()" style={{"background":"none","border":"none","fontSize":"1.6rem","cursor":"pointer","lineHeight":"1"}}>✕</button>
+      </div>
+
+      <div style={{"marginTop":"10px"}}>
+        <h3 id="adminCreateUserTitle" style={{"fontSize":"1.3rem","marginBottom":"6px","color":"#222"}}>➕ Add New User</h3>
+        <p style={{"fontSize":"0.88rem","color":"#666","marginBottom":"14px"}}>
+          Provision an Attendee or Organizer account directly into the database.
+        </p>
+
+        <form onsubmit="submitAdminCreateUser(event)">
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Full Name <span className="req-star">*</span></label>
+            <input id="adminNewUserName" type="text" className="sketch-input" placeholder="e.g. Rahul Sharma" required/>
+          </div>
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Email Address <span className="req-star">*</span></label>
+            <input id="adminNewUserEmail" type="email" className="sketch-input" placeholder="e.g. rahul@example.com" required/>
+          </div>
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Password <span className="req-star">*</span></label>
+            <input id="adminNewUserPassword" type="password" className="sketch-input" placeholder="Password (min 6 characters)" minLength={6} required/>
+          </div>
+          <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"10px","marginBottom":"16px"}}>
+            <div>
+              <label className="field-label">Role <span className="req-star">*</span></label>
+              <select id="adminNewUserRole" className="sketch-input" style={{"width":"100%"}}>
+                <option value="Attendee">Attendee</option>
+                <option value="Organizer">Organizer</option>
+              </select>
+            </div>
+            <div>
+              <label className="field-label">City <span className="req-star">*</span></label>
+              <input id="adminNewUserCity" type="text" className="sketch-input" placeholder="e.g. Ahmedabad" defaultValue="Ahmedabad" required/>
+            </div>
+          </div>
+
+          <div style={{"display":"flex","justifyContent":"flex-end","gap":"8px"}}>
+            <button type="button" className="btn-sketch-white" onclick="closeAdminCreateUserModal()" style={{"padding":"6px 14px"}}>Cancel</button>
+            <button type="submit" className="btn-crayon-yellow" style={{"padding":"6px 18px"}}>Create Account 👤</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {/* ADMIN CREATE EVENT MODAL */}
+  <div id="adminCreateEventModal" className="modal-backdrop hidden" onclick="if(event.target===this) closeAdminCreateEventModal()">
+    <div className="pass-card-container" style={{"maxWidth":"620px","maxHeight":"90vh","overflowY":"auto"}}>
+      <div className="pass-ticket-header">
+        <div className="brand-wordmark" style={{"fontSize":"1.35rem"}}>
+          <span className="m-blue">M</span><span className="e-green">E</span><span className="e-green">E</span><span className="t-yellow">T</span><span className="i-orange">I</span><span className="o-red">O</span><span className="r-teal">R</span>
+          <span style={{"fontSize":"0.95rem","color":"#f5a623","fontFamily":"var(--font-hand)","marginLeft":"6px"}}>EVENT MANAGEMENT</span>
+        </div>
+        <button onclick="closeAdminCreateEventModal()" style={{"background":"none","border":"none","fontSize":"1.6rem","cursor":"pointer","lineHeight":"1"}}>✕</button>
+      </div>
+
+      <div style={{"marginTop":"10px"}}>
+        <h3 style={{"fontSize":"1.3rem","marginBottom":"6px","color":"#222"}}>➕ Create Event as Administrator</h3>
+        <p style={{"fontSize":"0.88rem","color":"#666","marginBottom":"14px"}}>
+          Directly publish a curated or community event to the live discovery feed.
+        </p>
+
+        <form onsubmit="submitAdminCreateEvent(event)">
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Event Title <span className="req-star">*</span></label>
+            <input id="adminNewEventTitle" type="text" className="sketch-input" placeholder="e.g. Weekend Heritage Walk & Photography" required/>
+          </div>
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Description <span className="req-star">*</span></label>
+            <textarea id="adminNewEventDesc" className="sketch-input" rows={3} placeholder="Describe the meetup activity..." required></textarea>
+          </div>
+          <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"10px","marginBottom":"10px"}}>
+            <div>
+              <label className="field-label">Category <span className="req-star">*</span></label>
+              <select id="adminNewEventCategory" className="sketch-input" style={{"width":"100%"}}>
+                <option value="1">Music & Concerts</option>
+                <option value="2">Technology & AI</option>
+                <option value="3">Food & Cooking</option>
+                <option value="4">Art & Painting</option>
+                <option value="5">Fitness & Yoga</option>
+                <option value="6">Literature & Poetry</option>
+                <option value="7">Outdoor & Adventure</option>
+                <option value="8">Crafts & Pottery</option>
+                <option value="9">Culture & Heritage</option>
+              </select>
+            </div>
+            <div>
+              <label className="field-label">City <span className="req-star">*</span></label>
+              <input id="adminNewEventCity" type="text" className="sketch-input" placeholder="e.g. Ahmedabad" defaultValue="Ahmedabad" required/>
+            </div>
+          </div>
+          <div style={{"marginBottom":"10px"}}>
+            <label className="field-label">Venue / Landmark</label>
+            <input id="adminNewEventVenue" type="text" className="sketch-input" placeholder="e.g. Sabarmati Riverfront Walkway" defaultValue="City Center"/>
+          </div>
+          <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"10px","marginBottom":"16px"}}>
+            <div>
+              <label className="field-label">Ticket Price (₹)</label>
+              <input id="adminNewEventPrice" type="number" min="0" className="sketch-input" placeholder="0 for Free" defaultValue="0"/>
+            </div>
+            <div>
+              <label className="field-label">Capacity (Max Seats)</label>
+              <input id="adminNewEventCapacity" type="number" min="1" className="sketch-input" placeholder="50" defaultValue="50"/>
+            </div>
+          </div>
+
+          <div style={{"display":"flex","justifyContent":"flex-end","gap":"8px"}}>
+            <button type="button" className="btn-sketch-white" onclick="closeAdminCreateEventModal()" style={{"padding":"6px 14px"}}>Cancel</button>
+            <button type="submit" className="btn-crayon-yellow" style={{"padding":"6px 18px"}}>Publish Event 🎭</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
     </section>
 
     {/* =========================================================

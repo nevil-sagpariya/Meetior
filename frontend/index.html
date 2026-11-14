@@ -1781,6 +1781,7 @@
                 <option value="active">Active Only</option>
                 <option value="suspended">Suspended Only</option>
               </select>
+              <button class="btn-crayon-yellow" onclick="openAdminCreateUserModal('Attendee')" style="padding: 5px 14px; font-size: 0.9rem;">➕ Add Attendee</button>
               <button class="btn-sketch-white" onclick="loadAdminAttendees()" style="padding: 5px 12px;">🔄 Refresh</button>
             </div>
           </div>
@@ -1822,6 +1823,7 @@
                 <option value="active">Active Only</option>
                 <option value="suspended">Suspended Only</option>
               </select>
+              <button class="btn-crayon-yellow" onclick="openAdminCreateUserModal('Organizer')" style="padding: 5px 14px; font-size: 0.9rem;">➕ Add Organizer</button>
               <button class="btn-sketch-white" onclick="loadAdminOrganizers()" style="padding: 5px 12px;">🔄 Refresh</button>
             </div>
           </div>
@@ -1932,6 +1934,7 @@
                 <option value="Completed">Completed</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
+              <button class="btn-crayon-yellow" onclick="openAdminCreateEventModal()" style="padding: 5px 14px; font-size: 0.9rem;">➕ Create Event</button>
               <button class="btn-sketch-white" onclick="loadAdminEvents()" style="padding: 5px 12px;">🔄 Refresh</button>
             </div>
           </div>
@@ -2403,6 +2406,21 @@
               Save Platform Settings 💾
             </button>
           </form>
+
+          <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed #b5b2aa;">
+            <h4 style="font-size: 1.15rem; margin-bottom: 6px; color: #222;">🧹 Database Maintenance & Demo Data Controls</h4>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">
+              Purge temporary mock records or re-seed fresh authentic local Indian events across metro cities for demos and presentation.
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn-sketch-white" onclick="handleAdminPurgeDemoData()" style="color:#b71540; border-color:#b71540; padding:6px 14px; font-size:0.9rem;">
+                🧹 Purge Demo & Test Data
+              </button>
+              <button type="button" class="btn-sketch-white" onclick="handleAdminSeedDemoData()" style="color:#2e7d32; border-color:#2e7d32; padding:6px 14px; font-size:0.9rem;">
+                🌱 Seed Fresh Sample Gatherings
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -2650,6 +2668,129 @@
 
       <div id="adminMfaModalContent" style="margin-top: 10px;">
         <div style="text-align: center; padding: 20px; color: #777;">Loading MFA configuration...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN CREATE USER MODAL -->
+  <div id="adminCreateUserModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminCreateUserModal()">
+    <div class="pass-card-container" style="max-width: 520px;">
+      <div class="pass-ticket-header">
+        <div class="brand-wordmark" style="font-size: 1.35rem;">
+          <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
+          <span style="font-size: 0.95rem; color: #1e90ff; font-family: var(--font-hand); margin-left: 6px;">USER MANAGEMENT</span>
+        </div>
+        <button onclick="closeAdminCreateUserModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1;">✕</button>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <h3 id="adminCreateUserTitle" style="font-size: 1.3rem; margin-bottom: 6px; color: #222;">➕ Add New User</h3>
+        <p style="font-size: 0.88rem; color: #666; margin-bottom: 14px;">
+          Provision an Attendee or Organizer account directly into the database.
+        </p>
+
+        <form onsubmit="submitAdminCreateUser(event)">
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Full Name <span class="req-star">*</span></label>
+            <input id="adminNewUserName" type="text" class="sketch-input" placeholder="e.g. Rahul Sharma" required/>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Email Address <span class="req-star">*</span></label>
+            <input id="adminNewUserEmail" type="email" class="sketch-input" placeholder="e.g. rahul@example.com" required/>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Password <span class="req-star">*</span></label>
+            <input id="adminNewUserPassword" type="password" class="sketch-input" placeholder="Password (min 6 characters)" minlength="6" required/>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+            <div>
+              <label class="field-label">Role <span class="req-star">*</span></label>
+              <select id="adminNewUserRole" class="sketch-input" style="width:100%;">
+                <option value="Attendee">Attendee</option>
+                <option value="Organizer">Organizer</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">City <span class="req-star">*</span></label>
+              <input id="adminNewUserCity" type="text" class="sketch-input" placeholder="e.g. Ahmedabad" value="Ahmedabad" required/>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px;">
+            <button type="button" class="btn-sketch-white" onclick="closeAdminCreateUserModal()" style="padding: 6px 14px;">Cancel</button>
+            <button type="submit" class="btn-crayon-yellow" style="padding: 6px 18px;">Create Account 👤</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN CREATE EVENT MODAL -->
+  <div id="adminCreateEventModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminCreateEventModal()">
+    <div class="pass-card-container" style="max-width: 620px; max-height: 90vh; overflow-y: auto;">
+      <div class="pass-ticket-header">
+        <div class="brand-wordmark" style="font-size: 1.35rem;">
+          <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
+          <span style="font-size: 0.95rem; color: #f5a623; font-family: var(--font-hand); margin-left: 6px;">EVENT MANAGEMENT</span>
+        </div>
+        <button onclick="closeAdminCreateEventModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1;">✕</button>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 6px; color: #222;">➕ Create Event as Administrator</h3>
+        <p style="font-size: 0.88rem; color: #666; margin-bottom: 14px;">
+          Directly publish a curated or community event to the live discovery feed.
+        </p>
+
+        <form onsubmit="submitAdminCreateEvent(event)">
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Event Title <span class="req-star">*</span></label>
+            <input id="adminNewEventTitle" type="text" class="sketch-input" placeholder="e.g. Weekend Heritage Walk & Photography" required/>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Description <span class="req-star">*</span></label>
+            <textarea id="adminNewEventDesc" class="sketch-input" rows="3" placeholder="Describe the meetup activity..." required></textarea>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <div>
+              <label class="field-label">Category <span class="req-star">*</span></label>
+              <select id="adminNewEventCategory" class="sketch-input" style="width:100%;">
+                <option value="1">Music & Concerts</option>
+                <option value="2">Technology & AI</option>
+                <option value="3">Food & Cooking</option>
+                <option value="4">Art & Painting</option>
+                <option value="5">Fitness & Yoga</option>
+                <option value="6">Literature & Poetry</option>
+                <option value="7">Outdoor & Adventure</option>
+                <option value="8">Crafts & Pottery</option>
+                <option value="9">Culture & Heritage</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">City <span class="req-star">*</span></label>
+              <input id="adminNewEventCity" type="text" class="sketch-input" placeholder="e.g. Ahmedabad" value="Ahmedabad" required/>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label class="field-label">Venue / Landmark</label>
+            <input id="adminNewEventVenue" type="text" class="sketch-input" placeholder="e.g. Sabarmati Riverfront Walkway" value="City Center"/>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+            <div>
+              <label class="field-label">Ticket Price (₹)</label>
+              <input id="adminNewEventPrice" type="number" min="0" class="sketch-input" placeholder="0 for Free" value="0"/>
+            </div>
+            <div>
+              <label class="field-label">Capacity (Max Seats)</label>
+              <input id="adminNewEventCapacity" type="number" min="1" class="sketch-input" placeholder="50" value="50"/>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px;">
+            <button type="button" class="btn-sketch-white" onclick="closeAdminCreateEventModal()" style="padding: 6px 14px;">Cancel</button>
+            <button type="submit" class="btn-crayon-yellow" style="padding: 6px 18px;">Publish Event 🎭</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -9261,7 +9402,7 @@
                 <td style="padding: 10px; text-align: center; white-space: nowrap;">
                   <button class="btn-crayon-yellow" onclick="openOrganizerDetails(${o.user_id})" style="padding: 3px 8px; font-size: 0.8rem; margin-right:4px;">🔍 Performance</button>
                   ${statusActionBtn}
-                </td>
+                <button class="btn-sketch-white" onclick="handleAdminDeleteUser(${o.user_id})" style="padding: 3px 8px; font-size: 0.8rem; color: #dc2626; border-color: #dc2626; margin-left: 4px;" title="Permanently delete organizer">🗑️</button></td>
               </tr>
             `;
           }).join('');
@@ -10090,7 +10231,7 @@
                 <strong>${c.name}</strong>
               </div>
               <span style="font-size: 0.8rem; color: #888;">#${c.category_id}</span>
-            </div>
+            <button class="btn-sketch-white" onclick="handleAdminDeleteCategory(${c.category_id})" style="padding: 2px 6px; font-size: 0.75rem; color: #dc2626; border-color: #dc2626; margin-left: 6px;" title="Delete category">🗑️</button></div>
           `).join('');
         }
       } catch (err) {
@@ -10428,7 +10569,8 @@
     }
 
     async function handleAdminDeleteUser(userId, name) {
-      if (!confirm(`Are you sure you want to permanently delete user "${name}" (#${userId}) and all their associated registrations, tickets, and bookings?`)) {
+      const targetName = name || `User #${userId}`;
+      if (!confirm(`Are you sure you want to permanently delete user "${targetName}" (#${userId}) and all their associated registrations, tickets, and bookings?`)) {
         return;
       }
 
@@ -10480,7 +10622,8 @@
     }
 
     async function handleAdminDeleteEvent(eventId, title) {
-      if (!confirm(`Are you sure you want to permanently delete event "${title}" (#${eventId}) and all its associated tickets and registrations?`)) {
+      const targetTitle = title || `Event #${eventId}`;
+      if (!confirm(`Are you sure you want to permanently delete event "${targetTitle}" (#${eventId}) and all its associated tickets and registrations?`)) {
         return;
       }
 
@@ -10495,7 +10638,8 @@
     }
 
     async function handleAdminDeleteCategory(catId, name) {
-      if (!confirm(`Are you sure you want to delete category "${name}"?`)) {
+      const targetName = name || `Category #${catId}`;
+      if (!confirm(`Are you sure you want to delete category "${targetName}"?`)) {
         return;
       }
 
