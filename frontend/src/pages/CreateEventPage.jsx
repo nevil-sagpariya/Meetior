@@ -60,7 +60,7 @@ export default function CreateEventPage({ navigateTo, currentUser, showToast }) 
             <input id="ceCost" type="text" className="sketch-input" placeholder="Enter 0 for free, or specify ₹ per attendee"/>
             <div className="helper-note" style={{"display":"flex","flexDirection":"column","gap":"3px","marginTop":"4px"}}>
               <span>Must mention 'free' or specify the charge in ₹</span>
-              <span style={{"color":"#d97706","fontWeight":"700","fontSize":"0.84rem"}}>ℹ️ Platform Service Fee: 5.0% auto-deducted from paid ticket sales at payout settlement. Free events (₹0) have 0% fee.</span>
+              <span style={{"color":"#d97706","fontWeight":"700","fontSize":"0.84rem"}}>ℹ️ Platform Service Fee: <span id="createEventCommissionRate">5.0%</span> auto-deducted from paid ticket sales at payout settlement. Free events (₹0) have 0% fee.</span>
             </div>
           </div>
         </div>

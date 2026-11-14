@@ -809,8 +809,13 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
           <form onsubmit="handleSavePlatformSettings(event)">
             <div style={{"marginBottom":"14px"}}>
               <label className="field-label">Platform Fee Commission (%) <span className="req-star">*</span></label>
-              <input id="settingCommissionPercent" type="number" step="0.1" min="0" max="50" className="sketch-input" style={{"width":"100%"}} defaultValue="5.0" required/>
-              <span style={{"fontSize":"0.82rem","color":"#666"}}>Deducted from gross booking revenue before net organizer earnings calculation.</span>
+              <input id="settingCommissionPercent" type="number" step="0.1" min="0" max="50" className="sketch-input" style={{"width":"100%"}} defaultValue="5.0" required oninput="updateSettingsCommissionPreview()"/>
+              <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","flexWrap":"wrap","gap":"6px","marginTop":"4px"}}>
+                <span style={{"fontSize":"0.82rem","color":"#666"}}>Deducted from gross booking revenue before net organizer earnings calculation.</span>
+                <span id="settingPreviewWrap" style={{"fontSize":"0.84rem","color":"#00838f","fontWeight":"700"}}>
+                  Simulated Profit at <span id="settingPreviewRate">5.0%</span>: <span id="settingPreviewProfit" style={{"color":"#006064"}}>₹15.00</span> (Organizer Net: <span id="settingPreviewOrganizer" style={{"color":"#2e7d32"}}>₹285.00</span>)
+                </span>
+              </div>
             </div>
 
             <div style={{"marginBottom":"14px"}}>
