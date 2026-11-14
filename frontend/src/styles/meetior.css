@@ -1627,8 +1627,8 @@
     body.theme-night .pass-card-container #passVenue {
       color: #ffffff !important;
     }
-    body.theme-night .pass-card-container div,
-    body.theme-night .pass-card-container span {
+    body.theme-night #passModal .pass-card-container div,
+    body.theme-night #passModal .pass-card-container span {
       color: #cbd5e1 !important;
     }
     body.theme-night .pass-card-container .qr-frame {
@@ -1798,6 +1798,218 @@
     }
     body.theme-night .city-modal-helper {
       color: #94a3b8 !important;
+    }
+
+    /* =========================================================================
+       NIGHT THEME — ADMIN INSPECTION & MANAGEMENT MODALS
+       ========================================================================= */
+    body.theme-night #adminOrganizerModal .pass-card-container,
+    body.theme-night #adminAttendeeModal .pass-card-container,
+    body.theme-night #adminEventModal .pass-card-container,
+    body.theme-night #adminNewAdminModal .pass-card-container,
+    body.theme-night #adminCreateUserModal .pass-card-container,
+    body.theme-night #adminCreateEventModal .pass-card-container,
+    body.theme-night #adminMfaModal .pass-card-container {
+      background: #181d28 !important;
+      border-color: #3b4256 !important;
+      color: #f1f2f6 !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.65), 4px 6px 0 #fab005 !important;
+    }
+
+    body.theme-night #adminOrganizerModal .pass-ticket-header,
+    body.theme-night #adminAttendeeModal .pass-ticket-header,
+    body.theme-night #adminEventModal .pass-ticket-header,
+    body.theme-night #adminCreateUserModal .pass-ticket-header,
+    body.theme-night #adminCreateEventModal .pass-ticket-header,
+    body.theme-night #adminNewAdminModal .pass-ticket-header {
+      border-bottom: 2px dashed #3b4256 !important;
+    }
+
+    body.theme-night #adminOrganizerModal .pass-ticket-header button,
+    body.theme-night #adminAttendeeModal .pass-ticket-header button,
+    body.theme-night #adminEventModal .pass-ticket-header button,
+    body.theme-night #adminCreateUserModal .pass-ticket-header button,
+    body.theme-night #adminCreateEventModal .pass-ticket-header button {
+      color: #f1f2f6 !important;
+    }
+
+    /* Modal Top Header Card (Organizer / Attendee / Event summary) */
+    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"],
+    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"],
+    body.theme-night #adminEventModal div[style*="background:#faf8ef"] {
+      background: #202738 !important;
+      border: 1.5px solid #3b4256 !important;
+      color: #f1f2f6 !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] h2,
+    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] h2,
+    body.theme-night #adminEventModal div[style*="background:#faf8ef"] h2 {
+      color: #ffffff !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] div,
+    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] div,
+    body.theme-night #adminEventModal div[style*="background:#faf8ef"] div {
+      color: #cbd5e1 !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] strong,
+    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] strong,
+    body.theme-night #adminEventModal div[style*="background:#faf8ef"] strong {
+      color: #ffffff !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="color:#512da8"],
+    body.theme-night #adminAttendeeModal div[style*="color:#512da8"] {
+      color: #c084fc !important;
+    }
+
+    /* Financial Stat Cards in Modals */
+    body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"],
+    body.theme-night #adminAttendeeModal div[style*="background:#e8f5e9"] {
+      background: rgba(46, 125, 50, 0.22) !important;
+      border: 1.5px solid #22c55e !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"] div[style*="color:#1b5e20"] {
+      color: #86efac !important;
+      font-weight: 700 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"] div[style*="color:#2e7d32"] {
+      color: #4ade80 !important;
+      font-weight: 800 !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="background:#ffebee"],
+    body.theme-night #adminAttendeeModal div[style*="background:#ffebee"] {
+      background: rgba(198, 40, 40, 0.22) !important;
+      border: 1.5px solid #ef4444 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#ffebee"] div[style*="color:#b71540"] {
+      color: #fca5a5 !important;
+      font-weight: 700 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#ffebee"] div[style*="color:#c62828"] {
+      color: #f87171 !important;
+      font-weight: 800 !important;
+    }
+
+    body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"],
+    body.theme-night #adminAttendeeModal div[style*="background:#ede7f6"] {
+      background: rgba(103, 58, 183, 0.25) !important;
+      border: 1.5px solid #a855f7 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"] div[style*="color:#4527a0"] {
+      color: #d8b4fe !important;
+      font-weight: 700 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"] div[style*="color:#512da8"] {
+      color: #c084fc !important;
+      font-weight: 800 !important;
+    }
+
+    /* Modal Tables (Hosted Events, Bookings, Registrations) */
+    body.theme-night #adminOrganizerModal table,
+    body.theme-night #adminAttendeeModal table,
+    body.theme-night #adminEventModal table {
+      background: #181d28 !important;
+      color: #cbd5e1 !important;
+    }
+    body.theme-night #adminOrganizerModal table thead,
+    body.theme-night #adminAttendeeModal table thead,
+    body.theme-night #adminEventModal table thead {
+      background: #252d40 !important;
+    }
+    body.theme-night #adminOrganizerModal table th,
+    body.theme-night #adminAttendeeModal table th,
+    body.theme-night #adminEventModal table th {
+      color: #f8fafc !important;
+      border-bottom: 2px solid #3b4256 !important;
+    }
+    body.theme-night #adminOrganizerModal table tr,
+    body.theme-night #adminAttendeeModal table tr,
+    body.theme-night #adminEventModal table tr {
+      background: transparent !important;
+      border-bottom: 1px solid #283248 !important;
+    }
+    body.theme-night #adminOrganizerModal table td,
+    body.theme-night #adminAttendeeModal table td,
+    body.theme-night #adminEventModal table td {
+      color: #cbd5e1 !important;
+      border-bottom: 1px solid #283248 !important;
+    }
+    body.theme-night #adminOrganizerModal table td strong,
+    body.theme-night #adminAttendeeModal table td strong,
+    body.theme-night #adminEventModal table td strong {
+      color: #ffffff !important;
+    }
+
+    /* Scrollable Table and Box Wrappers */
+    body.theme-night #adminOrganizerModal div[style*="max-height"],
+    body.theme-night #adminAttendeeModal div[style*="max-height"],
+    body.theme-night #adminEventModal div[style*="max-height"] {
+      border-color: #3b4256 !important;
+      background: #181d28 !important;
+    }
+
+    /* Complaints / Reports Box */
+    body.theme-night #adminOrganizerModal div[style*="background:#fff"],
+    body.theme-night #adminAttendeeModal div[style*="background:#fff"],
+    body.theme-night #adminEventModal div[style*="background:#fff"] {
+      background: #202738 !important;
+      border: 1px solid #3b4256 !important;
+      color: #cbd5e1 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#fff"] strong,
+    body.theme-night #adminAttendeeModal div[style*="background:#fff"] strong,
+    body.theme-night #adminEventModal div[style*="background:#fff"] strong {
+      color: #ffffff !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="background:#fff"] div,
+    body.theme-night #adminAttendeeModal div[style*="background:#fff"] div,
+    body.theme-night #adminEventModal div[style*="background:#fff"] div {
+      color: #94a3b8 !important;
+    }
+    body.theme-night #adminOrganizerModal div[style*="border-bottom:1px dashed"],
+    body.theme-night #adminAttendeeModal div[style*="border-bottom:1px dashed"],
+    body.theme-night #adminEventModal div[style*="border-bottom:1px dashed"] {
+      border-bottom-color: #3b4256 !important;
+    }
+
+    /* Section Headings in Modals (h4) */
+    body.theme-night #adminOrganizerModal h4,
+    body.theme-night #adminAttendeeModal h4,
+    body.theme-night #adminEventModal h4 {
+      color: #f1f2f6 !important;
+    }
+
+    /* Modal Bottom Action Footer */
+    body.theme-night #adminOrganizerModal div[style*="border-top: 1.5px dashed"],
+    body.theme-night #adminAttendeeModal div[style*="border-top: 1.5px dashed"],
+    body.theme-night #adminEventModal div[style*="border-top: 1.5px dashed"] {
+      border-top-color: #3b4256 !important;
+    }
+
+    body.theme-night #adminOrganizerModal .btn-sketch-white,
+    body.theme-night #adminAttendeeModal .btn-sketch-white,
+    body.theme-night #adminEventModal .btn-sketch-white {
+      background: #252d40 !important;
+      border-color: #475569 !important;
+      color: #ffffff !important;
+    }
+
+    body.theme-night #adminOrganizerModal button[onclick*="'suspended'"],
+    body.theme-night #adminAttendeeModal button[onclick*="'suspended'"] {
+      background: rgba(183, 21, 64, 0.25) !important;
+      color: #f87171 !important;
+      border-color: #ef4444 !important;
+    }
+
+    body.theme-night #adminOrganizerModal button[onclick*="'active'"],
+    body.theme-night #adminAttendeeModal button[onclick*="'active'"] {
+      background: rgba(46, 125, 50, 0.25) !important;
+      color: #4ade80 !important;
+      border-color: #22c55e !important;
     }
 
     /* NIGHT THEME - HOME, BROWSE & MAP SEARCH BARS */
