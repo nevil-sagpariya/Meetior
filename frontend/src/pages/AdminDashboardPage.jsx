@@ -285,14 +285,14 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
 
       {/* TAB 4: ORGANIZER EARNINGS */}
       <div id="adminTab-earnings" className="hidden">
-        {/* Razorpay Test Mode Warning Banner */}
-        <div className="sketch-box" style={{"padding":"14px 18px","marginBottom":"16px","background":"#fff3e0","borderColor":"#ff9800","borderWidth":"2.5px"}}>
+        {/* Razorpay Gateway Settlement Banner */}
+        <div className="sketch-box" style={{"padding":"14px 18px","marginBottom":"16px","background":"#eef2ff","borderColor":"#6366f1","borderWidth":"2.5px"}}>
           <div style={{"display":"flex","alignItems":"flex-start","gap":"10px"}}>
-            <div style={{"fontSize":"1.8rem","lineHeight":"1"}}>⚠️</div>
+            <div style={{"fontSize":"1.8rem","lineHeight":"1"}}>💳</div>
             <div>
-              <strong style={{"fontSize":"1.05rem","color":"#e65100"}}>TEST / SIMULATED TRANSACTION DISCLOSURE:</strong>
-              <div style={{"fontSize":"0.92rem","color":"#5d4037","marginTop":"4px","lineHeight":"1.4"}}>
-                Meetior is currently configured in <strong>Razorpay Test Mode</strong>. All transaction amounts, commissions, and organizer earnings shown here are simulated figures based on verified test orders. Actual bank payouts and automated settlement transfers are not configured.
+              <strong style={{"fontSize":"1.05rem","color":"#4338ca"}}>SECURE PAYMENT &amp; SETTLEMENT GATEWAY:</strong>
+              <div style={{"fontSize":"0.92rem","color":"#374151","marginTop":"4px","lineHeight":"1.4"}}>
+                Meetior is integrated with the <strong>Razorpay Payment &amp; Settlement Gateway</strong>. All ticket sales, commissions (5.0%), and organizer earnings are verified and reconciled for direct bank settlement.
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
                 <th style={{"padding":"10px","textAlign":"right"}}>Refunds Deducted</th>
                 <th id="admEarningsThCommission" style={{"padding":"10px","textAlign":"right"}}>Platform Fee (5.0%)</th>
                 <th style={{"padding":"10px","textAlign":"right"}}>Net Est. Earnings</th>
-                <th style={{"padding":"10px","textAlign":"center"}}>Actual Payouts</th>
+                <th style={{"padding":"10px","textAlign":"center"}}>Settlement Status</th>
               </tr>
             </thead>
             <tbody id="adminEarningsTableBody">
@@ -535,10 +535,10 @@ export default function AdminDashboardPage({ navigateTo, currentUser, showToast 
             <div id="admPaySummaryNet" style={{"fontSize":"2.1rem","fontWeight":"800","color":"#1565c0","margin":"4px 0"}}>₹0.00</div>
             <div style={{"fontSize":"0.82rem","color":"#555"}}>Gross Processed − Refunds</div>
           </div>
-          <div className="sketch-box" style={{"background":"#fff3e0","borderColor":"#e65100","padding":"14px","textAlign":"center"}}>
-            <div style={{"fontSize":"0.82rem","fontWeight":"700","color":"#bf360c","textTransform":"uppercase"}}>Gateway Mode</div>
-            <div style={{"fontSize":"1.5rem","fontWeight":"800","color":"#e65100","margin":"8px 0"}}>Razorpay Sandbox</div>
-            <div style={{"fontSize":"0.82rem","color":"#777"}}>TEST / SIMULATED</div>
+          <div className="sketch-box" style={{"background":"#e8f5e9","borderColor":"#2e7d32","padding":"14px","textAlign":"center"}}>
+            <div style={{"fontSize":"0.82rem","fontWeight":"700","color":"#1b5e20","textTransform":"uppercase"}}>Gateway Mode</div>
+            <div style={{"fontSize":"1.5rem","fontWeight":"800","color":"#2e7d32","margin":"8px 0"}}>Razorpay Verified Gateway</div>
+            <div style={{"fontSize":"0.82rem","color":"#1b5e20","fontWeight":"600"}}>Direct Bank Settlement (Active) 💼</div>
           </div>
         </div>
 

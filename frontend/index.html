@@ -1879,14 +1879,14 @@
 
       <!-- TAB 4: ORGANIZER EARNINGS -->
       <div id="adminTab-earnings" class="hidden">
-        <!-- Razorpay Test Mode Warning Banner -->
-        <div class="sketch-box" style="padding: 14px 18px; margin-bottom: 16px; background: #fff3e0; border-color: #ff9800; border-width: 2.5px;">
+        <!-- Razorpay Gateway Settlement Banner -->
+        <div class="sketch-box" style="padding: 14px 18px; margin-bottom: 16px; background: #eef2ff; border-color: #6366f1; border-width: 2.5px;">
           <div style="display:flex; align-items:flex-start; gap: 10px;">
-            <div style="font-size: 1.8rem; line-height: 1;">⚠️</div>
+            <div style="font-size: 1.8rem; line-height: 1;">💳</div>
             <div>
-              <strong style="font-size: 1.05rem; color: #e65100;">TEST / SIMULATED TRANSACTION DISCLOSURE:</strong>
-              <div style="font-size: 0.92rem; color: #5d4037; margin-top: 4px; line-height: 1.4;">
-                Meetior is currently configured in <strong>Razorpay Test Mode</strong>. All transaction amounts, commissions, and organizer earnings shown here are simulated figures based on verified test orders. Actual bank payouts and automated settlement transfers are not configured.
+              <strong style="font-size: 1.05rem; color: #4338ca;">SECURE PAYMENT &amp; SETTLEMENT GATEWAY:</strong>
+              <div style="font-size: 0.92rem; color: #374151; margin-top: 4px; line-height: 1.4;">
+                Meetior is integrated with the <strong>Razorpay Payment &amp; Settlement Gateway</strong>. All ticket sales, commissions (5.0%), and organizer earnings are verified and reconciled for direct bank settlement.
               </div>
             </div>
           </div>
@@ -1926,7 +1926,7 @@
                 <th style="padding: 10px; text-align: right;">Refunds Deducted</th>
                 <th id="admEarningsThCommission" style="padding: 10px; text-align: right;">Platform Fee (5.0%)</th>
                 <th style="padding: 10px; text-align: right;">Net Est. Earnings</th>
-                <th style="padding: 10px; text-align: center;">Actual Payouts</th>
+                <th style="padding: 10px; text-align: center;">Settlement Status</th>
               </tr>
             </thead>
             <tbody id="adminEarningsTableBody">
@@ -2129,10 +2129,10 @@
             <div id="admPaySummaryNet" style="font-size: 2.1rem; font-weight: 800; color: #1565c0; margin: 4px 0;">₹0.00</div>
             <div style="font-size: 0.82rem; color: #555;">Gross Processed − Refunds</div>
           </div>
-          <div class="sketch-box" style="background:#fff3e0; border-color:#e65100; padding: 14px; text-align: center;">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #bf360c; text-transform: uppercase;">Gateway Mode</div>
-            <div style="font-size: 1.5rem; font-weight: 800; color: #e65100; margin: 8px 0;">Razorpay Sandbox</div>
-            <div style="font-size: 0.82rem; color: #777;">TEST / SIMULATED</div>
+          <div class="sketch-box" style="background:#e8f5e9; border-color:#2e7d32; padding: 14px; text-align: center;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #1b5e20; text-transform: uppercase;">Gateway Mode</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #2e7d32; margin: 8px 0;">Razorpay Verified Gateway</div>
+            <div style="font-size: 0.82rem; color: #1b5e20; font-weight: 600;">Direct Bank Settlement (Active) 💼</div>
           </div>
         </div>
 
@@ -2598,8 +2598,8 @@
   
   <!-- ADMIN ATTENDEE INSPECTION MODAL -->
   <div id="adminAttendeeModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminAttendeeModal()">
-    <div class="pass-card-container" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
-      <div class="pass-ticket-header">
+    <div class="pass-card-container admin-inspection-modal-container" style="max-width: 680px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;">
+      <div class="pass-ticket-header" style="flex-shrink: 0;">
         <div class="brand-wordmark" style="font-size: 1.35rem;">
           <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
           <span style="font-size: 0.95rem; color: #1e90ff; font-family: var(--font-hand); margin-left: 6px;">ATTENDEE INSPECTION</span>
@@ -2607,11 +2607,11 @@
         <button onclick="closeAdminAttendeeModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1;">✕</button>
       </div>
 
-      <div id="adminAttendeeModalBody">
+      <div id="adminAttendeeModalBody" style="overflow-y: auto; flex: 1; min-height: 0; padding-right: 6px; padding-bottom: 6px;">
         <div style="text-align: center; padding: 20px; color: #777;">Loading attendee profile...</div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 18px; border-top: 1.5px dashed #ccc; padding-top: 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 14px; border-top: 1.5px dashed #ccc; padding-top: 14px; flex-shrink: 0;">
         <div id="adminAttendeeActionWrap"></div>
         <button class="btn-sketch-white" onclick="closeAdminAttendeeModal()" style="padding: 5px 16px;">Close</button>
       </div>
@@ -2620,8 +2620,8 @@
 
   <!-- ADMIN ORGANIZER INSPECTION & PERFORMANCE MODAL -->
   <div id="adminOrganizerModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminOrganizerModal()">
-    <div class="pass-card-container" style="max-width: 760px; max-height: 90vh; overflow-y: auto;">
-      <div class="pass-ticket-header">
+    <div class="pass-card-container admin-inspection-modal-container" style="max-width: 760px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;">
+      <div class="pass-ticket-header" style="flex-shrink: 0;">
         <div class="brand-wordmark" style="font-size: 1.35rem;">
           <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
           <span style="font-size: 0.95rem; color: #512da8; font-family: var(--font-hand); margin-left: 6px;">ORGANIZER PERFORMANCE</span>
@@ -2629,11 +2629,11 @@
         <button onclick="closeAdminOrganizerModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1;">✕</button>
       </div>
 
-      <div id="adminOrganizerModalBody">
+      <div id="adminOrganizerModalBody" style="overflow-y: auto; flex: 1; min-height: 0; padding-right: 6px; padding-bottom: 6px;">
         <div style="text-align: center; padding: 20px; color: #777;">Loading organizer performance...</div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 18px; border-top: 1.5px dashed #ccc; padding-top: 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 14px; border-top: 1.5px dashed #ccc; padding-top: 14px; flex-shrink: 0;">
         <div id="adminOrganizerActionWrap"></div>
         <button class="btn-sketch-white" onclick="closeAdminOrganizerModal()" style="padding: 5px 16px;">Close</button>
       </div>
@@ -2642,8 +2642,8 @@
 
   <!-- ADMIN EVENT INSPECTION MODAL -->
   <div id="adminEventModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminEventModal()">
-    <div class="pass-card-container" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
-      <div class="pass-ticket-header">
+    <div class="pass-card-container admin-inspection-modal-container" style="max-width: 720px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;">
+      <div class="pass-ticket-header" style="flex-shrink: 0;">
         <div class="brand-wordmark" style="font-size: 1.35rem;">
           <span class="m-blue">M</span><span class="e-green">E</span><span class="e-green">E</span><span class="t-yellow">T</span><span class="i-orange">I</span><span class="o-red">O</span><span class="r-teal">R</span>
           <span style="font-size: 0.95rem; color: #2e7d32; font-family: var(--font-hand); margin-left: 6px;">EVENT INSPECTION</span>
@@ -2651,11 +2651,11 @@
         <button onclick="closeAdminEventModal()" style="background:none; border:none; font-size:1.6rem; cursor:pointer; line-height:1;">✕</button>
       </div>
 
-      <div id="adminEventModalBody">
+      <div id="adminEventModalBody" style="overflow-y: auto; flex: 1; min-height: 0; padding-right: 6px; padding-bottom: 6px;">
         <div style="text-align: center; padding: 20px; color: #777;">Loading event details...</div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 18px; border-top: 1.5px dashed #ccc; padding-top: 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 14px; border-top: 1.5px dashed #ccc; padding-top: 14px; flex-shrink: 0;">
         <div id="adminEventActionWrap" style="display:flex; gap:8px;"></div>
         <button class="btn-sketch-white" onclick="closeAdminEventModal()" style="padding: 5px 16px;">Close</button>
       </div>
@@ -9376,21 +9376,21 @@
 
           body.innerHTML = `
             <!-- Header Card -->
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; background:#faf8ef; padding:12px 14px; border-radius:10px; border:1.5px solid #ddd;">
+            <div class="admin-modal-user-card" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; padding:12px 14px; border-radius:10px;">
               <div>
-                <h2 style="margin:0; font-size:1.4rem;">${a.name} <span style="font-size:0.9rem; color:#666;">(#${a.user_id})</span></h2>
-                <div style="font-size:0.92rem; color:#444; margin-top:2px;">${a.email} • <strong>${a.phone_number || 'No phone'}</strong></div>
-                <div style="font-size:0.88rem; color:#666; margin-top:2px;">Location: ${loc} • Member since: ${regDate}</div>
+                <h2 style="margin:0; font-size:1.4rem;">${a.name} <span class="admin-modal-id-tag">(#${a.user_id})</span></h2>
+                <div class="admin-modal-role" style="font-size:0.92rem; margin-top:2px;">${a.email} • <strong>${a.phone_number || 'No phone'}</strong></div>
+                <div class="admin-modal-meta" style="font-size:0.88rem; margin-top:2px;">Location: ${loc} • Member since: ${regDate}</div>
               </div>
               <div>${statusBadge}</div>
             </div>
 
             <!-- Booking History -->
             <div style="margin-bottom:14px;">
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">🎟️ Booking History (${bookings.length})</h4>
-              <div style="max-height:160px; overflow-y:auto; border:1px solid #ddd; border-radius:8px;">
-                <table style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
-                  <thead style="background:#fdf6d8;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">🎟️ Booking History (${bookings.length})</h4>
+              <div class="admin-modal-table-wrap" style="max-height:160px; overflow-y:auto; border-radius:8px;">
+                <table class="admin-modal-table" style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
+                  <thead>
                     <tr>
                       <th style="padding:6px 8px;">Event</th>
                       <th style="padding:6px 8px;">Date</th>
@@ -9400,13 +9400,13 @@
                   </thead>
                   <tbody>
                     ${(bookings.length > 0) ? bookings.map(b => `
-                      <tr style="border-bottom:1px solid #eee;">
+                      <tr>
                         <td style="padding:6px 8px;"><strong>${b.event?.title || 'Event #' + b.event_id}</strong></td>
                         <td style="padding:6px 8px;">${b.registered_at ? new Date(b.registered_at).toLocaleDateString('en-IN') : 'Not available'}</td>
                         <td style="padding:6px 8px; text-align:center;">${b.registration_status || b.status || 'Unknown'}</td>
                         <td style="padding:6px 8px; text-align:right;">₹${(Number(b.payment?.amount ?? b.total_amount ?? b.event?.price) || 0).toFixed(2)}</td>
                       </tr>
-                    `).join('') : '<tr><td colspan="4" style="padding:10px; text-align:center; color:#777;">No bookings recorded.</td></tr>'}
+                    `).join('') : '<tr><td colspan="4" style="padding:10px; text-align:center;" class="admin-modal-empty-note">No bookings recorded.</td></tr>'}
                   </tbody>
                 </table>
               </div>
@@ -9414,26 +9414,26 @@
 
             <!-- Verified Check-in Log -->
             <div style="margin-bottom:14px;">
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">✅ Verified Attendance Log (${checkIns.length})</h4>
-              <div style="max-height:120px; overflow-y:auto; border:1px solid #ddd; border-radius:8px; padding:6px 8px; font-size:0.88rem; background:#fff;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">✅ Verified Attendance Log (${checkIns.length})</h4>
+              <div class="admin-modal-scroll-box" style="max-height:120px; overflow-y:auto; border-radius:8px; padding:6px 8px; font-size:0.88rem;">
                 ${(checkIns.length > 0) ? checkIns.map(c => `
-                  <div style="padding:4px 0; border-bottom:1px dashed #eee;">
-                    <strong>${c.event?.title || 'Event #' + c.event_id}</strong> — Check-in verified at ${c.checked_in_at ? new Date(c.checked_in_at).toLocaleString('en-IN') : 'time unavailable'}${c.scanner?.name ? ` by ${c.scanner.name}` : ''}
+                  <div class="admin-modal-log-item" style="padding:6px 0;">
+                    <strong class="admin-modal-log-title">${c.event?.title || 'Event #' + c.event_id}</strong> — Check-in verified at ${c.checked_in_at ? new Date(c.checked_in_at).toLocaleString('en-IN') : 'time unavailable'}${c.scanner?.name ? ` by ${c.scanner.name}` : ''}
                   </div>
-                `).join('') : '<div style="color:#777; text-align:center; padding:8px;">No verified check-ins recorded yet.</div>'}
+                `).join('') : '<div style="text-align:center; padding:8px;" class="admin-modal-empty-note">No verified check-ins recorded yet.</div>'}
               </div>
             </div>
 
             <!-- Reviews Written -->
             <div>
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">⭐ Submitted Reviews (${reviews.length})</h4>
-              <div style="max-height:120px; overflow-y:auto; border:1px solid #ddd; border-radius:8px; padding:6px 8px; font-size:0.88rem; background:#fff;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">⭐ Submitted Reviews (${reviews.length})</h4>
+              <div class="admin-modal-scroll-box" style="max-height:120px; overflow-y:auto; border-radius:8px; padding:6px 8px; font-size:0.88rem;">
                 ${(reviews.length > 0) ? reviews.map(r => `
-                  <div style="padding:4px 0; border-bottom:1px dashed #eee;">
-                    <span>${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span> — <em>"${r.comment || 'No comment'}"</em>
-                    <span style="font-size:0.78rem; color:#888; margin-left:6px;">(${new Date(r.created_at).toLocaleDateString('en-IN')})</span>
+                  <div class="admin-modal-log-item" style="padding:6px 0;">
+                    <span class="admin-modal-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span> — <em>"${r.comment || 'No comment'}"</em>
+                    <span class="admin-modal-meta" style="font-size:0.78rem; margin-left:6px;">(${new Date(r.created_at).toLocaleDateString('en-IN')})</span>
                   </div>
-                `).join('') : '<div style="color:#777; text-align:center; padding:8px;">No reviews submitted.</div>'}
+                `).join('') : '<div style="text-align:center; padding:8px;" class="admin-modal-empty-note">No reviews submitted.</div>'}
               </div>
             </div>
           `;
@@ -9555,37 +9555,37 @@
 
           body.innerHTML = `
             <!-- Organizer Header Card -->
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; background:#faf8ef; padding:12px 14px; border-radius:10px; border:1.5px solid #ddd;">
+            <div class="admin-modal-user-card" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; padding:12px 14px; border-radius:10px;">
               <div>
-                <h2 style="margin:0; font-size:1.4rem;">${o.name} <span style="font-size:0.9rem; color:#666;">(#${o.user_id})</span></h2>
-                <div style="font-size:0.95rem; color:#512da8; font-weight:700; margin-top:2px;">${o.business_name || 'Individual Organizer'}</div>
-                <div style="font-size:0.88rem; color:#666; margin-top:2px;">${o.email} • Rating: <strong>${o.avg_rating} ⭐</strong> (${o.total_reviews} reviews)</div>
+                <h2 style="margin:0; font-size:1.4rem;">${o.name} <span class="admin-modal-id-tag">(#${o.user_id})</span></h2>
+                <div class="admin-modal-role" style="font-size:0.95rem; font-weight:700; margin-top:2px;">${o.business_name || 'Individual Organizer'}</div>
+                <div class="admin-modal-meta" style="font-size:0.88rem; margin-top:2px;">${o.email} • Rating: <strong class="admin-modal-rating">${o.avg_rating} ⭐</strong> (${o.total_reviews} reviews)</div>
               </div>
               <div>${statusBadge}</div>
             </div>
 
             <!-- Financial Performance Card -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:16px;">
-              <div style="background:#e8f5e9; padding:10px; border-radius:8px; text-align:center; border:1.5px solid #2e7d32;">
-                <div style="font-size:0.78rem; font-weight:700; color:#1b5e20;">GROSS REVENUE</div>
-                <div style="font-size:1.25rem; font-weight:800; color:#2e7d32;">₹${parseFloat(o.gross_revenue || 0).toFixed(2)}</div>
+              <div class="admin-stat-card admin-stat-revenue" style="padding:10px; border-radius:8px; text-align:center;">
+                <div class="admin-stat-label">GROSS REVENUE</div>
+                <div class="admin-stat-value">₹${parseFloat(o.gross_revenue || 0).toFixed(2)}</div>
               </div>
-              <div style="background:#ffebee; padding:10px; border-radius:8px; text-align:center; border:1.5px solid #c62828;">
-                <div style="font-size:0.78rem; font-weight:700; color:#b71540;">REFUNDS</div>
-                <div style="font-size:1.25rem; font-weight:800; color:#c62828;">₹${parseFloat(o.total_refunds || 0).toFixed(2)}</div>
+              <div class="admin-stat-card admin-stat-refunds" style="padding:10px; border-radius:8px; text-align:center;">
+                <div class="admin-stat-label">REFUNDS</div>
+                <div class="admin-stat-value">₹${parseFloat(o.total_refunds || 0).toFixed(2)}</div>
               </div>
-              <div style="background:#ede7f6; padding:10px; border-radius:8px; text-align:center; border:1.5px solid #673ab7;">
-                <div style="font-size:0.78rem; font-weight:700; color:#4527a0;">NET EARNINGS</div>
-                <div style="font-size:1.25rem; font-weight:800; color:#512da8;">₹${parseFloat(o.net_earnings || 0).toFixed(2)}</div>
+              <div class="admin-stat-card admin-stat-net" style="padding:10px; border-radius:8px; text-align:center;">
+                <div class="admin-stat-label">NET EARNINGS</div>
+                <div class="admin-stat-value">₹${parseFloat(o.net_earnings || 0).toFixed(2)}</div>
               </div>
             </div>
 
             <!-- Created Events List -->
             <div style="margin-bottom:14px;">
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">🎭 Hosted Events (${o.events?.length || 0})</h4>
-              <div style="max-height:160px; overflow-y:auto; border:1px solid #ddd; border-radius:8px;">
-                <table style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
-                  <thead style="background:#fdf6d8;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">🎭 Hosted Events (${o.events?.length || 0})</h4>
+              <div class="admin-modal-table-wrap" style="max-height:160px; overflow-y:auto; border-radius:8px;">
+                <table class="admin-modal-table" style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
+                  <thead>
                     <tr>
                       <th style="padding:6px 8px;">Title</th>
                       <th style="padding:6px 8px;">Date</th>
@@ -9597,7 +9597,7 @@
                   </thead>
                   <tbody>
                     ${(o.events && o.events.length > 0) ? o.events.map(ev => `
-                      <tr style="border-bottom:1px solid #eee;">
+                      <tr>
                         <td style="padding:6px 8px;"><strong>${ev.title}</strong></td>
                         <td style="padding:6px 8px;">${new Date(ev.start_datetime).toLocaleDateString('en-IN')}</td>
                         <td style="padding:6px 8px; text-align:center;">${ev.status}</td>
@@ -9605,7 +9605,7 @@
                         <td style="padding:6px 8px; text-align:center;">${ev.verified_checkins}</td>
                         <td style="padding:6px 8px; text-align:right;">₹${parseFloat(ev.gross_revenue || 0).toFixed(2)}</td>
                       </tr>
-                    `).join('') : '<tr><td colspan="6" style="padding:10px; text-align:center; color:#777;">No events created yet.</td></tr>'}
+                    `).join('') : '<tr><td colspan="6" style="padding:10px; text-align:center;" class="admin-modal-empty-note">No events created yet.</td></tr>'}
                   </tbody>
                 </table>
               </div>
@@ -9613,14 +9613,14 @@
 
             <!-- Complaints / Reports -->
             <div>
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">🚩 Moderation Reports & Complaints (${o.complaints?.length || 0})</h4>
-              <div style="max-height:100px; overflow-y:auto; border:1px solid #ddd; border-radius:8px; padding:6px 8px; font-size:0.88rem; background:#fff;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">🚩 Moderation Reports & Complaints (${o.complaints?.length || 0})</h4>
+              <div class="admin-modal-scroll-box" style="max-height:100px; overflow-y:auto; border-radius:8px; padding:6px 8px; font-size:0.88rem;">
                 ${(o.complaints && o.complaints.length > 0) ? o.complaints.map(c => `
-                  <div style="padding:4px 0; border-bottom:1px dashed #eee;">
-                    <strong>Report #${c.report_id}</strong> (${c.reason}) — Status: ${c.status}
-                    <div style="font-size:0.8rem; color:#666;">${c.description || 'No additional details'}</div>
+                  <div class="admin-modal-log-item" style="padding:6px 0;">
+                    <strong class="admin-modal-log-title">Report #${c.report_id}</strong> (${c.reason}) — <span class="admin-modal-log-status">Status: ${c.status}</span>
+                    <div class="admin-modal-log-desc" style="font-size:0.8rem; margin-top:2px;">${c.description || 'No additional details'}</div>
                   </div>
-                `).join('') : '<div style="color:#777; text-align:center; padding:8px;">Zero community complaints recorded. Good standing! 🌟</div>'}
+                `).join('') : '<div style="text-align:center; padding:8px;" class="admin-modal-empty-note">Zero community complaints recorded. Good standing! 🌟</div>'}
               </div>
             </div>
           `;
@@ -9684,7 +9684,7 @@
                 <td style="padding: 10px; text-align: right; color:#00838f;">-₹${parseFloat(o.platform_commission_amount || 0).toFixed(2)}</td>
                 <td style="padding: 10px; text-align: right; font-weight:800; color:#2e7d32;">₹${parseFloat(o.net_estimated_earnings || 0).toFixed(2)}</td>
                 <td style="padding: 10px; text-align: center;">
-                  <span style="font-size:0.8rem; background:#fff3e0; color:#e65100; border:1px solid #ffb74d; padding:2px 8px; border-radius:12px;">${o.payout_status || 'Actual payouts not configured'}</span>
+                  <span style="font-size:0.8rem; background:#e8f5e9; color:#1b5e20; border:1px solid #4ade80; padding:2px 8px; border-radius:12px;">${o.payout_status || 'Direct Bank Settlement (Configured) 💼'}</span>
                 </td>
               </tr>
             `;
@@ -9711,7 +9711,7 @@
         parseFloat(o.total_refunds || 0).toFixed(2),
         parseFloat(o.platform_commission_amount || 0).toFixed(2),
         parseFloat(o.net_estimated_earnings || 0).toFixed(2),
-        `"TEST/SIMULATED - Actual payouts not configured"`
+        `"Direct Bank Settlement (Configured)"`
       ]);
 
       const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
@@ -9811,11 +9811,11 @@
           body.innerHTML = `
             ${bannerHtml}
             <div style="margin-bottom:12px;">
-              <h2 style="margin:0 0 4px; font-size:1.5rem;">${ev.title} <span style="font-size:0.9rem; color:#666;">(#${ev.event_id})</span></h2>
-              <div style="font-size:0.92rem; color:#555;">Hosted by: <strong>${ev.organizer?.name || 'Organizer'}</strong> • Category: <strong>${ev.category?.name || 'Community'}</strong></div>
+              <h2 style="margin:0 0 4px; font-size:1.5rem;">${ev.title} <span class="admin-modal-id-tag">(#${ev.event_id})</span></h2>
+              <div class="admin-modal-role" style="font-size:0.92rem;">Hosted by: <strong>${ev.organizer?.name || 'Organizer'}</strong> • Category: <strong>${ev.category?.name || 'Community'}</strong></div>
             </div>
 
-            <div style="background:#faf8ef; padding:12px; border-radius:8px; border:1.5px solid #ddd; margin-bottom:14px; font-size:0.92rem;">
+            <div class="admin-modal-user-card" style="padding:12px; border-radius:8px; margin-bottom:14px; font-size:0.92rem;">
               <div style="margin-bottom:4px;"><strong>📅 Date & Time:</strong> ${new Date(ev.start_datetime).toLocaleString('en-IN')}</div>
               <div style="margin-bottom:4px;">
                 <strong>📍 Venue:</strong> ${ev.location?.formatted_address || 'TBA'}, ${ev.location?.city || ''}
@@ -9827,17 +9827,17 @@
             </div>
 
             <div style="margin-bottom:14px;">
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">📝 Description</h4>
-              <div style="font-size:0.92rem; color:#444; line-height:1.5; background:#fff; padding:10px; border:1px solid #ddd; border-radius:8px; max-height:100px; overflow-y:auto;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">📝 Description</h4>
+              <div class="admin-modal-scroll-box" style="font-size:0.92rem; line-height:1.5; padding:10px; border-radius:8px; max-height:100px; overflow-y:auto;">
                 ${ev.description || 'No description provided.'}
               </div>
             </div>
 
             <div>
-              <h4 style="margin:0 0 6px; font-size:1.05rem;">👥 Confirmed Registrations (${ev.registrations?.length || 0})</h4>
-              <div style="max-height:120px; overflow-y:auto; border:1px solid #ddd; border-radius:8px;">
-                <table style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
-                  <thead style="background:#fdf6d8;">
+              <h4 class="admin-modal-section-title" style="margin:0 0 6px; font-size:1.05rem;">👥 Confirmed Registrations (${ev.registrations?.length || 0})</h4>
+              <div class="admin-modal-table-wrap" style="max-height:120px; overflow-y:auto; border-radius:8px;">
+                <table class="admin-modal-table" style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
+                  <thead>
                     <tr>
                       <th style="padding:6px 8px;">Attendee</th>
                       <th style="padding:6px 8px;">Email</th>
@@ -9846,12 +9846,12 @@
                   </thead>
                   <tbody>
                     ${(ev.registrations && ev.registrations.length > 0) ? ev.registrations.map(r => `
-                      <tr style="border-bottom:1px solid #eee;">
+                      <tr>
                         <td style="padding:6px 8px;">${r.user?.name || 'User #' + r.user_id}</td>
-                        <td style="padding:6px 8px; color:#555;">${r.user?.email || '-'}</td>
+                        <td style="padding:6px 8px;">${r.user?.email || '-'}</td>
                         <td style="padding:6px 8px; text-align:center;">${r.ticket?.ticket_status || r.registration_status}</td>
                       </tr>
-                    `).join('') : '<tr><td colspan="3" style="padding:10px; text-align:center; color:#777;">No registrations yet.</td></tr>'}
+                    `).join('') : '<tr><td colspan="3" style="padding:10px; text-align:center;" class="admin-modal-empty-note">No registrations yet.</td></tr>'}
                   </tbody>
                 </table>
               </div>

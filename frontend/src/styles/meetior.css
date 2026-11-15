@@ -1801,6 +1801,158 @@
     }
 
     /* =========================================================================
+       ADMIN INSPECTION & PERFORMANCE MODALS — BASE & LIGHT THEME STYLES
+       ========================================================================= */
+    .admin-inspection-modal-container {
+      display: flex !important;
+      flex-direction: column !important;
+      max-height: 88vh !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+    .admin-modal-user-card {
+      background: #faf8ef;
+      border: 1.5px solid #d1d5db;
+      color: #111827;
+    }
+    .admin-modal-user-card h2 {
+      color: #111827 !important;
+    }
+    .admin-modal-id-tag {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+    .admin-modal-role {
+      color: #512da8;
+      font-weight: 700;
+    }
+    .admin-modal-meta {
+      color: #4b5563;
+    }
+    .admin-modal-meta strong {
+      color: #111827;
+    }
+    .admin-modal-rating {
+      color: #d97706;
+      font-weight: 700;
+    }
+
+    .admin-stat-card {
+      border-radius: 8px;
+      text-align: center;
+      padding: 10px;
+    }
+    .admin-stat-revenue {
+      background: #e8f5e9;
+      border: 1.5px solid #2e7d32;
+    }
+    .admin-stat-revenue .admin-stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1b5e20;
+    }
+    .admin-stat-revenue .admin-stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #2e7d32;
+    }
+
+    .admin-stat-refunds {
+      background: #ffebee;
+      border: 1.5px solid #c62828;
+    }
+    .admin-stat-refunds .admin-stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #b71540;
+    }
+    .admin-stat-refunds .admin-stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #c62828;
+    }
+
+    .admin-stat-net {
+      background: #ede7f6;
+      border: 1.5px solid #673ab7;
+    }
+    .admin-stat-net .admin-stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #4527a0;
+    }
+    .admin-stat-net .admin-stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #512da8;
+    }
+
+    .admin-modal-section-title {
+      font-size: 1.05rem;
+      color: #1f2937;
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .admin-modal-table-wrap {
+      border: 1.5px solid #d1d5db;
+      background: #ffffff;
+      overflow-y: auto;
+    }
+    .admin-modal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+    .admin-modal-table thead {
+      background: #fdf6d8;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .admin-modal-table th {
+      padding: 6px 8px;
+      color: #1f2937;
+      font-weight: 700;
+    }
+    .admin-modal-table tr {
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .admin-modal-table td {
+      padding: 6px 8px;
+      color: #374151;
+    }
+    .admin-modal-table td strong {
+      color: #111827;
+    }
+
+    .admin-modal-scroll-box {
+      background: #ffffff;
+      border: 1.5px solid #d1d5db;
+      color: #374151;
+      padding: 6px 8px;
+      font-size: 0.88rem;
+    }
+    .admin-modal-log-item {
+      padding: 6px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+    .admin-modal-log-title {
+      color: #111827 !important;
+      font-weight: 700;
+    }
+    .admin-modal-log-status {
+      color: #1f2937;
+      font-weight: 600;
+    }
+    .admin-modal-log-desc {
+      color: #6b7280;
+    }
+    .admin-modal-empty-note {
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    /* =========================================================================
        NIGHT THEME — ADMIN INSPECTION & MANAGEMENT MODALS
        ========================================================================= */
     body.theme-night #adminOrganizerModal .pass-card-container,
@@ -1834,171 +1986,189 @@
     }
 
     /* Modal Top Header Card (Organizer / Attendee / Event summary) */
+    body.theme-night .admin-modal-user-card,
     body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"],
+    body.theme-night #adminOrganizerModal div[style*="background: #faf8ef"],
     body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"],
-    body.theme-night #adminEventModal div[style*="background:#faf8ef"] {
+    body.theme-night #adminAttendeeModal div[style*="background: #faf8ef"],
+    body.theme-night #adminEventModal div[style*="background:#faf8ef"],
+    body.theme-night #adminEventModal div[style*="background: #faf8ef"] {
       background: #202738 !important;
       border: 1.5px solid #3b4256 !important;
       color: #f1f2f6 !important;
     }
 
-    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] h2,
-    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] h2,
-    body.theme-night #adminEventModal div[style*="background:#faf8ef"] h2 {
+    body.theme-night .admin-modal-user-card h2,
+    body.theme-night #adminOrganizerModal h2,
+    body.theme-night #adminAttendeeModal h2,
+    body.theme-night #adminEventModal h2 {
       color: #ffffff !important;
     }
 
-    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] div,
-    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] div,
-    body.theme-night #adminEventModal div[style*="background:#faf8ef"] div {
-      color: #cbd5e1 !important;
+    body.theme-night .admin-modal-id-tag {
+      color: #94a3b8 !important;
     }
 
-    body.theme-night #adminOrganizerModal div[style*="background:#faf8ef"] strong,
-    body.theme-night #adminAttendeeModal div[style*="background:#faf8ef"] strong,
-    body.theme-night #adminEventModal div[style*="background:#faf8ef"] strong {
-      color: #ffffff !important;
-    }
-
+    body.theme-night .admin-modal-role,
     body.theme-night #adminOrganizerModal div[style*="color:#512da8"],
     body.theme-night #adminAttendeeModal div[style*="color:#512da8"] {
       color: #c084fc !important;
     }
 
+    body.theme-night .admin-modal-meta,
+    body.theme-night #adminOrganizerModal div[style*="color:#666"],
+    body.theme-night #adminAttendeeModal div[style*="color:#666"],
+    body.theme-night #adminEventModal div[style*="color:#666"] {
+      color: #cbd5e1 !important;
+    }
+
+    body.theme-night .admin-modal-meta strong,
+    body.theme-night .admin-modal-user-card strong,
+    body.theme-night #adminOrganizerModal strong,
+    body.theme-night #adminAttendeeModal strong,
+    body.theme-night #adminEventModal strong {
+      color: #ffffff !important;
+    }
+
+    body.theme-night .admin-modal-rating {
+      color: #fbbf24 !important;
+    }
+
     /* Financial Stat Cards in Modals */
+    body.theme-night .admin-stat-revenue,
     body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"],
+    body.theme-night #adminOrganizerModal div[style*="background: #e8f5e9"],
     body.theme-night #adminAttendeeModal div[style*="background:#e8f5e9"] {
-      background: rgba(46, 125, 50, 0.22) !important;
+      background: rgba(34, 197, 94, 0.22) !important;
       border: 1.5px solid #22c55e !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"] div[style*="color:#1b5e20"] {
+    body.theme-night .admin-stat-revenue .admin-stat-label,
+    body.theme-night #adminOrganizerModal div[style*="color:#1b5e20"] {
       color: #86efac !important;
       font-weight: 700 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#e8f5e9"] div[style*="color:#2e7d32"] {
+    body.theme-night .admin-stat-revenue .admin-stat-value,
+    body.theme-night #adminOrganizerModal div[style*="color:#2e7d32"] {
       color: #4ade80 !important;
       font-weight: 800 !important;
     }
 
+    body.theme-night .admin-stat-refunds,
     body.theme-night #adminOrganizerModal div[style*="background:#ffebee"],
+    body.theme-night #adminOrganizerModal div[style*="background: #ffebee"],
     body.theme-night #adminAttendeeModal div[style*="background:#ffebee"] {
-      background: rgba(198, 40, 40, 0.22) !important;
+      background: rgba(239, 68, 68, 0.22) !important;
       border: 1.5px solid #ef4444 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#ffebee"] div[style*="color:#b71540"] {
+    body.theme-night .admin-stat-refunds .admin-stat-label,
+    body.theme-night #adminOrganizerModal div[style*="color:#b71540"] {
       color: #fca5a5 !important;
       font-weight: 700 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#ffebee"] div[style*="color:#c62828"] {
+    body.theme-night .admin-stat-refunds .admin-stat-value,
+    body.theme-night #adminOrganizerModal div[style*="color:#c62828"] {
       color: #f87171 !important;
       font-weight: 800 !important;
     }
 
+    body.theme-night .admin-stat-net,
     body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"],
+    body.theme-night #adminOrganizerModal div[style*="background: #ede7f6"],
     body.theme-night #adminAttendeeModal div[style*="background:#ede7f6"] {
-      background: rgba(103, 58, 183, 0.25) !important;
+      background: rgba(168, 85, 247, 0.25) !important;
       border: 1.5px solid #a855f7 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"] div[style*="color:#4527a0"] {
+    body.theme-night .admin-stat-net .admin-stat-label,
+    body.theme-night #adminOrganizerModal div[style*="color:#4527a0"] {
       color: #d8b4fe !important;
       font-weight: 700 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#ede7f6"] div[style*="color:#512da8"] {
+    body.theme-night .admin-stat-net .admin-stat-value,
+    body.theme-night #adminOrganizerModal div[style*="color:#512da8"] {
       color: #c084fc !important;
       font-weight: 800 !important;
     }
 
     /* Modal Tables (Hosted Events, Bookings, Registrations) */
-    body.theme-night #adminOrganizerModal table,
-    body.theme-night #adminAttendeeModal table,
-    body.theme-night #adminEventModal table {
-      background: #181d28 !important;
-      color: #cbd5e1 !important;
-    }
-    body.theme-night #adminOrganizerModal table thead,
-    body.theme-night #adminAttendeeModal table thead,
-    body.theme-night #adminEventModal table thead {
-      background: #252d40 !important;
-    }
-    body.theme-night #adminOrganizerModal table th,
-    body.theme-night #adminAttendeeModal table th,
-    body.theme-night #adminEventModal table th {
-      color: #f8fafc !important;
-      border-bottom: 2px solid #3b4256 !important;
-    }
-    body.theme-night #adminOrganizerModal table tr,
-    body.theme-night #adminAttendeeModal table tr,
-    body.theme-night #adminEventModal table tr {
-      background: transparent !important;
-      border-bottom: 1px solid #283248 !important;
-    }
-    body.theme-night #adminOrganizerModal table td,
-    body.theme-night #adminAttendeeModal table td,
-    body.theme-night #adminEventModal table td {
-      color: #cbd5e1 !important;
-      border-bottom: 1px solid #283248 !important;
-    }
-    body.theme-night #adminOrganizerModal table td strong,
-    body.theme-night #adminAttendeeModal table td strong,
-    body.theme-night #adminEventModal table td strong {
-      color: #ffffff !important;
-    }
-
-    /* Scrollable Table and Box Wrappers */
+    body.theme-night .admin-modal-table-wrap,
     body.theme-night #adminOrganizerModal div[style*="max-height"],
     body.theme-night #adminAttendeeModal div[style*="max-height"],
     body.theme-night #adminEventModal div[style*="max-height"] {
       border-color: #3b4256 !important;
       background: #181d28 !important;
     }
-
-    /* Complaints / Reports Box */
-    body.theme-night #adminOrganizerModal div[style*="background:#fff"],
-    body.theme-night #adminAttendeeModal div[style*="background:#fff"],
-    body.theme-night #adminEventModal div[style*="background:#fff"] {
-      background: #202738 !important;
-      border: 1px solid #3b4256 !important;
+    body.theme-night .admin-modal-table,
+    body.theme-night #adminOrganizerModal table,
+    body.theme-night #adminAttendeeModal table,
+    body.theme-night #adminEventModal table {
+      background: #181d28 !important;
       color: #cbd5e1 !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#fff"] strong,
-    body.theme-night #adminAttendeeModal div[style*="background:#fff"] strong,
-    body.theme-night #adminEventModal div[style*="background:#fff"] strong {
+    body.theme-night .admin-modal-table thead,
+    body.theme-night #adminOrganizerModal table thead,
+    body.theme-night #adminAttendeeModal table thead,
+    body.theme-night #adminEventModal table thead {
+      background: #252d40 !important;
+      border-bottom: 2px solid #3b4256 !important;
+    }
+    body.theme-night .admin-modal-table th,
+    body.theme-night #adminOrganizerModal table th,
+    body.theme-night #adminAttendeeModal table th,
+    body.theme-night #adminEventModal table th {
+      color: #f8fafc !important;
+      border-bottom: 2px solid #3b4256 !important;
+    }
+    body.theme-night .admin-modal-table tr,
+    body.theme-night #adminOrganizerModal table tr,
+    body.theme-night #adminAttendeeModal table tr,
+    body.theme-night #adminEventModal table tr {
+      background: transparent !important;
+      border-bottom: 1px solid #283248 !important;
+    }
+    body.theme-night .admin-modal-table td,
+    body.theme-night #adminOrganizerModal table td,
+    body.theme-night #adminAttendeeModal table td,
+    body.theme-night #adminEventModal table td {
+      color: #cbd5e1 !important;
+      border-bottom: 1px solid #283248 !important;
+    }
+    body.theme-night .admin-modal-table td strong,
+    body.theme-night #adminOrganizerModal table td strong,
+    body.theme-night #adminAttendeeModal table td strong,
+    body.theme-night #adminEventModal table td strong {
       color: #ffffff !important;
     }
-    body.theme-night #adminOrganizerModal div[style*="background:#fff"] div,
-    body.theme-night #adminAttendeeModal div[style*="background:#fff"] div,
-    body.theme-night #adminEventModal div[style*="background:#fff"] div {
-      color: #94a3b8 !important;
+
+    /* Scrollable Box (Complaints, Attendance Log, Reviews, Description) */
+    body.theme-night .admin-modal-scroll-box,
+    body.theme-night #adminOrganizerModal div[style*="background:#fff"],
+    body.theme-night #adminOrganizerModal div[style*="background: #fff"],
+    body.theme-night #adminAttendeeModal div[style*="background:#fff"],
+    body.theme-night #adminAttendeeModal div[style*="background: #fff"],
+    body.theme-night #adminEventModal div[style*="background:#fff"],
+    body.theme-night #adminEventModal div[style*="background: #fff"] {
+      background: #1e2638 !important;
+      border: 1.5px solid #3b4256 !important;
+      color: #cbd5e1 !important;
     }
+    body.theme-night .admin-modal-log-item,
     body.theme-night #adminOrganizerModal div[style*="border-bottom:1px dashed"],
     body.theme-night #adminAttendeeModal div[style*="border-bottom:1px dashed"],
     body.theme-night #adminEventModal div[style*="border-bottom:1px dashed"] {
-      border-bottom-color: #3b4256 !important;
+      border-bottom-color: #334155 !important;
     }
-
-        /* Direct Class Selectors for Admin Inspection Modals */
-    body.theme-night .admin-modal-user-card {
-      background: #202738 !important;
-      border-color: #3b4256 !important;
-      color: #f1f2f6 !important;
-    }
-    body.theme-night .admin-modal-user-card h2,
-    body.theme-night .admin-modal-user-card strong {
-      color: #ffffff !important;
-    }
-    body.theme-night .admin-modal-user-card div,
-    body.theme-night .admin-modal-user-card span {
-      color: #cbd5e1 !important;
-    }
-    body.theme-night .admin-modal-scroll-box {
-      background: #181d28 !important;
-      border-color: #3b4256 !important;
-      color: #cbd5e1 !important;
-    }
+    body.theme-night .admin-modal-log-title,
     body.theme-night .admin-modal-scroll-box strong {
       color: #ffffff !important;
     }
+    body.theme-night .admin-modal-log-status {
+      color: #93c5fd !important;
+    }
+    body.theme-night .admin-modal-log-desc,
     body.theme-night .admin-modal-scroll-box div {
+      color: #94a3b8 !important;
+    }
+    body.theme-night .admin-modal-empty-note {
       color: #94a3b8 !important;
     }
 
@@ -2040,6 +2210,7 @@
     }
 
     /* Section Headings in Modals (h4) */
+    body.theme-night .admin-modal-section-title,
     body.theme-night #adminOrganizerModal h4,
     body.theme-night #adminAttendeeModal h4,
     body.theme-night #adminEventModal h4 {
@@ -2073,6 +2244,22 @@
       background: rgba(46, 125, 50, 0.25) !important;
       color: #4ade80 !important;
       border-color: #22c55e !important;
+    }
+
+    /* Tab 4 Earnings Banner Night Theme */
+    body.theme-night #adminTab-earnings div[style*="background: #eef2ff"],
+    body.theme-night #adminTab-earnings div[style*="background:#eef2ff"] {
+      background: #1e1b4b !important;
+      border-color: #6366f1 !important;
+      color: #e0e7ff !important;
+    }
+    body.theme-night #adminTab-earnings div[style*="background: #eef2ff"] strong,
+    body.theme-night #adminTab-earnings div[style*="background:#eef2ff"] strong {
+      color: #a5b4fc !important;
+    }
+    body.theme-night #adminTab-earnings div[style*="background: #eef2ff"] div,
+    body.theme-night #adminTab-earnings div[style*="background:#eef2ff"] div {
+      color: #c7d2fe !important;
     }
 
     /* NIGHT THEME - HOME, BROWSE & MAP SEARCH BARS */
