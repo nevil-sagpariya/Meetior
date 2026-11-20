@@ -19,6 +19,28 @@ export default function EventDetailsPage({ navigateTo, currentUser, showToast })
         <div></div>
       </div>
 
+      {/* EMPTY STATE WHEN NO EVENTS IN CITY */}
+      <div id="detailNoEventBox" className="sketch-box hidden" style={{"padding":"44px 24px","textAlign":"center","maxWidth":"680px","margin":"30px auto","background":"#fffdf5","border":"2.5px dashed #fab005","borderRadius":"20px"}}>
+        <div style={{"fontSize":"3rem","marginBottom":"12px"}}>📍✨</div>
+        <h2 style={{"fontFamily":"'Fredoka', cursive","fontSize":"1.65rem","color":"#222","marginBottom":"8px"}}>
+          No Events Scheduled in <span id="detailNoEventCityName">this city</span>!
+        </h2>
+        <p style={{"fontFamily":"'Patrick Hand', cursive","fontSize":"1.2rem","color":"#666","maxWidth":"520px","margin":"0 auto 22px"}}>
+          There are currently no events or gatherings scheduled in this location yet. You can explore events across India, select another city, or suggest an event on our Demand Engine!
+        </p>
+        <div style={{"display":"flex","gap":"12px","justifyContent":"center","flexWrap":"wrap"}}>
+          <button type="button" className="btn-crayon-yellow" onclick="openCityPickerModal()" style={{"padding":"10px 22px","fontSize":"1.05rem","borderRadius":"999px"}}>
+            📍 Change Browsing City
+          </button>
+          <button type="button" className="btn-crayon-green" onclick="navigateTo('demands')" style={{"padding":"10px 22px","fontSize":"1.05rem","borderRadius":"999px"}}>
+            💡 Request on Demand Engine
+          </button>
+          <button type="button" className="btn-sketch-white" onclick="selectBrowsingCity('all'); navigateTo('browse');" style={{"padding":"10px 20px","fontSize":"1.05rem","borderRadius":"999px"}}>
+            Explore All India Events 🇮🇳
+          </button>
+        </div>
+      </div>
+
       <div className="details-wrapper">
         <button className="carousel-side-btn prev" onclick="cycleDetailEvent(-1)">
           <svg width="36" height="44" viewBox="0 0 36 44">
@@ -79,7 +101,7 @@ export default function EventDetailsPage({ navigateTo, currentUser, showToast })
                   <iframe id="detailMapIframe" title="Venue Location Map" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style={{"border":"0","display":"none"}} loading="lazy"></iframe>
                 </div>
                 <div className="detail-map-footer">
-                  <span id="detailMapCoords">📍 Coordinates: 23.0365° N, 72.5695° E</span>
+                  <span id="detailMapCoords">📍 Coordinates: Venue Location</span>
                   <button type="button" className="btn-sketch-white" onclick="copyEventCoordinates()" style={{"fontSize":"0.78rem","padding":"2px 8px","fontWeight":"700","cursor":"pointer"}}>📋 Copy Coords</button>
                 </div>
               </div>
@@ -178,8 +200,8 @@ export default function EventDetailsPage({ navigateTo, currentUser, showToast })
           <div id="similarEventsGrid" className="cards-grid-3" style={{"gap":"14px"}}></div>
         </div>
 
-        <a className="browse-more-pill" onclick="navigateTo('browse')">
-          Browse More Events in Ahmedabad →
+        <a id="detailBrowseMorePill" className="browse-more-pill" onclick="navigateTo('browse')">
+          Browse More Events →
         </a>
       </div>
     </section>

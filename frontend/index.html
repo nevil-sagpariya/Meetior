@@ -11,6 +11,8 @@
   <!-- Interactive Leaflet Map Assets (Local with CDN Fallback) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
   <script src="vendor/leaflet/leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
+  <!-- Client-side QR Code Decoder for Real Mobile and Webcam Scanning -->
+  <script src="vendor/jsQR.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';"></script>
   
   <!-- Main Stylesheet (extracted from inline style for clean formatting) -->
   <link rel="stylesheet" href="src/styles/meetior.css" />
@@ -353,6 +355,28 @@
         <div></div>
       </div>
 
+      <!-- EMPTY STATE WHEN NO EVENTS IN CITY -->
+      <div id="detailNoEventBox" class="sketch-box hidden" style="padding: 44px 24px; text-align: center; max-width: 680px; margin: 30px auto; background: #fffdf5; border: 2.5px dashed #fab005; border-radius: 20px;">
+        <div style="font-size: 3rem; margin-bottom: 12px;">📍✨</div>
+        <h2 style="font-family: 'Fredoka', cursive; font-size: 1.65rem; color: #222; margin-bottom: 8px;">
+          No Events Scheduled in <span id="detailNoEventCityName">this city</span>!
+        </h2>
+        <p style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; color: #666; max-width: 520px; margin: 0 auto 22px;">
+          There are currently no events or gatherings scheduled in this location yet. You can explore events across India, select another city, or suggest an event on our Demand Engine!
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn-crayon-yellow" onclick="openCityPickerModal()" style="padding: 10px 22px; font-size: 1.05rem; border-radius: 999px;">
+            📍 Change Browsing City
+          </button>
+          <button type="button" class="btn-crayon-green" onclick="navigateTo('demands')" style="padding: 10px 22px; font-size: 1.05rem; border-radius: 999px;">
+            💡 Request on Demand Engine
+          </button>
+          <button type="button" class="btn-sketch-white" onclick="selectBrowsingCity('all'); navigateTo('browse');" style="padding: 10px 20px; font-size: 1.05rem; border-radius: 999px;">
+            Explore All India Events 🇮🇳
+          </button>
+        </div>
+      </div>
+
       <div class="details-wrapper">
         <button class="carousel-side-btn prev" onclick="cycleDetailEvent(-1)">
           <svg width="36" height="44" viewBox="0 0 36 44">
@@ -413,7 +437,7 @@
                   <iframe id="detailMapIframe" title="Venue Location Map" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border: 0; display: none;" loading="lazy"></iframe>
                 </div>
                 <div class="detail-map-footer">
-                  <span id="detailMapCoords">📍 Coordinates: 23.0365° N, 72.5695° E</span>
+                  <span id="detailMapCoords">📍 Coordinates: Venue Location</span>
                   <button type="button" class="btn-sketch-white" onclick="copyEventCoordinates()" style="font-size: 0.78rem; padding: 2px 8px; font-weight: 700; cursor: pointer;">📋 Copy Coords</button>
                 </div>
               </div>
@@ -512,8 +536,8 @@
           <div id="similarEventsGrid" class="cards-grid-3" style="gap: 14px;"></div>
         </div>
 
-        <a class="browse-more-pill" onclick="navigateTo('browse')">
-          Browse More Events in Ahmedabad →
+        <a id="detailBrowseMorePill" class="browse-more-pill" onclick="navigateTo('browse')">
+          Browse More Events →
         </a>
       </div>
     </section>
@@ -1394,9 +1418,11 @@
           </div>
         </div>
 
-        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 10px;">
-          <button class="btn-crayon-yellow" id="btnToggleCam" onclick="toggleCameraScanner()">Start Camera</button>
-          <button class="btn-sketch-white" onclick="simulateScan()">🧪 Test Sample Pass</button>
+        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-crayon-yellow" id="btnToggleCam" onclick="toggleCameraScanner()">📷 Start Live Camera</button>
+          <button type="button" class="btn-crayon-green" id="btnSnapPhoto" onclick="document.getElementById('mobileQrFileInput').click()">📸 Snap Photo with Phone Camera</button>
+          <button type="button" class="btn-sketch-white" onclick="simulateScan()">🧪 Test Sample Pass</button>
+          <input type="file" id="mobileQrFileInput" accept="image/*" capture="environment" style="display:none;" onchange="handleQrFileSelected(this)">
         </div>
 
         <!-- Manual Token Verification Fallback -->
@@ -1589,6 +1615,11 @@
                 <option value="Lucknow">
                 <option value="Indore">
                 <option value="Chandigarh">
+                <option value="Guwahati">
+                <option value="Imphal">
+                <option value="Leh">
+                <option value="Kavaratti">
+                <option value="Port Blair">
               </datalist>
             </div>
             <span class="city-hint-text" style="font-size: 0.82rem; color: #666; margin-top: 4px; display: block;">Type any city in India — saving updates your browsing city and discovery feeds everywhere!</span>
@@ -1884,9 +1915,9 @@
           <div style="display:flex; align-items:flex-start; gap: 10px;">
             <div style="font-size: 1.8rem; line-height: 1;">💳</div>
             <div>
-              <strong style="font-size: 1.05rem; color: #4338ca;">SECURE PAYMENT &amp; SETTLEMENT GATEWAY:</strong>
-              <div style="font-size: 0.92rem; color: #374151; margin-top: 4px; line-height: 1.4;">
-                Meetior is integrated with the <strong>Razorpay Payment &amp; Settlement Gateway</strong>. All ticket sales, commissions (5.0%), and organizer earnings are verified and reconciled for direct bank settlement.
+              <strong id="admEarningsGatewayTitle" style="font-size: 1.05rem; color: #4338ca;">PAYMENT &amp; SETTLEMENT GATEWAY:</strong>
+              <div id="admEarningsGatewayNotice" style="font-size: 0.92rem; color: #374151; margin-top: 4px; line-height: 1.4;">
+                Meetior platform transactions and organizer earnings are calculated and reconciled for direct bank settlement.
               </div>
             </div>
           </div>
@@ -2131,8 +2162,8 @@
           </div>
           <div class="sketch-box" style="background:#e8f5e9; border-color:#2e7d32; padding: 14px; text-align: center;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #1b5e20; text-transform: uppercase;">Gateway Mode</div>
-            <div style="font-size: 1.5rem; font-weight: 800; color: #2e7d32; margin: 8px 0;">Razorpay Verified Gateway</div>
-            <div style="font-size: 0.82rem; color: #1b5e20; font-weight: 600;">Direct Bank Settlement (Active) 💼</div>
+            <div id="admPayGatewayMode" style="font-size: 1.15rem; font-weight: 800; color: #2e7d32; margin: 8px 0;">Razorpay Gateway</div>
+            <div id="admPayPayoutStatus" style="font-size: 0.82rem; color: #1b5e20; font-weight: 600;">Direct Bank Settlement (Configured) 💼</div>
           </div>
         </div>
 
@@ -4557,7 +4588,8 @@
       'lucknow': 'Uttar Pradesh', 'kanpur': 'Uttar Pradesh', 'varanasi': 'Uttar Pradesh',
       'bhopal': 'Madhya Pradesh', 'indore': 'Madhya Pradesh',
       'patna': 'Bihar', 'ranchi': 'Jharkhand', 'bhubaneswar': 'Odisha',
-      'kochi': 'Kerala', 'thiruvananthapuram': 'Kerala', 'guwahati': 'Assam'
+      'kochi': 'Kerala', 'thiruvananthapuram': 'Kerala', 'guwahati': 'Assam',
+      'imphal': 'Manipur', 'leh': 'Ladakh', 'kavaratti': 'Lakshadweep', 'port blair': 'Andaman and Nicobar Islands'
     };
 
     const CITY_DEFAULT_PINS = {
@@ -5403,6 +5435,9 @@
         }, 150);
       }
       if (viewName === 'details') {
+        if (!window.currentDetailedEventId && (!activeEventsList || activeEventsList.length === 0)) {
+          refreshEventDetailsForCurrentCity();
+        }
         setTimeout(() => {
           if (detailMap) detailMap.invalidateSize();
         }, 150);
@@ -5644,6 +5679,9 @@
       if (typeof currentView !== 'undefined' && currentView === 'demands') {
         loadDemands();
       }
+      if (typeof currentView !== 'undefined' && currentView === 'details') {
+        refreshEventDetailsForCurrentCity();
+      }
     }
 
     async function openCityPickerModal() {
@@ -5674,6 +5712,9 @@
       showToast(`Browsing events in: ${canonical === 'all' ? 'All India 🇮🇳' : canonical}`);
       loadHomeEvents();
       renderBrowseCards();
+      if (typeof currentView !== 'undefined' && currentView === 'details') {
+        refreshEventDetailsForCurrentCity();
+      }
     }
 
     function renderCityPickerModalList(cities) {
@@ -5765,7 +5806,7 @@
       // 1. Featured Spotlight Event (First event as wide hero banner)
       const feat = events[0];
       const featImg = feat.image_url || feat.original_image_url || getEventFallbackImageUrl(feat);
-      const featLoc = feat.location ? (feat.location.venue_name || feat.location.city) : (feat.location || 'Ahmedabad');
+      const featLoc = feat.location ? (feat.location.venue_name || feat.location.city) : (feat.city || 'Event Venue');
       const featDate = feat.start_datetime
         ? new Date(feat.start_datetime).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
         : (feat.homeDate || 'Featured Gathering');
@@ -5820,7 +5861,7 @@
         const art = imgPath
           ? `<img src="${API_BASE}${imgPath}" alt="${ev.title}" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;" onerror="this.onerror=null; this.src='${API_BASE}${getEventFallbackImageUrl(ev)}';"/>`
           : getEventIllustration(ev);
-        const loc = ev.location ? (ev.location.venue_name || ev.location.city) : (ev.location || 'Ahmedabad');
+        const loc = ev.location ? (ev.location.venue_name || ev.location.city) : (ev.city || 'Event Venue');
         const dateStr = ev.start_datetime
           ? new Date(ev.start_datetime).toLocaleDateString('en-IN', { weekday: 'short', hour: '2-digit', minute:'2-digit' })
           : (ev.homeDate || 'This Weekend');
@@ -5923,7 +5964,7 @@
         const art = imgPath
           ? `<img src="${API_BASE}${imgPath}" alt="${ev.title}" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;" onerror="this.onerror=null; this.src='${API_BASE}${getEventFallbackImageUrl(ev)}';"/>`
           : getEventIllustration(ev);
-        const loc = ev.location ? (ev.location.venue_name || ev.location.city) : (ev.location || 'Ahmedabad');
+        const loc = ev.location ? (ev.location.venue_name || ev.location.city) : (ev.city || 'Event Venue');
         const dateStr = ev.start_datetime
           ? new Date(ev.start_datetime).toLocaleDateString('en-IN', { weekday: 'short', month:'short', day:'numeric', hour: '2-digit', minute:'2-digit' })
           : (ev.browseDate || 'Upcoming');
@@ -6141,14 +6182,116 @@
     }
 
     // ============================================================================
-    // EVENT DETAILS, BULLETPROOF CAROUSEL & DOTS
+    // EVENT DETAILS, BULLETPROOF CAROUSEL & EMPTY STATES
     // ============================================================================
+
+    // Major Indian City Coordinates Map for Accurate Regional Geolocation
+    const INDIAN_CITY_COORDINATES = {
+      'ahmedabad':          { lat: 23.022500, lng: 72.571400 },
+      'gandhinagar':        { lat: 23.215600, lng: 72.636900 },
+      'surat':              { lat: 21.170200, lng: 72.831100 },
+      'vadodara':           { lat: 22.307200, lng: 73.181200 },
+      'baroda':             { lat: 22.307200, lng: 73.181200 },
+      'rajkot':             { lat: 22.303900, lng: 70.802200 },
+      'mumbai':             { lat: 19.076000, lng: 72.877700 },
+      'bombay':             { lat: 19.076000, lng: 72.877700 },
+      'pune':               { lat: 18.520400, lng: 73.856700 },
+      'bengaluru':          { lat: 12.971600, lng: 77.594600 },
+      'bangalore':          { lat: 12.971600, lng: 77.594600 },
+      'chennai':            { lat: 13.082700, lng: 80.270700 },
+      'madras':             { lat: 13.082700, lng: 80.270700 },
+      'delhi':              { lat: 28.613900, lng: 77.209000 },
+      'new delhi':          { lat: 28.613900, lng: 77.209000 },
+      'hyderabad':          { lat: 17.385000, lng: 78.486700 },
+      'kolkata':            { lat: 22.572600, lng: 88.363900 },
+      'calcutta':           { lat: 22.572600, lng: 88.363900 },
+      'jaipur':             { lat: 26.912400, lng: 75.787300 },
+      'lucknow':            { lat: 26.846700, lng: 80.946200 },
+      'kanpur':             { lat: 26.449900, lng: 80.331900 },
+      'varanasi':           { lat: 25.317600, lng: 82.973900 },
+      'prayagraj':          { lat: 25.435800, lng: 81.846300 },
+      'kochi':              { lat: 9.931200,  lng: 76.267300 },
+      'cochin':             { lat: 9.931200,  lng: 76.267300 },
+      'thiruvananthapuram': { lat: 8.524100,  lng: 76.936600 },
+      'chandigarh':         { lat: 30.733300, lng: 76.779400 },
+      'indore':             { lat: 22.719600, lng: 75.857700 },
+      'bhopal':             { lat: 23.259900, lng: 77.412600 },
+      'nagpur':             { lat: 21.145800, lng: 79.088200 },
+      'patna':              { lat: 25.594100, lng: 85.137600 },
+      'bhubaneswar':        { lat: 20.296100, lng: 85.824500 },
+      'goa':                { lat: 15.490900, lng: 73.827800 },
+      'panaji':             { lat: 15.490900, lng: 73.827800 },
+      'coimbatore':         { lat: 11.016800, lng: 76.955800 },
+      'visakhapatnam':      { lat: 17.686800, lng: 83.218500 },
+      'guwahati':           { lat: 26.144500, lng: 91.736200 }
+    };
+
+    function showNoEventsInDetailsView(city) {
+      const cityName = (city === 'all') ? 'All India' : (city || activeBrowsingCity || 'this city');
+      const noEventBox = document.getElementById('detailNoEventBox');
+      const detailsWrapper = document.querySelector('#view-details .details-wrapper');
+      const dotsEl = document.getElementById('detailDotsContainer');
+      const titleEl = document.getElementById('detailNoEventCityName');
+
+      if (titleEl) titleEl.textContent = cityName;
+      if (noEventBox) noEventBox.classList.remove('hidden');
+      if (detailsWrapper) detailsWrapper.style.display = 'none';
+      if (dotsEl) dotsEl.innerHTML = '';
+
+      window.currentDetailedEventId = null;
+      currentDetailIndex = 0;
+      activeEventsList = [];
+    }
+
+    function hideNoEventsInDetailsView() {
+      const noEventBox = document.getElementById('detailNoEventBox');
+      const detailsWrapper = document.querySelector('#view-details .details-wrapper');
+      if (noEventBox) noEventBox.classList.add('hidden');
+      if (detailsWrapper) detailsWrapper.style.display = 'block';
+    }
+
+    async function refreshEventDetailsForCurrentCity() {
+      const city = activeBrowsingCity;
+      if (!city || city === 'all') {
+        try {
+          const res = await API.getEvents({ limit: 12 });
+          if (res && res.events && res.events.length > 0) {
+            activeEventsList = res.events;
+            openEventDetailsByIndex(0);
+            return;
+          }
+        } catch (_) {}
+        showNoEventsInDetailsView('All India');
+        return;
+      }
+
+      try {
+        const res = await API.getEvents({ limit: 12, city: city });
+        if (res && res.events && res.events.length > 0) {
+          activeEventsList = res.events;
+          openEventDetailsByIndex(0);
+          return;
+        }
+      } catch (_) {}
+
+      // If no events in this city, show the clean empty state message!
+      showNoEventsInDetailsView(city);
+    }
+
     function openEventDetailsByIndex(index) {
       if (!activeEventsList || activeEventsList.length === 0) {
-        activeEventsList = [...EVENTS_DATA];
+        showNoEventsInDetailsView(activeBrowsingCity);
+        return;
       }
+
+      hideNoEventsInDetailsView();
       currentDetailIndex = (index + activeEventsList.length) % activeEventsList.length;
       const ev = activeEventsList[currentDetailIndex];
+      if (!ev) {
+        showNoEventsInDetailsView(activeBrowsingCity);
+        return;
+      }
+      window.currentDetailedEventId = ev.event_id || ev.id;
 
       document.getElementById('detailRainbowTitle').innerHTML = colorizeRainbowTitle(ev.title);
 
@@ -6174,10 +6317,11 @@
 
       const dateStr = ev.start_datetime
         ? new Date(ev.start_datetime).toLocaleDateString('en-IN', { weekday: 'long', year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
-        : (ev.fullDate || 'Saturday, 7:00 AM');
-      let locStr = 'Local Venue';
+        : (ev.fullDate || 'Upcoming Gathering');
+
+      let locStr = '';
       if (typeof ev.location === 'string' && ev.location.trim()) {
-        locStr = ev.fullLocation || ev.location;
+        locStr = ev.fullLocation || ev.location.trim();
       } else if (ev.location && typeof ev.location === 'object') {
         const parts = [
           ev.location.venue_name,
@@ -6185,14 +6329,18 @@
           ev.location.city,
           ev.location.state
         ].filter(Boolean);
-        locStr = ev.location.formatted_address || (parts.length > 0 ? parts.join(', ') : (ev.fullLocation || 'Local Venue'));
+        locStr = ev.location.formatted_address || (parts.length > 0 ? parts.join(', ') : (ev.fullLocation || ''));
       } else if (ev.fullLocation) {
         locStr = ev.fullLocation;
       } else if (ev.venue_name) {
         locStr = [ev.venue_name, ev.city, ev.state].filter(Boolean).join(', ');
       }
-      if (!locStr || locStr === ', ' || locStr === '.' || locStr.trim() === ',') {
-        locStr = ev.fullLocation || (typeof ev.location === 'string' ? ev.location : '') || ev.city || 'Local Venue';
+      if (locStr) {
+        locStr = locStr.replace(/^[,\s.-]+|[,\s.-]+$/g, '').trim();
+      }
+      if (!locStr) {
+        const evCityOnly = ev.location?.city || ev.city;
+        locStr = evCityOnly ? `Venue to be announced (${evCityOnly})` : 'Venue address to be announced';
       }
 
       const orgStr = ev.organizer ? (ev.organizer.name || ev.organizer) : 'Community Organizer';
@@ -6203,13 +6351,14 @@
       document.getElementById('detailDescription').textContent = ev.description || 'Join us for this community event!';
 
       // City Context Indicator: Warn if viewing an event from a different city than current active city
-      const evCity = (ev.location?.city || ev.city || (typeof ev.location === 'string' && ev.location.includes('Ahmedabad') ? 'Ahmedabad' : '') || '').toLowerCase();
+      const evCity = (ev.location?.city || ev.city || '').toLowerCase();
       const currentCity = (activeBrowsingCity || '').toLowerCase();
       const contextEl = document.getElementById('detailCityContextBanner');
       if (contextEl) {
         if (currentCity && currentCity !== 'all' && evCity && !evCity.includes(currentCity) && !currentCity.includes(evCity)) {
+          const displayEvCity = ev.location?.city || ev.city || 'another city';
           contextEl.style.display = 'block';
-          contextEl.innerHTML = `📍 <strong>Notice:</strong> This gathering takes place in <strong>${ev.location?.city || 'Ahmedabad'}</strong>. You are currently browsing <strong>${activeBrowsingCity}</strong>. <a href="javascript:void(0)" onclick="navigateTo('browse')" style="color:#b71540; font-weight:700; text-decoration:underline;">Browse All ${activeBrowsingCity} Events →</a>`;
+          contextEl.innerHTML = `📍 <strong>Notice:</strong> This gathering takes place in <strong>${displayEvCity}</strong>. You are currently browsing <strong>${activeBrowsingCity}</strong>. <a href="javascript:void(0)" onclick="navigateTo('browse')" style="color:#b71540; font-weight:700; text-decoration:underline;">Browse All ${activeBrowsingCity} Events →</a>`;
         } else {
           contextEl.style.display = 'none';
         }
@@ -6221,7 +6370,8 @@
 
       if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
         const vName = (ev.location?.venue_name || ev.venue || ev.title || '').toLowerCase();
-        const cName = (ev.location?.city || ev.city || '').toLowerCase();
+        const cName = (ev.location?.city || ev.city || '').toLowerCase().trim();
+
         if (vName.includes('promenade') || (vName.includes('riverfront') && !vName.includes('event centre') && !vName.includes('flower'))) {
           lat = 23.036500; lng = 72.569500;
         } else if (vName.includes('event centre') || vName.includes('event center')) {
@@ -6244,47 +6394,53 @@
           lat = 23.031500; lng = 72.596000;
         } else if (vName.includes('sindhu') || vName.includes('bodakdev')) {
           lat = 23.043500; lng = 72.502800;
-        } else if (vName.includes('koba')) {
-          lat = 23.143200; lng = 72.637500;
-        } else if (vName.includes('tapi')) {
-          lat = 21.195900; lng = 72.793300;
-        } else if (vName.includes('dumas')) {
-          lat = 21.074200; lng = 72.716100;
-        } else if (vName.includes('sarsana') || vName.includes('siec')) {
-          lat = 21.162200; lng = 72.774400;
-        } else if (cName.includes('surat')) {
-          lat = 21.170200; lng = 72.831100;
-        } else if (cName.includes('kochi') || cName.includes('cochin') || cName.includes('ernakulam')) {
-          lat = 9.965800; lng = 76.241500;
-        } else if (cName.includes('gandhinagar')) {
-          lat = 23.215600; lng = 72.636900;
-        } else {
-          lat = 23.022500; lng = 72.571400;
+        } else if (vName.includes('marine drive')) {
+          lat = 18.943800; lng = 72.823100;
+        } else if (cName && INDIAN_CITY_COORDINATES[cName]) {
+          lat = INDIAN_CITY_COORDINATES[cName].lat;
+          lng = INDIAN_CITY_COORDINATES[cName].lng;
+        } else if (activeBrowsingCity && activeBrowsingCity !== 'all' && INDIAN_CITY_COORDINATES[activeBrowsingCity.toLowerCase()]) {
+          lat = INDIAN_CITY_COORDINATES[activeBrowsingCity.toLowerCase()].lat;
+          lng = INDIAN_CITY_COORDINATES[activeBrowsingCity.toLowerCase()].lng;
         }
       }
 
       // Update OpenStreetMap iframe & Google Maps external link
-      const bboxDeltaLat = 0.007;
-      const bboxDeltaLng = 0.010;
-      const minLng = (lng - bboxDeltaLng).toFixed(6);
-      const minLat = (lat - bboxDeltaLat).toFixed(6);
-      const maxLng = (lng + bboxDeltaLng).toFixed(6);
-      const maxLat = (lat + bboxDeltaLat).toFixed(6);
-
-      const mapIframe = document.getElementById('detailMapIframe');
-      if (mapIframe) {
-        mapIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${minLng}%2C${minLat}%2C${maxLng}%2C${maxLat}&layer=mapnik&marker=${lat.toFixed(6)}%2C${lng.toFixed(6)}`;
-      }
-      const mapExtLink = document.getElementById('detailMapExternalLink');
-      if (mapExtLink) {
-        const queryVenue = encodeURIComponent((ev.location?.venue_name || ev.venue || ev.title || 'Venue') + ', ' + (ev.location?.city || ev.city || 'Ahmedabad'));
-        mapExtLink.href = `https://www.google.com/maps/search/?api=1&query=${lat.toFixed(6)},${lng.toFixed(6)}+(${queryVenue})`;
-      }
       const mapCoordsEl = document.getElementById('detailMapCoords');
-      if (mapCoordsEl) {
-        mapCoordsEl.textContent = `📍 Coordinates: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`;
-        mapCoordsEl.dataset.lat = lat.toFixed(6);
-        mapCoordsEl.dataset.lng = lng.toFixed(6);
+      const mapIframe = document.getElementById('detailMapIframe');
+      const mapExtLink = document.getElementById('detailMapExternalLink');
+
+      if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+        if (mapCoordsEl) {
+          mapCoordsEl.textContent = '📍 Map coordinates not specified for this venue';
+          delete mapCoordsEl.dataset.lat;
+          delete mapCoordsEl.dataset.lng;
+        }
+        if (mapIframe) mapIframe.style.display = 'none';
+        if (mapExtLink) {
+          const searchQ = encodeURIComponent([ev.title, locStr].filter(Boolean).join(', ') || 'Event Venue');
+          mapExtLink.href = `https://www.google.com/maps/search/?api=1&query=${searchQ}`;
+        }
+      } else {
+        if (mapIframe) {
+          mapIframe.style.display = 'block';
+          const bboxDeltaLat = 0.007;
+          const bboxDeltaLng = 0.010;
+          const minLng = (lng - bboxDeltaLng).toFixed(6);
+          const minLat = (lat - bboxDeltaLat).toFixed(6);
+          const maxLng = (lng + bboxDeltaLng).toFixed(6);
+          const maxLat = (lat + bboxDeltaLat).toFixed(6);
+          mapIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${minLng}%2C${minLat}%2C${maxLng}%2C${maxLat}&layer=mapnik&marker=${lat.toFixed(6)}%2C${lng.toFixed(6)}`;
+        }
+        if (mapExtLink) {
+          const queryVenue = encodeURIComponent([ev.location?.venue_name || ev.venue || ev.title, ev.location?.city || ev.city].filter(Boolean).join(', ') || 'Venue Location');
+          mapExtLink.href = `https://www.google.com/maps/search/?api=1&query=${lat.toFixed(6)},${lng.toFixed(6)}+(${queryVenue})`;
+        }
+        if (mapCoordsEl) {
+          mapCoordsEl.textContent = `📍 Coordinates: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`;
+          mapCoordsEl.dataset.lat = lat.toFixed(6);
+          mapCoordsEl.dataset.lng = lng.toFixed(6);
+        }
       }
 
       const evId = ev.event_id || ev.id;
@@ -6407,6 +6563,12 @@
         }).catch(() => {});
       }
 
+      const browsePillEl = document.getElementById('detailBrowseMorePill');
+      if (browsePillEl) {
+        const evCityName = ev.location?.city || ev.city || (activeBrowsingCity !== 'all' ? activeBrowsingCity : null);
+        browsePillEl.textContent = evCityName ? `Browse More Events in ${evCityName} →` : 'Explore All Events across India 🇮🇳 →';
+      }
+
       navigateTo('details');
       initDetailMap(lat, lng, ev.title, ev.location?.venue_name || ev.venue || 'Event Venue');
     }
@@ -6420,14 +6582,23 @@
     }
 
     async function handleQuickPreviewEventDetails() {
-      // 1. If activeEventsList already has events for the current city, open the first one!
-      if (activeEventsList && activeEventsList.length > 0) {
+      const city = activeBrowsingCity || 'Ahmedabad';
+      navigateTo('details');
+
+      // 1. If activeEventsList has events for the current city, open the first one!
+      const matchingEvents = (activeEventsList || []).filter(ev => {
+        if (city === 'all') return true;
+        const evCity = (ev.location?.city || ev.city || '').toLowerCase();
+        return evCity && (evCity.includes(city.toLowerCase()) || city.toLowerCase().includes(evCity));
+      });
+
+      if (matchingEvents.length > 0) {
+        activeEventsList = matchingEvents;
         openEventDetailsByIndex(0);
         return;
       }
 
-      // 2. Query events for activeBrowsingCity
-      const city = activeBrowsingCity || 'Ahmedabad';
+      // 2. Query events for activeBrowsingCity from backend
       try {
         const res = await API.getEvents({ limit: 12, ...(city === 'all' ? {} : { city }) });
         if (res && res.events && res.events.length > 0) {
@@ -6437,30 +6608,33 @@
         }
       } catch (_) {}
 
-      // 3. If current city has no events, inform user and show preview event
-      showToast(`ℹ️ No events found in ${city} yet. Showing featured gathering.`);
-      activeEventsList = [...EVENTS_DATA];
-      openEventDetailsByIndex(0);
+      // 3. If current city has no events, DO NOT SHOW AHMEDABAD!
+      showNoEventsInDetailsView(city);
     }
 
-    function openEventDetailsById(id) {
-      if (!activeEventsList || activeEventsList.length === 0) {
-        activeEventsList = [...EVENTS_DATA];
+    async function openEventDetailsById(id) {
+      navigateTo('details');
+      let idx = (activeEventsList || []).findIndex(e => (e.event_id || e.id) == id);
+      if (idx !== -1) {
+        openEventDetailsByIndex(idx);
+        return;
       }
-      let idx = activeEventsList.findIndex(e => (e.event_id || e.id) == id);
-      if (idx === -1) {
-        const found = EVENTS_DATA.find(e => (e.event_id || e.id) == id);
-        if (found) {
-          activeEventsList.push(found);
-          idx = activeEventsList.length - 1;
-        } else {
-          idx = 0;
+      try {
+        const res = await API.getEventById(id);
+        const ev = res?.event || res;
+        if (ev && (ev.event_id || ev.id)) {
+          if (!activeEventsList) activeEventsList = [];
+          activeEventsList.push(ev);
+          openEventDetailsByIndex(activeEventsList.length - 1);
+          return;
         }
-      }
-      openEventDetailsByIndex(idx);
+      } catch (_) {}
+      showToast('Event details not found.');
+      showNoEventsInDetailsView(activeBrowsingCity);
     }
 
     function cycleDetailEvent(step) {
+      if (!activeEventsList || activeEventsList.length === 0) return;
       openEventDetailsByIndex(currentDetailIndex + step);
     }
 
@@ -6508,7 +6682,7 @@
           : (ev.date || 'Upcoming');
         const loc = ev.location
           ? (typeof ev.location === 'object' ? `${ev.location.venue_name || ''}, ${ev.location.city || ''}` : ev.location)
-          : 'Ahmedabad';
+          : (ev.city ? `Venue in ${ev.city}` : 'Venue to be announced');
 
         let artContent = '';
         const cardImgPath = ev.image_url || ev.original_image_url || getEventFallbackImageUrl(ev);
@@ -6618,8 +6792,8 @@
               amount: res.amount,
               currency: res.currency || 'INR',
               event_title: ev?.title || 'Meetior Event',
-              date: document.getElementById('detailDateTime')?.textContent || 'Saturday, 7:00 AM',
-              venue: document.getElementById('detailLocation')?.textContent || 'Sabarmati Riverfront, Ahmedabad'
+              date: document.getElementById('detailDateTime')?.textContent || 'Upcoming Gathering',
+              venue: document.getElementById('detailLocation')?.textContent || 'Event Venue'
             };
             openPaymentModal(pendingPaymentData);
             return;
@@ -6668,8 +6842,8 @@
             amount: res.amount,
             currency: res.currency || 'INR',
             event_title: ev?.title || 'Meetior Event',
-            date: document.getElementById('detailDateTime')?.textContent || 'Saturday, 7:00 AM',
-            venue: document.getElementById('detailLocation')?.textContent || 'Sabarmati Riverfront, Ahmedabad'
+            date: document.getElementById('detailDateTime')?.textContent || 'Upcoming Gathering',
+            venue: document.getElementById('detailLocation')?.textContent || 'Event Venue'
           };
           openPaymentModal(pendingPaymentData);
           return;
@@ -7056,7 +7230,7 @@
       document.getElementById('passAttendeeName').textContent = ticket.attendee || currentUser?.name || 'Attendee';
       document.getElementById('passTicketNo').textContent = ticket.ticket_no || 'MTR-PASS-DEMO';
       document.getElementById('passDateTime').textContent = ticket.date || 'Upcoming';
-      const venueStr = ticket.venue || 'Ahmedabad';
+      const venueStr = ticket.venue || 'Event Venue';
       document.getElementById('passVenue').textContent = venueStr;
 
       const mapLink = document.getElementById('passMapLink');
@@ -7093,7 +7267,7 @@
         currency: currency || 'INR',
         event_title: title || 'Meetior Event',
         date: date || 'Saturday, 7:00 AM',
-        venue: venue || 'Ahmedabad'
+        venue: venue || 'Event Venue'
       };
       openPaymentModal(pendingPaymentData);
     }
@@ -7135,7 +7309,7 @@
             const dateStr = ev.start_datetime
               ? new Date(ev.start_datetime).toLocaleDateString('en-IN', { weekday: 'short', month:'short', day:'numeric', hour: '2-digit', minute:'2-digit' })
               : 'Upcoming';
-            const venueStr = ev.location?.venue_name || ev.location?.city || 'Ahmedabad';
+            const venueStr = ev.location?.venue_name || (ev.location?.city ? `Venue in ${ev.location.city}` : (ev.city ? `Venue in ${ev.city}` : 'Event Venue'));
 
             let statusBadge = '';
             let actionButtons = '';
@@ -7209,8 +7383,8 @@
             }
 
             const ticketNum = ticket.public_ticket_number || (isPending ? 'Payment Pending' : 'Pass Ready');
-            const locName = ev.location?.venue_name || ev.location?.city || 'Ahmedabad';
-            const locQuery = encodeURIComponent(`${locName}, ${ev.location?.city || ''}`);
+            const locName = ev.location?.venue_name || (ev.location?.city ? `Venue in ${ev.location.city}` : (ev.city ? `Venue in ${ev.city}` : 'Event Venue'));
+            const locQuery = encodeURIComponent(ev.location?.city ? `${locName}, ${ev.location.city}` : (ev.city ? `${locName}, ${ev.city}` : locName));
 
             return `
               <article class="sketch-box event-card" id="booking-card-${b.registration_id}" style="transition: all 0.3s ease;">
@@ -7341,7 +7515,7 @@
           container.innerHTML = res.saved_events.map((ev, idx) => `
             <article class="sketch-box event-card" id="saved-card-${ev.event_id}" style="transition: all 0.25s ease;">
               <h4>${ev.title}</h4>
-              <div class="card-meta">📍 ${ev.location?.venue_name || ev.location?.city || 'Ahmedabad'}</div>
+              <div class="card-meta">📍 ${ev.location?.venue_name || (ev.location?.city ? `Venue in ${ev.location.city}` : (ev.city ? `Venue in ${ev.city}` : 'Event Venue'))}</div>
               <div style="display:flex; gap:8px; margin-top:14px;">
                 <button class="btn-crayon-yellow" style="flex:1; padding:6px 12px;" onclick="openEventDetailsById(${ev.event_id})">
                   View →
@@ -7782,32 +7956,119 @@
       } catch (_) {}
     }
 
+    let liveScanRafId = null;
+    const scanCanvas = document.createElement('canvas');
+    const scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
+
+    function startLiveScanLoop() {
+      const video = document.getElementById('scannerVideo');
+      if (!activeCameraStream || !video) return;
+
+      function checkFrame() {
+        if (!activeCameraStream) return;
+        if (video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
+          scanCanvas.width = video.videoWidth;
+          scanCanvas.height = video.videoHeight;
+          scanCtx.drawImage(video, 0, 0, scanCanvas.width, scanCanvas.height);
+          const imgData = scanCtx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
+          if (typeof window.jsQR === 'function') {
+            const code = window.jsQR(imgData.data, imgData.width, imgData.height, {
+              inversionAttempts: 'dontInvert'
+            });
+            if (code && code.data && code.data.trim()) {
+              showToast('✅ QR Code detected from live camera!');
+              verifyScannedToken(code.data.trim());
+              toggleCameraScanner();
+              return;
+            }
+          }
+        }
+        liveScanRafId = requestAnimationFrame(checkFrame);
+      }
+      liveScanRafId = requestAnimationFrame(checkFrame);
+    }
+
     async function toggleCameraScanner() {
       const video = document.getElementById('scannerVideo');
       const btn = document.getElementById('btnToggleCam');
       const placeholder = document.getElementById('scannerPlaceholderMsg');
 
       if (activeCameraStream) {
+        if (liveScanRafId) {
+          cancelAnimationFrame(liveScanRafId);
+          liveScanRafId = null;
+        }
         activeCameraStream.getTracks().forEach(t => t.stop());
         activeCameraStream = null;
         video.srcObject = null;
-        btn.textContent = 'Start Camera';
+        btn.textContent = '📷 Start Live Camera';
         placeholder.style.display = 'block';
         return;
       }
 
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' }
-        });
-        activeCameraStream = stream;
-        video.srcObject = stream;
-        btn.textContent = 'Stop Camera';
-        placeholder.style.display = 'none';
-        showToast('Camera active! Point at attendee QR code.');
-      } catch (err) {
-        showToast('Camera access not granted or unavailable.');
+      // Try live camera stream if available in this browser context
+      if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+          });
+          activeCameraStream = stream;
+          video.srcObject = stream;
+          btn.textContent = '⏹ Stop Camera';
+          placeholder.style.display = 'none';
+          showToast('Live camera active! Point at attendee QR code 📷');
+          startLiveScanLoop();
+          return;
+        } catch (camErr) {
+          console.warn('Live getUserMedia error or denied:', camErr);
+        }
       }
+
+      // If live camera is blocked (e.g. mobile browser accessing over HTTP IP), seamlessly launch mobile camera photo snapshot!
+      showToast('Live video blocked on mobile HTTP. Opening mobile camera to snap QR... 📸');
+      const mobileInput = document.getElementById('mobileQrFileInput');
+      if (mobileInput) {
+        mobileInput.click();
+      }
+    }
+
+    function handleQrFileSelected(input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      showToast('Reading QR code from camera photo... ⏳');
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 1200;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+            else { w = Math.round(w * maxDim / h); h = maxDim; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(img, 0, 0, w, h);
+          const imgData = ctx.getImageData(0, 0, w, h);
+          if (typeof window.jsQR === 'function') {
+            const code = window.jsQR(imgData.data, imgData.width, imgData.height);
+            if (code && code.data && code.data.trim()) {
+              showToast('✅ QR Code decoded successfully!');
+              verifyScannedToken(code.data.trim());
+            } else {
+              showToast('❌ Could not read QR code. Hold camera closer and ensure QR code is in focus.');
+            }
+          } else {
+            showToast('QR decoder ready. Please try scanning again.');
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      input.value = '';
     }
 
     async function verifyScannedToken(token) {
@@ -9664,6 +9925,10 @@
         if (commTh && res && res.commission_percent !== undefined) {
           commTh.textContent = `Platform Fee (${res.commission_percent}%)`;
         }
+        const gatewayNotice = document.getElementById('admEarningsGatewayNotice');
+        if (gatewayNotice && res.notice) {
+          gatewayNotice.textContent = res.notice;
+        }
         if (res && res.organizers) {
           adminEarningsCache = res.organizers;
 
@@ -10114,6 +10379,10 @@
             document.getElementById('admPaySummaryProcessed').textContent = `₹${(Number(summary.total_processed ?? summary.total_gross_completed) || 0).toFixed(2)}`;
             document.getElementById('admPaySummaryRefunded').textContent = `₹${(Number(summary.total_refunded) || 0).toFixed(2)}`;
             document.getElementById('admPaySummaryNet').textContent = `₹${(Number(summary.net_revenue ?? summary.net_receipts) || 0).toFixed(2)}`;
+            if (summary.gateway_mode) {
+              const gwEl = document.getElementById('admPayGatewayMode');
+              if (gwEl) gwEl.textContent = summary.gateway_mode;
+            }
           }
 
           if (res.payments) {

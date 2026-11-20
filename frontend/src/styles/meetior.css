@@ -827,6 +827,7 @@
     .details-wrapper {
       position: relative;
       max-width: 920px;
+      display: block;
       margin: 0 auto;
     }
 
@@ -1042,20 +1043,31 @@
     }
 
     .browse-more-pill {
-      margin: 12px auto 0;
+      margin: 22px auto 0;
       width: fit-content;
-      padding: 5px 28px;
+      max-width: 90%;
+      padding: 8px 36px;
       border-radius: 999px;
       background: repeating-linear-gradient(-15deg, #f6c728, #f6c728 5px, #fbd446 5px, #fbd446 10px);
       border: 3px solid #aba698;
-      font-size: 1.6rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #0b4f8a;
       text-decoration: underline;
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      white-space: nowrap;
+      box-sizing: border-box;
+      clear: both;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .browse-more-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
     }
 
     

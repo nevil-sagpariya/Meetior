@@ -8,7 +8,8 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org)
 
 > **Final Semester Capstone Project (Semester 7)**  
-> **Architecture:** Full-Stack Node.js, Express.js, MySQL (Sequelize ORM), Vanilla JavaScript, HTML5 & CSS3  
+> **Backend Architecture:** Full-Stack Node.js, Express.js, MySQL (Sequelize ORM), REST APIs  
+> **Frontend Architecture:** Unified single-file zero-build SPA (`frontend/index.html`) served directly by Express; modular Vite + React component suite in `frontend/src` (`npm run build`)  
 > **UI Aesthetic:** Hand-Drawn Crayon & Playful Sketchbook Theme  
 > **Test Coverage:** 150 Automated Isolated Integration Tests (100% Pass)
 
@@ -19,8 +20,9 @@
 **Meetior** is a hyper-local event discovery, community meetup, and ticketing platform designed to connect event attendees and organizers across India. Built from the ground up without heavy frontend framework overhead, Meetior combines an authentic hand-drawn sketchbook aesthetic with a rock-solid, production-grade 25-table relational MySQL backend.
 
 Key highlights include:
-- **Interactive Multi-Channel Checkout**: Meetior Demo Student Wallet, UPI QR Code generation with live phone scanning, PayPal Sandbox, and Razorpay Gateway test sandbox.
-- **Atomic Entry & Passes**: Cryptographic QR-coded event passes (`MTR-YYYYMMDD-XXXXXX`) with an in-app camera check-in scanner and duplicate-entry safeguards.
+- **Interactive Multi-Channel Checkout**: Meetior Demo Student Wallet, UPI QR Code generation with live phone scanning, PayPal Sandbox simulation, and Razorpay Test Mode with clear distinction between live provider test mode and simulated database-only transactions.
+- **Atomic Entry & Authenticated Passes**: Cryptographic HMAC-SHA256 authenticated QR passes (`MTR1:<ticket_id>:<issuedAt>:<signature>`) with SHA-256 hash persistence, in-app camera check-in scanner, and duplicate-scan rejection.
+- **Configurable Platform Economics**: Configurable commission rate (default 3.0% in active database seed, showing ₹9.00 fee on ₹300.00 ticket sales; 5.0% default template), fully synchronized across organizer revenue, admin dashboards, and finance ledgers.
 - **Community Demand & Second Chance**: Event concept crowdsourcing, upvoting, and repeat session requests for past completed events.
 - **Enterprise-Grade Admin Portal**: 16 dedicated governance modules including Role-Based Access Control (RBAC), multi-factor authentication (MFA), location auditing, revenue tracking, and complete **Admin Data Management (Add & Remove Users, Events, and Categories)**.
 
@@ -194,10 +196,15 @@ Meetior offers a versatile, academic-friendly multi-channel payment architecture
    - Complete checkout with the **`✅ I Have Paid / Verify UPI Payment`** button.
 
 3. **PayPal Sandbox**:
-   - Instant simulation generating authentic `PAYID-MTR-XXXXXX` references.
+   - Instant simulation generating authentic `PAYID-MTR-XXXXXX` references for wallet top-ups.
 
 4. **Razorpay Test Gateway**:
-   - Supports live test keys or automatic simulation fallback.
+   - When valid `rzp_test_...` test keys are configured in `backend/.env`, processes authentic test-mode orders and HMAC payment signature verification.
+   - When placeholder keys are detected, safely runs in **Simulated / Database-Only Mode**, preserving system stability and ledger integrity without claiming fake external provider completions.
+
+5. **Configurable Platform Fee & Settlements**:
+   - Platform service commission is dynamically loaded from `PlatformSettings` (active database rate: **3.0%**; standard baseline template: **5.0%**).
+   - All gross booking revenues, refunds, platform fees (e.g. ₹9.00 on a ₹300.00 ticket at 3.0%), and net organizer payouts (₹291.00) are dynamically reconciled across organizer revenue views and admin ledger reports.
 
 ---
 
@@ -248,7 +255,10 @@ meetior/
 │   ├── schema.sql                   # Clean MySQL DDL table schemas (25 tables)
 │   └── database-relationships.md    # Foreign keys and entity relationship reference
 └── frontend/
-    └── index.html                   # Unified, zero-build single-file HTML5/CSS3/JS app
+    ├── index.html                   # Unified, zero-build single-file HTML5/CSS3/JS app (served by Express)
+    ├── src/                         # Modular Vite + React component suite & design tokens
+    ├── package.json                 # Frontend build dependencies (Vite, React, Lucide)
+    └── vite.config.js               # Vite build configuration (outputs to dist/)
 ```
 
 ---

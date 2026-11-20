@@ -363,11 +363,66 @@ const createEvent = async (req, res) => {
         resolvedCity = 'Bengaluru';
         resolvedDistrict = 'Bengaluru Urban';
         resolvedState = 'Karnataka';
+      } else if (lowerVenue.includes('chennai') || lowerVenue.includes('madras')) {
+        resolvedCity = 'Chennai';
+        resolvedDistrict = 'Chennai';
+        resolvedState = 'Tamil Nadu';
+      } else if (lowerVenue.includes('hyderabad')) {
+        resolvedCity = 'Hyderabad';
+        resolvedDistrict = 'Hyderabad';
+        resolvedState = 'Telangana';
+      } else if (lowerVenue.includes('kolkata') || lowerVenue.includes('calcutta')) {
+        resolvedCity = 'Kolkata';
+        resolvedDistrict = 'Kolkata';
+        resolvedState = 'West Bengal';
+      } else if (lowerVenue.includes('pune')) {
+        resolvedCity = 'Pune';
+        resolvedDistrict = 'Pune';
+        resolvedState = 'Maharashtra';
+      } else if (lowerVenue.includes('jaipur')) {
+        resolvedCity = 'Jaipur';
+        resolvedDistrict = 'Jaipur';
+        resolvedState = 'Rajasthan';
+      } else if (lowerVenue.includes('guwahati')) {
+        resolvedCity = 'Guwahati';
+        resolvedDistrict = 'Kamrup Metropolitan';
+        resolvedState = 'Assam';
+      } else if (lowerVenue.includes('imphal')) {
+        resolvedCity = 'Imphal';
+        resolvedDistrict = 'Imphal West';
+        resolvedState = 'Manipur';
+      } else if (lowerVenue.includes('leh')) {
+        resolvedCity = 'Leh';
+        resolvedDistrict = 'Leh';
+        resolvedState = 'Ladakh';
+      } else if (lowerVenue.includes('kavaratti')) {
+        resolvedCity = 'Kavaratti';
+        resolvedDistrict = 'Lakshadweep';
+        resolvedState = 'Lakshadweep';
+      } else if (lowerVenue.includes('port blair')) {
+        resolvedCity = 'Port Blair';
+        resolvedDistrict = 'South Andaman';
+        resolvedState = 'Andaman and Nicobar Islands';
       } else if (!resolvedCity) {
         resolvedCity = 'Ahmedabad';
       }
     }
 
+    const CITY_TO_STATE = {
+      'Ahmedabad': 'Gujarat', 'Gandhinagar': 'Gujarat', 'Surat': 'Gujarat', 'Vadodara': 'Gujarat', 'Rajkot': 'Gujarat',
+      'Mumbai': 'Maharashtra', 'Pune': 'Maharashtra', 'Nagpur': 'Maharashtra', 'Nashik': 'Maharashtra',
+      'Bengaluru': 'Karnataka', 'Mysuru': 'Karnataka', 'Mangaluru': 'Karnataka',
+      'Chennai': 'Tamil Nadu', 'Coimbatore': 'Tamil Nadu', 'Madurai': 'Tamil Nadu',
+      'Delhi': 'Delhi', 'Hyderabad': 'Telangana', 'Kolkata': 'West Bengal', 'Jaipur': 'Rajasthan',
+      'Lucknow': 'Uttar Pradesh', 'Kanpur': 'Uttar Pradesh', 'Varanasi': 'Uttar Pradesh',
+      'Kochi': 'Kerala', 'Thiruvananthapuram': 'Kerala', 'Chandigarh': 'Chandigarh',
+      'Indore': 'Madhya Pradesh', 'Bhopal': 'Madhya Pradesh', 'Patna': 'Bihar', 'Bhubaneswar': 'Odisha', 'Panaji': 'Goa',
+      'Guwahati': 'Assam', 'Imphal': 'Manipur', 'Leh': 'Ladakh', 'Kavaratti': 'Lakshadweep', 'Port Blair': 'Andaman and Nicobar Islands',
+      'Ranchi': 'Jharkhand', 'Dehradun': 'Uttarakhand', 'Shimla': 'Himachal Pradesh', 'Raipur': 'Chhattisgarh'
+    };
+    if (!resolvedState && CITY_TO_STATE[resolvedCity]) {
+      resolvedState = CITY_TO_STATE[resolvedCity];
+    }
     resolvedDistrict = resolvedDistrict || resolvedCity;
     resolvedState = resolvedState || 'Gujarat';
     const resolvedAddress = formatted_address || `${resolvedVenue}, ${resolvedCity}, ${resolvedState}, India`;

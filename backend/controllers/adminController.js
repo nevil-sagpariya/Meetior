@@ -67,6 +67,29 @@ async function getPlatformCommissionPercent() {
   return 5.0; // Default 5.0%
 }
 
+// Helper: Get verified vs simulated gateway status
+function getGatewayStatus() {
+  const keyId = process.env.RAZORPAY_KEY_ID || '';
+  const keySecret = process.env.RAZORPAY_KEY_SECRET || '';
+  const hasValidTestKeys = keyId.startsWith('rzp_test_') &&
+    keySecret.length > 5 &&
+    !keyId.includes('placeholder') &&
+    !keyId.includes('your_key') &&
+    !keySecret.includes('your_razorpay') &&
+    !keySecret.includes('placeholder');
+
+  if (hasValidTestKeys) {
+    return {
+      mode: 'Razorpay Test Gateway Mode (Configured) ✅',
+      notice: 'Razorpay Test Gateway Mode: Transactions, platform fees, and organizer net earnings are processed in Razorpay test mode (TEST/SIMULATED reconciliation verified).'
+    };
+  }
+  return {
+    mode: 'Simulated / Database-Only Mode (Razorpay Test Keys Unverified) ℹ️',
+    notice: 'Simulated / Database-Only Mode: All transactions, platform fees, and organizer net earnings are recorded in database-only mode (TEST/SIMULATED reconciliation verified). Live/test gateway checkout requires active Razorpay test keys.'
+  };
+}
+
 // ============================================================================
 // 1. ADMIN AUTHENTICATION, MFA & SESSION MANAGEMENT
 // ============================================================================
@@ -539,7 +562,7 @@ const getAdminOverview = async (req, res) => {
           platform_commission_percent: commissionPercent,
           platform_revenue: totalPlatformRevenue,
           organizer_earnings: netOrganizerEarnings,
-          gateway_mode: 'Razorpay Verified Gateway Mode ✅',
+          gateway_mode: getGatewayStatus().mode,
           actual_payout_status: 'Direct Bank Settlement (Configured) 💼'
         },
         governance: {
@@ -1127,7 +1150,7 @@ const getOrganizerEarningsReport = async (req, res) => {
       success: true,
       time_filter: timeFilter,
       commission_percent: commissionPercent,
-      notice: 'Razorpay Verified Gateway Mode: All transactions, platform fees, and organizer net earnings are calculated and reconciled for direct bank settlement (TEST/SIMULATED reconciliation verified).',
+      notice: getGatewayStatus().notice,
       totals: {
         total_gross_booking_revenue: totalGross,
         total_refunds: totalRefunds,
@@ -1653,7 +1676,7 @@ const getAdminPayments = async (req, res) => {
         net_receipts: netReceipts,
         total_pending: parseFloat(pendingSum || 0),
         currency: 'INR',
-        gateway_mode: 'Razorpay Verified Gateway Mode ✅'
+        gateway_mode: getGatewayStatus().mode
       },
       payments: formattedPayments
     });
@@ -1728,7 +1751,7 @@ const getPlatformFinancialReports = async (req, res) => {
         platform_revenue: platformRevenue,
         estimated_organizer_earnings: organizerNet,
         currency: 'INR',
-        gateway_mode: 'Razorpay Verified Gateway Mode ✅',
+        gateway_mode: getGatewayStatus().mode,
         actual_payout_status: 'Direct Bank Settlement (Configured) 💼'
       },
       top_events: topEvents,
